@@ -17,6 +17,9 @@
 # Windows
 Thumbs.db
 
+# Obsidian
+.obsidian/
+
 # Node.js
 node_modules
 package-lock.json
