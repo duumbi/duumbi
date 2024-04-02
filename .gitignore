@@ -1,0 +1,27 @@
+# Visual Studio Code
+.settings/
+.classpath
+.project
+.factorypath
+.vscode
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Node.js
+node_modules
+package-lock.json
+
+# Build generated
+dist/
+build/
+app
