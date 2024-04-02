@@ -18,7 +18,8 @@
 Thumbs.db
 
 # Obsidian
-.obsidian/
+**/.obsidian/icons/
+**/.obsidian/plugins
 
 # Node.js
 node_modules
