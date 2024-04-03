@@ -1,9 +1,9 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+
 # Visual Studio Code
-.settings/
-.classpath
-.project
-.factorypath
-.vscode
+.vscode/
 
 # IntelliJ IDEA
 .idea/
@@ -11,21 +11,6 @@
 *.iml
 *.ipr
 
-# macOS
-.DS_Store
-
-# Windows
-Thumbs.db
-
 # Obsidian
 **/.obsidian/icons/
-**/.obsidian/plugins
-
-# Node.js
-node_modules
-package-lock.json
-
-# Build generated
-dist/
-build/
-app
+**/.obsidian/plugins/
