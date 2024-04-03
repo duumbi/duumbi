@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "462b0a4058567fc4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Contribution Guidelines.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Samples.md",
+                "file": "Contribution Guidelines.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Samples.md",
+                "file": "Contribution Guidelines.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Samples.md"
+                "file": "Contribution Guidelines.md"
               }
             }
           }
@@ -146,10 +159,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f39e6d862d238c51",
+  "active": "462b0a4058567fc4",
   "lastOpenFiles": [
+    "Samples.md",
+    "Contribution Guidelines.md",
     "image.png",
-    "Architecture.md",
-    "Samples.md"
+    "Architecture.md"
   ]
 }

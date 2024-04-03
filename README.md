@@ -1,6 +1,17 @@
 # Duumbi
+Data management platform, designed to optimize performance, privacy and usability.
 
-## Setup
+## Documentation
+ - Installation
+ - [Contribution Guidelines](https://docs.duumbi.io/contributions/)
+## What is Duumbi?
 
-__Install the git hook scripts:__
-run `pre-commit install` to set up the git hook scripts
+## Why Duumbi?
+
+### Privacy
+
+### Performance
+
+### Security
+
+### Usability
