@@ -1,4 +1,4 @@
-resource "port_blueprint" "github_repository" {
+/* resource "port_blueprint" "github_repository" {
   identifier  = "github_repository"
   title       = "Repository"
   icon        = "Github"
@@ -21,4 +21,4 @@ resource "port_blueprint" "github_repository" {
       }
     }
   }
-}
+} */

@@ -1,4 +1,4 @@
-resource "port_blueprint" "web_application" {
+/* resource "port_blueprint" "web_application" {
   identifier  = "web_application"
   title       = "Web Application"
   icon        = "Service"
@@ -31,3 +31,4 @@ resource "port_blueprint" "web_application" {
     }
   }
 }
+ */
