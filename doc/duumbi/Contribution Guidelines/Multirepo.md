@@ -1,3 +1,8 @@
+---
+tags:
+  - contribution
+  - guidline
+---
 This page provides guidelines on how to contribute to Duumbi. Duumbi uses Git to manage everything on the platform  [GitHub](https://github.com/duumbi).
 
 ## Development

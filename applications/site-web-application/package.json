@@ -1,0 +1,39 @@
+{
+  "name": "site",
+  "version": "1.0.0",
+  "description": "duumbi.io site",
+  "main": "tailwind.config.js",
+  "keywords": [
+    "site",
+    "duumbi"
+  ],
+  "license": "",
+  "repository": "https://github.com/duumbi/duumbi.git",
+  "homepage": "https://duumbi.io",
+  "scripts": {
+    "clean": "rimraf dist/",
+    "copy-files": "copyfiles *.html img/* css/styles.css dist/",
+    "tt": "tailwindcss --help",
+    "css": "tailwindcss -i ./css/tailwind.css -o ./css/styles.css",
+    "dev:css": "tailwindcss -i ./css/tailwind.css -o ./css/styles.css --watch",
+    "build:css": "tailwindcss -i ./css/tailwind.css -o ./css/styles.css --minify",
+    "build": "npm run clean && npm run build:css && npm run copy-files",
+    "srv": "serve ./dist --debug"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "prettier": "3.2.5",
+    "rimraf": "^5.0.5",
+    "sirv": "^2.0.4",
+    "tailwindcss": "^3.4.3"
+  },
+  "browserslist": [
+    "> 1%",
+    "not edge <= 18",
+    "not ie 11",
+    "not op_mini all"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

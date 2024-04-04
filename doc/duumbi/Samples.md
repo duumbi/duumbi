@@ -2,10 +2,15 @@
 tags:
   - doc
 ---
+
 Welcome to the official Obsidian Help site, where you can find tips and guides on how to use [Obsidian](https://obsidian.md/)
+
 # Getting started
+
 If you're new to Obsidian, learn the basics of note-taking with Obsidian.
+
 ## Basic formatting syntax
+
 Learn how to apply basic formatting to your notes[^1], using [Markdown](https://daringfireball.net/projects/markdown/).
 Text inside `backticks` on a line will be formatted like code. 😀
 This is an inline math expression $\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$.
@@ -19,6 +24,7 @@ if __name__ == "__main__":
     template = Template("default")
     template.create()
 ```
+
 ### Callouts
 
 > [!tip] Callouts can have custom titles > Tip
@@ -44,8 +50,8 @@ if __name__ == "__main__":
 | 123 | 456 | 789 |     |
 | 000 | 111 | 222 | 22  |
 
-
 ### PlantUML
+
 ```plantuml
 skinparam defaultFontColor white
 skinparam arrowColor white
@@ -62,7 +68,9 @@ actor "<b>Developer</b>" as DEVELOPER #155e75;text:white
 node1 -> db : hello
 db -> db2 : hello
 ```
+
 ### Mermaid
+
 ```mermaid
 
 graph LR

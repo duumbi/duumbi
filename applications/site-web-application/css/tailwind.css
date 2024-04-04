@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn-primary {
+  @apply rounded-full bg-fuchsia-800 px-3.5 py-2.5 text-sm font-semibold shadow-sm hover:bg-fuchsia-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-600;
+}
+
+.btn-secondary {
+  @apply rounded-full ring-cyan-900/40 ring-1 px-3.5 py-2.5 text-sm font-semibold text-cyan-300 shadow-sm hover:ring-cyan-900/70 hover:text-cyan-100 hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600;
+}
