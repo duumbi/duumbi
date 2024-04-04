@@ -1,0 +1,4 @@
+identifier: site-web-application
+blueprint: web_application
+properties:
+  applicationName: Site (duumbi.io)
