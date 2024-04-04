@@ -2,5 +2,6 @@ identifier: duumbi
 title: duumbi
 blueprint: github_repository
 properties:
-  readme: README.md
+  readme: file://README.md
   url: https://github.com/duumbi/duumbi
+  defaultBranch: main
