@@ -7,9 +7,13 @@
 		{
 			"name": "Web Application - Site",
 			"path": "../applications/site-web-application"
+		},
+		{
+			"name": "DevOps - Internal Developer Portal",
+			"path": "../devops/idp"
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "Web Application - Site"
+		"liveServer.settings.multiRootWorkspaceName": "Web Application - Site",
 	}
 }
