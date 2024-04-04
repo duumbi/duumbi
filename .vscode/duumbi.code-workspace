@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"name": "Duumbi",
+			"path": ".."
+		},
+		{
+			"name": "Web Application - Site",
+			"path": "../applications/site-web-application"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Web Application - Site"
+	}
+}
