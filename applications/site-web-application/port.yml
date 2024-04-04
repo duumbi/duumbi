@@ -1,0 +1,6 @@
+identifier: site-web-application
+title: site-web-application
+blueprint: web_application
+properties:
+  applicationName: Site (duumbi.io)
+  language: Html

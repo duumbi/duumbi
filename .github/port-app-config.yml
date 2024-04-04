@@ -1,0 +1,19 @@
+resources:
+  - kind: folder
+    selector:
+      query: 'true'
+      folders:
+        - path: applications/*
+          repos:
+            - duumbi
+    port:
+      entity:
+        mappings:
+          identifier: .folder.name
+          title: .folder.name
+          blueprint: '"application"'
+          properties:
+            url: >-
+              .repo.html_url + "/tree/" + .repo.default_branch  + "/" +
+              .folder.path
+            readme: file://README.md
