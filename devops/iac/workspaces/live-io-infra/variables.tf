@@ -21,8 +21,6 @@ variable "environment" {
     condition     = contains(["live", "stage"], var.environment)
     error_message = "Valid values for var: environment are (live, stage)"
   }
-
-  default = "live"
 }
 
 variable "location_base" {
