@@ -14,7 +14,7 @@ resource "port_blueprint" "github_repository" {
       "url" = {
         title    = "Repository URL"
         format   = "url"
-        icon     = "url"
+        icon     = "Link"
         required = true
       }
       "defaultBranch" = {
