@@ -41,6 +41,6 @@ variable "tags_base" {
   description = "If specified, will set the default tags for all resources deployed by this module where supported."
 
   default = {
-    managed_by = "Terraform"
+    managed_by = "terraform"
   }
 }
