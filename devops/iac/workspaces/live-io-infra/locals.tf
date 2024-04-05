@@ -1,5 +1,5 @@
 locals {
-  rg_name = lower(format("%s-%s-%s-%s-rg", var.organization, var.environment, var.location_base.short_name, var.project))
+  rg_name = lower(format("%s-%s-%s-%s-rg", var.organization, var.environment, var.project, var.location_base.short_name))
 
   tags = merge(
     var.tags_base,
