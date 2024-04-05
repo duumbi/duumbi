@@ -15,3 +15,22 @@ resources:
               .repo.html_url + "/tree/" + .repo.default_branch  + "/" +
               .folder.path
             readme: file://README.md
+          relations:
+            repository: .repo.name
+  - kind: repository
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"github_repository"'
+          properties:
+            url: .html_url
+            readme: file://README.md
+            defaultBranch: .default_branch
+            description: .description
+            homePage: .homepage
+            createdAt: .created_at
+            private: .private
