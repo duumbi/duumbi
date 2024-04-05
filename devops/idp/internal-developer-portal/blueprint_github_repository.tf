@@ -22,7 +22,7 @@ resource "port_blueprint" "github_repository" {
         required = true
       }
       "description" = {
-        title     = "Default branch"
+        title     = "Description"
         icon      = "BlankPage"
         maxLength = 100
       }
