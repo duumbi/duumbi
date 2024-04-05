@@ -18,7 +18,7 @@ data "azurerm_subscription" "current" {
 #
 # https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application
 resource "azuread_application" "tfc_application" {
-  display_name = "dumbi-tfc-app"
+  display_name = "${lower(var.tfc_organization_name)}-tfc-app"
 }
 
 # Creates a service principal associated with the previously created
