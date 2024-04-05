@@ -12,13 +12,37 @@ resource "port_blueprint" "github_repository" {
         format = "markdown"
       }
       "url" = {
-        title  = "Repository URL"
-        format = "url"
-        icon   = "url"
+        title    = "Repository URL"
+        format   = "url"
+        icon     = "url"
+        required = true
       }
       "defaultBranch" = {
-        title = "Default branch"
+        title    = "Default branch"
+        required = true
+      }
+      "description" = {
+        title     = "Default branch"
+        icon      = "BlankPage"
+        maxLength = 100
+      }
+      "homePage" = {
+        title  = "Homepage"
+        format = "url"
+        icon   = "Link"
+      }
+      "createdAt" = {
+        title  = "Created At"
+        format = "date-time"
       }
     }
+
+    boolean_props = {
+      "private" = {
+        title    = "Private"
+        required = true
+      }
+    }
+
   }
 }
