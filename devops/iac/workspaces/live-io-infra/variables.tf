@@ -39,4 +39,8 @@ variable "location_base" {
 variable "tags_base" {
   type        = map(string)
   description = "If specified, will set the default tags for all resources deployed by this module where supported."
+
+  default = {
+    managed_by = "Terraform"
+  }
 }
