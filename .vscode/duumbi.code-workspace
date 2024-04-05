@@ -11,6 +11,10 @@
 		{
 			"name": "DevOps - Internal Developer Portal",
 			"path": "../devops/idp"
+		},
+		{
+			"name": "DevOps - Infrastructure as code",
+			"path": "../devops/iac"
 		}
 	],
 	"settings": {
