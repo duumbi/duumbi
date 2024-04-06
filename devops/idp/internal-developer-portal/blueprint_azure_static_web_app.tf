@@ -29,6 +29,7 @@ resource "port_blueprint" "azure_static_web_app" {
       title       = "Default url"
       type        = "string"
       format      = "url"
+      icon        = "Link"
       calculation = "'https://' + .properties.defaultHostName"
     }
   }
