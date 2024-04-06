@@ -11,7 +11,7 @@ resource "port_blueprint" "azure_static_web_app" {
         required = true
       }
       "defaultHostName" = {
-        title    = "Default Host Name"
+        title    = "Default host name"
         required = true
       }
       "resourceGroupName" = {
@@ -19,17 +19,16 @@ resource "port_blueprint" "azure_static_web_app" {
         required = true
       }
       "skuTier" = {
-        title = "Specifies the SKU tier of the Static Web App"
+        title = "SKU tier"
       }
     }
+  }
 
-    calculationProperties = {
-      "defaultUrl" : {
-        title       = "Default url"
-        type        = "string"
-        format      = "url"
-        calculation = "'https://' + .properties.defaultHostName"
-      }
-    }
+  calculation_properties = {
+    identifier  = "defaultUrl"
+    title       = "Default url"
+    type        = "string"
+    format      = "url"
+    calculation = "'https://' + .properties.defaultHostName"
   }
 }
