@@ -25,10 +25,11 @@ resource "port_blueprint" "azure_static_web_app" {
   }
 
   calculation_properties = {
-    identifier  = "defaultUrl"
-    title       = "Default url"
-    type        = "string"
-    format      = "url"
-    calculation = "'https://' + .properties.defaultHostName"
+    "defaultUrl" = {
+      title       = "Default url"
+      type        = "string"
+      format      = "url"
+      calculation = "'https://' + .properties.defaultHostName"
+    }
   }
 }
