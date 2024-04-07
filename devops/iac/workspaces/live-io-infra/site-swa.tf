@@ -20,4 +20,9 @@ resource "port_entity" "duumbi_live_io_site_swa_entity" {
       "skuTier"           = azurerm_static_web_app.duumbi_live_io_site_swa.sku_tier
     }
   }
+  relations = {
+    single_relations = {
+      "environment" = var.environment
+    }
+  }
 }
