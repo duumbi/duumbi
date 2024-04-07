@@ -33,4 +33,13 @@ resource "port_blueprint" "azure_static_web_app" {
       calculation = "'https://' + .properties.defaultHostName"
     }
   }
+
+  relations = {
+    "environment" = {
+      title    = "Environment"
+      required = false
+      target   = port_blueprint.environment.identifier
+      many     = false
+    }
+  }
 }
