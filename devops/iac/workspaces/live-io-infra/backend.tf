@@ -8,4 +8,11 @@ terraform {
       name = "live-io-infra"
     }
   }
+
+  required_providers {
+    port = {
+      source  = "port-labs/port-labs"
+      version = ">= 1.10.6"
+    }
+  }
 }
