@@ -1,0 +1,54 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Europe/Budapest"
+    labels:
+      - "github_actions"
+      - "dependencies"
+  # Enable version updates for IDP terraform
+  - package-ecosystem: "terraform"
+    directory: "devops/idp/internal-developer-portal"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Europe/Budapest"
+    labels:
+      - "terraform"
+      - "dependencies"
+  # Enable version updates for IAC terraform (live-io-infra)
+  - package-ecosystem: "terraform"
+    directory: "/devops/iac/workspaces/live-io-infra"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Europe/Budapest"
+    labels:
+      - "terraform"
+      - "dependencies"
+  # Enable version updates for web-application
+  - package-ecosystem: "npm"
+    directory: /applications/site-web-application
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Europe/Budapest"
+    labels:
+      - "npm"
+      - "dependencies"
+    groups:
+      npm:
+        patterns:
+          - '*'
