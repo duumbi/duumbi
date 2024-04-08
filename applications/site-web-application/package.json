@@ -13,7 +13,6 @@
   "scripts": {
     "clean": "rimraf dist/",
     "copy-files": "copyfiles *.html img/* css/styles.css dist/",
-    "tt": "tailwindcss --help",
     "css": "tailwindcss -i ./css/tailwind.css -o ./css/styles.css",
     "dev:css": "tailwindcss -i ./css/tailwind.css -o ./css/styles.css --watch",
     "build:css": "tailwindcss -i ./css/tailwind.css -o ./css/styles.css --minify",

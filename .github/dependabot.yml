@@ -28,7 +28,7 @@ updates:
       - "dependencies"
   # Enable version updates for IAC terraform (live-io-infra)
   - package-ecosystem: "terraform"
-    directory: "/devops/iac/workspaces/live-io-infra"
+    directory: "/devops/iac/workspaces/io-infra"
     schedule:
       interval: "weekly"
       day: "monday"
