@@ -1,4 +1,4 @@
-resource "azurerm_static_web_app" "duumbi_live_io_site_swa" {
+/* resource "azurerm_static_web_app" "duumbi_live_io_site_swa" {
   name                = local.site_swa_name
   location            = var.location_base.name
   resource_group_name = azurerm_resource_group.duumbi_live_io_rg.name
@@ -26,3 +26,4 @@ resource "port_entity" "duumbi_live_io_site_swa_entity" {
     }
   }
 }
+ */

@@ -14,5 +14,10 @@ terraform {
       source  = "port-labs/port-labs"
       version = ">= 1.10.6"
     }
+
+    doppler = {
+      source  = "DopplerHQ/doppler"
+      version = "1.7.0"
+    }
   }
 }

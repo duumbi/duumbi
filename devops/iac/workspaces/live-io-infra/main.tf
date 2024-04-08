@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "duumbi_live_io_rg" {
   tags     = local.tags
 }
 
-resource "port_entity" "duumbi_live_io_environment_entity" {
+/* resource "port_entity" "duumbi_live_io_environment_entity" {
   identifier = var.environment
   title      = title(var.environment)
   blueprint  = "environment"
@@ -13,4 +13,4 @@ resource "port_entity" "duumbi_live_io_environment_entity" {
       "name" = var.environment
     }
   }
-}
+} */
