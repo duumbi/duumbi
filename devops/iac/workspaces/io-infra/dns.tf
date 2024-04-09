@@ -51,7 +51,7 @@ resource "azurerm_dns_txt_record" "duumbi_io" {
   }
 }
 
-resource "azurerm_dns_cname_record" "duumbi_io" {
+/* resource "azurerm_dns_cname_record" "duumbi_io" {
   count = var.environment == "live" ? 1 : 0
 
   name                = "www"
@@ -60,4 +60,4 @@ resource "azurerm_dns_cname_record" "duumbi_io" {
   ttl                 = 300
   record              = azurerm_static_web_app.site_swa.default_host_name
   tags                = local.tags
-}
+} */
