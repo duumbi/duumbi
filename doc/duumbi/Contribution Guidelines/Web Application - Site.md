@@ -47,3 +47,6 @@ Run the command to build a new site, it creates folder named `public` and genera
 ## Deployment
 
 Make a pull request to the main branch, which will initiate the Azure Static Web App integration process.
+
+https://gray-plant-0f013cd03.5.azurestaticapps.net/
+https://gray-plant-0f013cd03-1.westeurope.5.azurestaticapps.net/
