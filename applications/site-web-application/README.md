@@ -5,5 +5,4 @@ Official duumbi.io web site.
 ![tailwind](https://img.shields.io/badge/Tailwind-3.4.3-blue)
 
 ## Documentation
- - Installation
  - [Contribution Guidelines](https://docs.duumbi.io/contributions/)
