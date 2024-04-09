@@ -1,7 +1,7 @@
 resource "azurerm_dns_zone" "duumbi_io" {
   count = var.environment == "live" ? 1 : 0
 
-  name                = "duumbi.io"
+  name                = local.zone_name
   resource_group_name = azurerm_resource_group.main_rg.name
   tags                = local.tags
 }
@@ -10,7 +10,7 @@ resource "azurerm_dns_a_record" "duumbi_io" {
   count = var.environment == "live" ? 1 : 0
 
   name                = "@"
-  zone_name           = azurerm_dns_zone.duumbi_io.name
+  zone_name           = local.zone_name
   resource_group_name = azurerm_resource_group.main_rg.name
   ttl                 = 300
   records             = ["20.8.24.149"]
@@ -21,7 +21,7 @@ resource "azurerm_dns_mx_record" "duumbi_io" {
   count = var.environment == "live" ? 1 : 0
 
   name                = "@"
-  zone_name           = azurerm_dns_zone.duumbi_io.name
+  zone_name           = local.zone_name
   resource_group_name = azurerm_resource_group.main_rg.name
   ttl                 = 1800
   record {
@@ -39,7 +39,7 @@ resource "azurerm_dns_txt_record" "duumbi_io" {
   count = var.environment == "live" ? 1 : 0
 
   name                = "@"
-  zone_name           = azurerm_dns_zone.duumbi_io.name
+  zone_name           = local.zone_name
   resource_group_name = azurerm_resource_group.main_rg.name
   ttl                 = 1800
 
@@ -55,7 +55,7 @@ resource "azurerm_dns_cname_record" "duumbi_io" {
   count = var.environment == "live" ? 1 : 0
 
   name                = "www"
-  zone_name           = azurerm_dns_zone.duumbi_io.name
+  zone_name           = local.zone_name
   resource_group_name = azurerm_resource_group.main_rg.name
   ttl                 = 300
   record              = azurerm_static_web_app.site_swa.default_host_name
