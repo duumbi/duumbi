@@ -7,14 +7,14 @@ on:
       - main
     paths:
       - applications/site-web-application/**
-      - .github/workflows/site-web-application.yml
+      - .github/workflows/azure-static-web-apps-gray-plant-0f013cd03.yml
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
     paths:
       - applications/site-web-application/**
-      - .github/workflows/site-web-application.yml
+      - .github/workflows/azure-static-web-apps-gray-plant-0f013cd03.yml
 
 jobs:
   build_and_deploy_job:
