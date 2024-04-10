@@ -58,3 +58,23 @@ variable "port_secret" {
   sensitive   = true
   description = "Port Secret. Get it from port UI"
 }
+
+# DOPPLER ---------------------------------------------------------------------
+
+variable "dns_azure_duumbi_txt_record" {
+  type        = string
+  sensitive   = true
+  description = "Azure DNS TXT record for duumbi.io"
+}
+
+variable "dns_github_txt_record" {
+  type        = string
+  sensitive   = true
+  description = "value for the DNS TXT record for the GitHub challenge"
+}
+
+variable "dns_privateemail_dkim_txt_record" {
+  type        = string
+  sensitive   = true
+  description = "value for the DNS TXT record for the privateemail DKIM key"
+}
