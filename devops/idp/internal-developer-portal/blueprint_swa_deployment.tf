@@ -14,6 +14,11 @@ resource "port_blueprint" "swa_deployment" {
       "commitSha" = {
         title = "Commit SHA"
       }
+      "buildAndDeployDate" = {
+        title    = "Build and Deploy datetime"
+        format   = "date-time"
+        required = true
+      }
     }
   }
 
