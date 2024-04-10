@@ -60,6 +60,23 @@ variable "port_secret" {
 }
 
 # DOPPLER ---------------------------------------------------------------------
+variable "doppler_config" {
+  type        = string
+  sensitive   = true
+  description = "value for the DOPPLER_CONFIG environment variable"
+}
+
+variable "doppler_environment" {
+  type        = string
+  sensitive   = true
+  description = "value for the DOPPLER_ENV environment variable"
+}
+
+variable "doppler_project" {
+  type        = string
+  sensitive   = true
+  description = "value for the DOPPLER_PROJECT environment variable"
+}
 
 variable "dns_azure_duumbi_txt_record" {
   type        = string
