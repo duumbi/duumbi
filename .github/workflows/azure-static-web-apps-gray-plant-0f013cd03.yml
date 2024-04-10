@@ -21,10 +21,19 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
+
+    outputs:
+      current_date: ${{ steps.date.outputs.current_date }}
+
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
+
+      - name: Set current date as env variable
+        id: date
+        run: echo "current_date=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_OUTPUT
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -52,3 +61,37 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_SITE_SWA_API_TOKEN }}
           action: "close"
           app_location: "/applications/site-web-application"
+
+  report-deployment:
+    if: github.event_name == 'push'
+    name: Report new Docker Image Entity
+    needs: build_and_deploy_job
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Set short sha
+        id: commit
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Report new deployment
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: UPSERT
+          identifier: "site-web-application:${{ steps.commit.outputs.sha_short }}"
+          title: SWA Deployment
+          blueprint: swa_deployment
+          properties: |-
+            {
+              "buildAndDeployDate": "${{ needs.build_and_deploy_job.outputs.current_date }}.000Z",
+              "version": "${{ steps.commit.outputs.sha_short }}",
+              "commitSha": "${{ github.sha }}"
+            }
+          relations: |-
+            {
+                "swa": "duumbi-io-live-we-site-swa",
+                "application": "site-web-application"
+            }
