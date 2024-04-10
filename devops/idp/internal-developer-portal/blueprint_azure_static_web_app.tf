@@ -14,6 +14,9 @@ resource "port_blueprint" "azure_static_web_app" {
         title    = "Default host name"
         required = true
       }
+      "defaultDomain" = {
+        title = "Default domain name"
+      }
       "resourceGroupName" = {
         title    = "Resource Groupe"
         required = true
@@ -31,6 +34,13 @@ resource "port_blueprint" "azure_static_web_app" {
       format      = "url"
       icon        = "Link"
       calculation = "'https://' + .properties.defaultHostName"
+    }
+    "Url" = {
+      title       = "Url"
+      type        = "string"
+      format      = "url"
+      icon        = "Link"
+      calculation = "'https://' + .properties.defaultDomain"
     }
   }
 
