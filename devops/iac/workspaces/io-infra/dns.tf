@@ -62,6 +62,17 @@ resource "azurerm_dns_cname_record" "www_duumbi_io" {
   tags                = local.tags
 }
 
+resource "azurerm_dns_cname_record" "status_duumbi_io" {
+  count = var.environment == "live" ? 1 : 0
+
+  name                = "status"
+  zone_name           = local.zone_name
+  resource_group_name = azurerm_resource_group.main_rg.name
+  ttl                 = 300
+  record              = "statuspage.betteruptime.com"
+  tags                = local.tags
+}
+
 resource "azurerm_dns_txt_record" "default_domainkey_duumbi_io" {
   count = var.environment == "live" ? 1 : 0
 
