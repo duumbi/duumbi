@@ -24,11 +24,16 @@ jobs:
 
     outputs:
       current_date: ${{ steps.date.outputs.current_date }}
+      sha_short: ${{ steps.commit.outputs.sha_short }}
 
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
+
+      - name: Set short sha
+        id: commit
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Set current date as env variable
         id: date
@@ -64,30 +69,26 @@ jobs:
 
   report-deployment:
     if: github.event_name == 'push'
-    name: Report new Docker Image Entity
+    name: Report new SWA Entity
     needs: build_and_deploy_job
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
     steps:
-      - name: Set short sha
-        id: commit
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
-      - name: Report new deployment
+      - name: Report a new SWA deployment
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          identifier: "site-web-application:${{ steps.commit.outputs.sha_short }}"
+          identifier: "site-web-application:${{ needs.build_and_deploy_job.outputs.sha_short }}"
           title: SWA Deployment
           blueprint: swa_deployment
           properties: |-
             {
               "buildAndDeployDate": "${{ needs.build_and_deploy_job.outputs.current_date }}.000Z",
-              "version": "${{ steps.commit.outputs.sha_short }}",
+              "version": "${{ needs.build_and_deploy_job.outputs.sha_short }}",
               "commitSha": "${{ github.sha }}"
             }
           relations: |-
