@@ -12,7 +12,7 @@
   "homepage": "https://duumbi.io",
   "scripts": {
     "clean": "rimraf dist/",
-    "copy-files": "copyfiles *.html img/* css/styles.css dist/",
+    "copy-files": "copyfiles *.html img/* js/* css/styles.css dist/",
     "css": "tailwindcss -i ./css/tailwind.css -o ./css/styles.css",
     "dev:css": "tailwindcss -i ./css/tailwind.css -o ./css/styles.css --watch",
     "build:css": "tailwindcss -i ./css/tailwind.css -o ./css/styles.css --minify",
