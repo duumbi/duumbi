@@ -8,15 +8,15 @@ NREUM.init = {
 NREUM.loader_config = {
   accountID: "4417619",
   trustKey: "4417619",
-  agentID: "538585741",
+  agentID: "538585756",
   licenseKey: "NRJS-b9850b93fc86510ec34",
-  applicationID: "538585741",
+  applicationID: "538585756",
 };
 NREUM.info = {
   beacon: "bam.eu01.nr-data.net",
   errorBeacon: "bam.eu01.nr-data.net",
   licenseKey: "NRJS-b9850b93fc86510ec34",
-  applicationID: "538585741",
+  applicationID: "538585756",
   sa: 1,
 }; /*! For license information please see nr-loader-spa-1.255.0.min.js.LICENSE.txt */
 (() => {
