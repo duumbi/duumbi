@@ -8,6 +8,34 @@ resource "azurerm_static_web_app" "site_swa" {
   app_settings        = {}
 }
 
+import {
+  id = "1908344"
+  to = betteruptime_monitor.site_monitor
+}
+
+resource "betteruptime_monitor" "site_monitor" {
+  monitor_type         = "status"
+  url                  = "https://${local.zone_name}"
+  call                 = false
+  email                = true
+  push                 = false
+  sms                  = false
+  check_frequency      = 1800
+  follow_redirects     = true
+  http_method          = "get"
+  maintenance_timezone = "UTC"
+  maintenance_days     = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+  paused               = false
+  pronounceable_name   = local.zone_name
+  recovery_period      = 3600
+  regions              = ["us", "eu", "as", "au"]
+  playwright_script    = "const { test, expect } = require('@playwright/test');\r\n\r\ntest('has title', async ({ page }) => {\r\n  await page.goto('https://betterstack.com/')\r\n  await expect(page).toHaveTitle(/Better Stack/)\r\n});\r\n"
+  remember_cookies     = true
+  request_timeout      = 30
+  ssl_expiration       = 7
+  verify_ssl           = true
+}
+
 resource "port_entity" "site_swa_entity" {
   identifier = local.site_swa_name
   title      = "Static Web App - ${local.zone_name}"

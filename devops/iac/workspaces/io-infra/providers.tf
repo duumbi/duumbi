@@ -10,5 +10,5 @@ provider "port" {
 provider "doppler" {
 }
 
-provider "better-uptime" {
+provider "betteruptime" {
 }
