@@ -42,6 +42,13 @@ resource "port_blueprint" "azure_static_web_app" {
       icon        = "Link"
       calculation = "'https://' + .properties.defaultDomain"
     }
+    "statusUrl" = {
+      title       = "Status Url"
+      type        = "string"
+      format      = "url"
+      icon        = "Link"
+      calculation = "'https://status.' + .properties.defaultDomain"
+    }
   }
 
   relations = {
