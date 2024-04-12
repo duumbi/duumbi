@@ -9,3 +9,6 @@ provider "port" {
 
 provider "doppler" {
 }
+
+provider "better-uptime" {
+}

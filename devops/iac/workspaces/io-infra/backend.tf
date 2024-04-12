@@ -19,5 +19,10 @@ terraform {
       source  = "DopplerHQ/doppler"
       version = "1.7.0"
     }
+
+    better-uptime = {
+      source  = "BetterStackHQ/better-uptime"
+      version = "0.8.0"
+    }
   }
 }
