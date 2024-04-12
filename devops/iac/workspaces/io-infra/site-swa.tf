@@ -8,11 +8,6 @@ resource "azurerm_static_web_app" "site_swa" {
   app_settings        = {}
 }
 
-import {
-  id = "1908344"
-  to = betteruptime_monitor.site_monitor
-}
-
 resource "betteruptime_monitor" "site_monitor" {
   monitor_type         = "status"
   url                  = "https://${local.zone_name}"
