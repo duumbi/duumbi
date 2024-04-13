@@ -41,10 +41,8 @@ resource "port_blueprint" "uptime_status_page" {
         required = true
       }
 
-      "statusUrl" = {
-        title    = "Status URL"
-        format   = "url"
-        icon     = "Link"
+      "domain" = {
+        title    = "Domain"
         required = true
       }
 
@@ -52,6 +50,18 @@ resource "port_blueprint" "uptime_status_page" {
         title    = "Subdomain"
         required = true
       }
+    }
+  }
+
+
+
+  calculation_properties = {
+    "statusUrl" = {
+      title       = "Status Url"
+      type        = "string"
+      format      = "url"
+      icon        = "Link"
+      calculation = "'https://' + .properties.domain"
     }
   }
 
