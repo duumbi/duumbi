@@ -73,6 +73,21 @@ resource "port_entity" "site_swa_entity" {
   relations = {
     single_relations = {
       "environment" = var.environment
+      "monitor"     = betteruptime_monitor.site_monitor.id
     }
   }
+}
+
+resource "port_entity" "site_monitor" {
+  identifier = betteruptime_monitor.site_monitor.id
+  blueprint  = data.terraform_remote_state.idp.outputs.port_uptime_monitor_identifier
+  title      = betteruptime_monitor.site_monitor.pronounceable_name
+
+  properties = {
+    "string_props" = {
+      "monitorType" = betteruptime_monitor.site_monitor.monitor_type
+      "url"         = betteruptime_monitor.site_monitor.url
+    }
+  }
+
 }
