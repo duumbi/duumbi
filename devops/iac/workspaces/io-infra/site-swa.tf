@@ -94,7 +94,7 @@ resource "port_entity" "site_monitor" {
 resource "port_entity" "site_status_page" {
   identifier = betteruptime_status_page.site_status_page.id
   blueprint  = data.terraform_remote_state.idp.outputs.port_uptime_status_page_identifier
-  title      = betteruptime_status_page.site_status_page.subdomain
+  title      = betteruptime_status_page.site_status_page.custom_domain
 
   properties = {
     "string_props" = {
