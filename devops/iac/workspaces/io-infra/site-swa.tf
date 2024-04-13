@@ -31,6 +31,29 @@ resource "betteruptime_monitor" "site_monitor" {
   verify_ssl           = true
 }
 
+import {
+  id = "184921"
+  to = betteruptime_status_page.site_status_page
+}
+
+resource "betteruptime_status_page" "site_status_page" {
+  announcement_embed_visible = true
+  automatic_reports          = false
+  company_name               = title(var.organization)
+  company_url                = "https://${local.zone_name}"
+  custom_domain              = "status.${local.zone_name}"
+  design                     = "v2"
+  hide_from_search_engines   = false
+  history                    = 90
+  layout                     = "vertical"
+  min_incident_length        = 0
+  password_enabled           = false
+  subdomain                  = var.organization
+  subscribable               = false
+  theme                      = "dark"
+  timezone                   = "Budapest"
+}
+
 resource "port_entity" "site_swa_entity" {
   identifier = local.site_swa_name
   title      = "Static Web App - ${local.zone_name}"
