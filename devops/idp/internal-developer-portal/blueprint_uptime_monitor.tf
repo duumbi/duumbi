@@ -49,7 +49,7 @@ resource "port_blueprint" "uptime_status_page" {
   }
 
   relations = {
-    "repository" = {
+    "monitor" = {
       title    = "Monitor"
       required = false
       target   = port_blueprint.uptime_monitor.identifier

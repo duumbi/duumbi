@@ -31,11 +31,6 @@ resource "betteruptime_monitor" "site_monitor" {
   verify_ssl           = true
 }
 
-import {
-  id = "184921/8403580"
-  to = betteruptime_status_page_resource.site_status_page_site
-}
-
 resource "betteruptime_status_page" "site_status_page" {
   announcement_embed_visible = true
   automatic_reports          = false

@@ -42,13 +42,6 @@ resource "port_blueprint" "azure_static_web_app" {
       icon        = "Link"
       calculation = "'https://' + .properties.defaultDomain"
     }
-    "statusUrl" = {
-      title       = "Status Url"
-      type        = "string"
-      format      = "url"
-      icon        = "Link"
-      calculation = "'https://status.' + .properties.defaultDomain"
-    }
   }
 
   relations = {
@@ -56,6 +49,12 @@ resource "port_blueprint" "azure_static_web_app" {
       title    = "Environment"
       required = false
       target   = port_blueprint.environment.identifier
+      many     = false
+    }
+    "monitor" = {
+      title    = "Monitor"
+      required = false
+      target   = port_blueprint.uptime_monitor.identifier
       many     = false
     }
   }
