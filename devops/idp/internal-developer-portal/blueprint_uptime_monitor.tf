@@ -41,6 +41,13 @@ resource "port_blueprint" "uptime_status_page" {
         required = true
       }
 
+      "statusUrl" = {
+        title    = "Status URL"
+        format   = "url"
+        icon     = "Link"
+        required = true
+      }
+
       "subdomain" = {
         title    = "Subdomain"
         required = true
