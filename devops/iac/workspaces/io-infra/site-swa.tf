@@ -89,5 +89,25 @@ resource "port_entity" "site_monitor" {
       "url"         = betteruptime_monitor.site_monitor.url
     }
   }
+}
 
+resource "port_entity" "site_status_page" {
+  identifier = betteruptime_status_page.site_status_page.id
+  blueprint  = data.terraform_remote_state.idp.outputs.port_uptime_status_page_identifier
+  title      = betteruptime_status_page.site_status_page.subdomain
+
+  properties = {
+    "string_props" = {
+      "companyName" = betteruptime_status_page.site_status_page.company_name
+      "companyUrl"  = betteruptime_status_page.site_status_page.company_url
+      "domain"      = betteruptime_status_page.site_status_page.custom_domain
+      "subdomain"   = betteruptime_status_page.site_status_page.subdomain
+    }
+  }
+
+  relations = {
+    single_relations = {
+      "monitor" = betteruptime_monitor.site_monitor.id
+    }
+  }
 }
