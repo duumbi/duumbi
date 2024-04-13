@@ -29,12 +29,12 @@ resource "port_blueprint" "uptime_status_page" {
 
   properties = {
     string_props = {
-      "company_name" = {
+      "companyName" = {
         title    = "Company Name"
         required = true
       }
 
-      "company_url" = {
+      "companyUrl" = {
         title    = "Company URL"
         format   = "url"
         icon     = "Link"
