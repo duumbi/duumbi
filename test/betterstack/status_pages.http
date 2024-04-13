@@ -1,0 +1,10 @@
+### List all existing status pages
+GET https://betteruptime.com/api/v2/status-pages HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{uptimeApiToken}}
+
+### Get a single status page
+# @prompt statusPageId
+GET https://betteruptime.com/api/v2/status-pages/{{statusPageId}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{uptimeApiToken}}
