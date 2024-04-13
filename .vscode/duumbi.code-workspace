@@ -9,6 +9,10 @@
 			"path": "../applications/site-web-application"
 		},
 		{
+			"name": "Web Application - Duumbi",
+			"path": "../applications/duumbi-web-application"
+		},
+		{
 			"name": "DevOps - Internal Developer Portal",
 			"path": "../devops/idp"
 		},
