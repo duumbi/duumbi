@@ -32,8 +32,8 @@ resource "betteruptime_monitor" "site_monitor" {
 }
 
 import {
-  id = "184921"
-  to = betteruptime_status_page.site_status_page
+  id = "184921/8403580"
+  to = betteruptime_status_page_resource.site_status_page_site
 }
 
 resource "betteruptime_status_page" "site_status_page" {
@@ -52,6 +52,14 @@ resource "betteruptime_status_page" "site_status_page" {
   subscribable               = false
   theme                      = "dark"
   timezone                   = "Budapest"
+}
+
+resource "betteruptime_status_page_resource" "site_status_page_site" {
+  public_name    = local.zone_name
+  resource_type  = "Monitor"
+  widget_type    = "response_times"
+  resource_id    = betteruptime_monitor.site_monitor.id
+  status_page_id = betteruptime_status_page.site_status_page.id
 }
 
 resource "port_entity" "site_swa_entity" {
