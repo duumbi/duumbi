@@ -1,4 +1,21 @@
-import { ThemedTitleV2 } from "@refinedev/antd";
+import { useLogin } from "@refinedev/core";
+import { useAuth0 } from "@auth0/auth0-react";
+
+export const Login: React.FC = () => {
+  const { loginWithRedirect } = useAuth0();
+
+  const { mutate: login } = useLogin();
+  login({ redirectPath: loginWithRedirect() })
+
+  return (
+    <div>...</div>
+  );
+}
+
+
+
+
+/* import { ThemedTitleV2 } from "@refinedev/antd";
 import { Button, Layout, Space, Typography } from "antd";
 
 import { useAuth0 } from "@auth0/auth0-react";
@@ -43,3 +60,4 @@ export const Login: React.FC = () => {
     </Layout>
   );
 };
+ */

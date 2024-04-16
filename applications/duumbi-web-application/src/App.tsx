@@ -1,5 +1,6 @@
 import {
   AuthBindings,
+  Authenticated,
   GitHubBanner,
   Refine,
   WelcomePage,
@@ -12,14 +13,18 @@ import "@refinedev/antd/dist/reset.css";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import routerBindings, {
+  CatchAllNavigate,
   DocumentTitleHandler,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
-import dataProvider from "@refinedev/simple-rest";
+//import dataProvider from "@refinedev/simple-rest";
+import { dataProvider, liveProvider } from "./providers";
+import { Home, Login } from "./pages";
 import { App as AntdApp } from "antd";
 import axios from "axios";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ColorModeContextProvider } from "./contexts/color-mode";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { Layout } from "./components/layout";
+//import { LoginPage } from "./pages";
 
 function App() {
   const { isLoading, user, logout, getIdTokenClaims } = useAuth0();
@@ -88,34 +93,46 @@ function App() {
 
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <RefineKbarProvider>
-        <ColorModeContextProvider>
-          <AntdApp>
-            <DevtoolsProvider>
-              <Refine
-                dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
-                notificationProvider={useNotificationProvider}
-                routerProvider={routerBindings}
-                authProvider={authProvider}
-                options={{
-                  syncWithLocation: true,
-                  warnWhenUnsavedChanges: true,
-                  useNewQueryKeys: true,
-                  projectId: "AXavv9-iQs941-vBsGfZ",
-                }}
-              >
-                <Routes>
-                  <Route index element={<WelcomePage />} />
-                </Routes>
-                <RefineKbar />
-                <UnsavedChangesNotifier />
-                <DocumentTitleHandler />
-              </Refine>
-              <DevtoolsPanel />
-            </DevtoolsProvider>
-          </AntdApp>
-        </ColorModeContextProvider>
+        <AntdApp>
+          <DevtoolsProvider>
+            <Refine
+              dataProvider={dataProvider}
+              liveProvider={liveProvider}
+              notificationProvider={useNotificationProvider}
+              routerProvider={routerBindings}
+              authProvider={authProvider}
+              options={{
+                syncWithLocation: true,
+                warnWhenUnsavedChanges: true,
+                useNewQueryKeys: true,
+                projectId: "AXavv9-iQs941-vBsGfZ",
+              }}
+            >
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route
+                  element={
+                    <Authenticated
+                      key="authenticated-layout"
+                      fallback={<CatchAllNavigate to="/login" />}
+                    >
+                      <Layout>
+                        <Outlet />
+                      </Layout>
+                    </Authenticated>
+                  }
+                >
+                  <Route index element={<Home />} />
+                </Route>
+              </Routes>
+              <RefineKbar />
+              <UnsavedChangesNotifier />
+              <DocumentTitleHandler />
+            </Refine>
+            <DevtoolsPanel />
+          </DevtoolsProvider>
+        </AntdApp>
       </RefineKbarProvider>
     </BrowserRouter>
   );
