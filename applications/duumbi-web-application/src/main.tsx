@@ -12,8 +12,25 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: "#0991b1",
-              colorInfo: "#0991b1"
+              //colorPrimary: "#0991b1",
+              //colorInfo: "#0991b1"
+            },
+            components: {
+              Layout: {
+                bodyBg: "#ffffff",
+                headerBg: "#ffffff",
+                siderBg: "#f5f5f5",
+                //headerPadding: "0 20px 0 0",
+                //triggerBg: "white",
+                //triggerColor: "#22d3ee",
+
+              },
+              Menu: {
+               // itemBg: "#ffffff",
+               // itemColor: "#cffafe",
+               // itemHoverColor: "#dbceff",
+               horizontalItemSelectedColor: "#dbceff",
+              }
             },
           }}
         >
