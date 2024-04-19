@@ -29,7 +29,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                // itemBg: "#ffffff",
                // itemColor: "#cffafe",
                // itemHoverColor: "#dbceff",
-               horizontalItemSelectedColor: "#dbceff",
+               horizontalItemSelectedColor: "#9c36b5",
+               horizontalItemHoverColor: "#dbceff",
               }
             },
           }}

@@ -1,21 +1,30 @@
 import React, { useState } from "react";
 
 import "../../assets/css/styles.css";
-import { Avatar, Button, Layout, Menu, Space, Flex, Tooltip, Card } from "antd";
+import { Avatar, Breadcrumb, Button, Layout, Menu, Space, Tooltip } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
-import Sider from "antd/es/layout/Sider";
 
 import { GrHomeRounded } from "react-icons/gr";
-
-import { IoIosSettings } from "react-icons/io";
 import { MdOutlineHelpOutline } from "react-icons/md";
 import { GoDatabase } from "react-icons/go";
 import { BsCollection } from "react-icons/bs";
 import { MdOutlineSchema } from "react-icons/md";
 import { MdDataSaverOff } from "react-icons/md";
 import { LiaUserEditSolid } from "react-icons/lia";
+import { IoIosGitNetwork } from "react-icons/io";
 
 export const ApplicationLayout = ({ children }: React.PropsWithChildren) => {
+  const collectionItems = [
+    {
+      key: '1',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+          Other Item
+        </a>
+      ),
+    },
+  ];
+
   return (
     <>
       <Layout className="container">
@@ -26,6 +35,7 @@ export const ApplicationLayout = ({ children }: React.PropsWithChildren) => {
           <div className="header-menu">
             <Menu
               mode="horizontal"
+              selectable={false}
               items={[
                 {
                   key: "database",
@@ -52,36 +62,74 @@ export const ApplicationLayout = ({ children }: React.PropsWithChildren) => {
           </div>
         </Header>
         <Layout className="designer">
-          <Header className="designer-toolbar">
-            <div className="floating-toolbar">
-              <Tooltip title="Schema">
-                <Button
-                  shape="default"
-                  size="large"
-                  type="dashed"
-                  icon={<MdOutlineSchema />}
-                />
-              </Tooltip>
-              <Tooltip title="Ingest">
-                <Button
-                  shape="default"
-                  size="large"
-                  type="dashed"
-                  icon={<MdDataSaverOff />}
-                />
-              </Tooltip>
-              <Tooltip title="Content editor">
-                <Button
-                  shape="default"
-                  size="large"
-                  type="dashed"
-                  icon={<LiaUserEditSolid />}
-                />
-              </Tooltip>
+          <Content>
+            <div className="designer-workspace">
+              <div className="designer-workspace-toolbar">
+                <Tooltip title="Schema">
+                  <Button
+                    shape="default"
+                    size="large"
+                    type="dashed"
+                    icon={<MdOutlineSchema />}
+                  />
+                </Tooltip>
+                <Tooltip title="Ingest">
+                  <Button
+                    shape="default"
+                    size="large"
+                    type="dashed"
+                    icon={<MdDataSaverOff />}
+                  />
+                </Tooltip>
+                <Tooltip title="Content editor">
+                  <Button
+                    shape="default"
+                    size="large"
+                    type="dashed"
+                    icon={<LiaUserEditSolid />}
+                  />
+                </Tooltip>
+              </div>
+              <div className="designer-workspace-content">
+                <div className="designer-workspace-breadcrumb">
+                  <Breadcrumb
+                    separator=">"
+                    items={[
+                      {
+                        href: "",
+                        title: (
+                          <>
+                            <GoDatabase />
+                            <span> Database Name</span>
+                          </>
+                        ),
+                      },
+                      {
+                        href: "",
+                        title: (
+                          <>
+                            <BsCollection />
+                            <span> Collection Name</span>
+                          </>
+                        ),
+                        menu: { items: collectionItems },
+                      },
+                      {
+                        href: "",
+                        title: (
+                          <>
+                            <IoIosGitNetwork />
+                            <span> Environment Name</span>
+                          </>
+                        ),
+                      },
+                    ]}
+                  />
+                  </div>
+                {children}
+              </div>
             </div>
-          </Header>
-
-          <Content className="content">{children}</Content>
+          </Content>
         </Layout>
       </Layout>
     </>
