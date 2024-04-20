@@ -26,7 +26,7 @@ variable "tfc_workspace_name" {
   type        = map(string)
   description = "The name of the workspace that you'd like to create and connect to Azure"
   default = {
-    "duumbi-live-io-infra-federated-credential"  = "live-io-infra"
-    "duumbi-stage-io-infra-federated-credential" = "stage-io-infra"
+    "duumbi-live-io-infra-federated-credential" = "live-io-infra"
+    "duumbi-live-io-auth0-federated-credential" = "live-io-auth0"
   }
 }
