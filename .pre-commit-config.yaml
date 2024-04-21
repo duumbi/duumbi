@@ -42,7 +42,19 @@ repos:
     rev: "v4.0.0-alpha.8"
     hooks:
       - id: prettier
-        files: ^applications/.*\.(js|jsx|json|css|scss|less|html|yaml|yml)$
+        # files: ^applications/.*\.(js|jsx|json|css|scss|less|html|yaml|yml)$
+        files: '.json5$'
+        types_or:
+          - "javascript"
+          - "json"
+          - "css"
+          - "ts"
+          - "tsx"
+          - "less"
+          - "html"
+          - "yaml"
+          - "html"
+
 # SPECIFIC CONF FOR TERRAFORM MODULE REPOSITORIES
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.88.4
