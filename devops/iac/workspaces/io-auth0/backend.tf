@@ -1,5 +1,5 @@
 terraform {
-  required_version = "1.7.0"
+  required_version = "1.8.1"
 
   cloud {
     hostname     = "app.terraform.io"
@@ -13,12 +13,12 @@ terraform {
 
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.99.0"
+      version = "3.100.0"
     }
 
     port = {
       source  = "port-labs/port-labs"
-      version = "1.10.5"
+      version = "1.10.6"
     }
 
     auth0 = {
