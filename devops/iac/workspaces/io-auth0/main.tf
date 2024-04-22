@@ -15,7 +15,7 @@ resource "auth0_client" "duumbi_client" {
   callbacks                           = ["http://localhost:5173"]
   web_origins                         = ["http://localhost:5173"]
   logo_uri                            = "https://duumbi.io/img/duumbi.png"
-  grant_types                         = ["authorization_code", "implicit", "refresh_token", "client_credentials"]
+  grant_types                         = ["authorization_code", "implicit", "refresh_token"]
   allowed_origins                     = []
   client_metadata                     = {}
 
