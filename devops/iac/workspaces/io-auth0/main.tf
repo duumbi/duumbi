@@ -1,7 +1,8 @@
-# import {
-# 	id = "0U4NzxCopAr1FJwfJjNcZXzEuq0V4BKV"
-# 	to = auth0_client.duumbi_client
-# }
+import {
+  id = "duumbi-live"
+  to = auth0_tenant.duumbi
+}
+
 
 resource "auth0_client" "duumbi_client" {
   name                                = "Duumbi Web Application"
