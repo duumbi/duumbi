@@ -5,7 +5,7 @@
     ":disableDependencyDashboard"
   ],
   "enabledManagers": [
-    "npm"
+    "terraform"
   ],
   "schedule": [
     "every weekday"
