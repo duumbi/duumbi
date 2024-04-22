@@ -10,9 +10,6 @@
   "schedule": [
     "every weekday"
   ],
-  "baseBranches": [
-    "main"
-  ],
   "includePaths": [
     "devops/**"
   ],
@@ -21,7 +18,6 @@
   "prHourlyLimit": 3,
   "minimumReleaseAge": "3 days",
   "timezone": "Europe/Budapest",
-  "logFileLevel": "info",
 
   "packageRules": [
     {
