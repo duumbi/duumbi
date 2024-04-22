@@ -28,7 +28,7 @@
     },
     {
       "description": "Pin all Auth0 Terraform dependencies",
-      "groupName": "io-auth0",
+      "groupName": "io-auth",
       "paths": [
         "devops/iac/workspaces/io-auth0/**"
       ],
