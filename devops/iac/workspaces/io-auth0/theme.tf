@@ -2,7 +2,9 @@ resource "auth0_branding_theme" "duumbi" {
   display_name = "Duumbi Theme"
 
   borders {}
-  colors {}
+  colors {
+    primary_button = "#9c36b5"
+  }
   fonts {
     title {}
     subtitle {}
@@ -16,6 +18,6 @@ resource "auth0_branding_theme" "duumbi" {
     page_layout      = "right"
   }
   widget {
-    logo_url = "https://duumbi.io/img/duumbi.png"
+    logo_url = "https://duumbi.io/img/logo.png"
   }
 }
