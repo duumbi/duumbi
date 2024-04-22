@@ -29,7 +29,7 @@
         "devops/iac/workspaces/io-auth0/**"
       ],
       "updateTypes": ["minor", "patch"],
-      "appendLabels": ["terraform", "iac", "auth0"]
+      "labels": ["dependencies", "renovate", "terraform", "iac", "auth0"]
     }
   ]
 }
