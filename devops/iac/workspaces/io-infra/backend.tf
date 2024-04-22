@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.8.0"
+  required_version = "1.8.0"
 
   cloud {
     hostname     = "app.terraform.io"
@@ -12,7 +12,7 @@ terraform {
   required_providers {
     port = {
       source  = "port-labs/port-labs"
-      version = ">= 1.10.4"
+      version = "1.10.4"
     }
 
     doppler = {
