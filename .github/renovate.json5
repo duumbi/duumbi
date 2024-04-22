@@ -11,7 +11,7 @@
     "every weekday"
   ],
   "includePaths": [
-    "devops/**"
+    "devops/iac/workspaces/io-auth0/**"
   ],
   "groupName": "terraform",
   "labels": ["dependencies", "renovate"],
