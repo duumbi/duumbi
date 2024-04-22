@@ -18,7 +18,7 @@ terraform {
 
     port = {
       source  = "port-labs/port-labs"
-      version = ">= 1.10.6"
+      version = "1.10.6"
     }
 
     auth0 = {

@@ -1,17 +1,38 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:best-practices",
-    "schedule:weekly"
+    "config:base",
+    ":disableDependencyDashboard"
   ],
+  "enabledManagers": [
+    "npm"
+  ],
+  "schedule": [
+    "every weekday"
+  ],
+  "baseBranches": [
+    "main"
+  ],
+  "includePaths": [
+    "devops/**"
+  ],
+  "groupName": "terraform",
   "labels": ["dependencies", "renovate"],
-  "dependencyDashboard": true,
   "prHourlyLimit": 3,
   "minimumReleaseAge": "3 days",
+  "timezone": "Europe/Budapest",
+  "logFileLevel": "info",
+
   "packageRules": [
     {
       "matchPackageNames": ["node", "npm"],
       "enabled": false
+    },
+    {
+      "paths": [
+        "devops/iac/workspaces/io-auth0/**"
+      ],
+      "labels": ["terraform", "iac", "auth0"]
     }
   ]
 }
