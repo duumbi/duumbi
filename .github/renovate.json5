@@ -31,7 +31,6 @@
         "devops/iac/workspaces/io-auth0/**"
       ],
       "updateTypes": ["minor", "patch", "pin"],
-      "rangeStrategy": "pin",
       "labels": ["dependencies", "renovate", "terraform", "iac", "auth0"]
     },
     {
@@ -40,7 +39,6 @@
         "devops/iac/workspaces/io-infra/**"
       ],
       "updateTypes": ["minor", "patch", "pin"],
-      "rangeStrategy": "pin",
       "labels": ["dependencies", "renovate", "terraform", "iac"]
     }
   ]
