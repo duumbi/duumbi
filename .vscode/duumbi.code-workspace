@@ -22,7 +22,7 @@
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "Web Application - Site",
+		"liveServer.settings.multiRootWorkspaceName": "Duumbi",
 	},
 	"launch": {
 		"configurations": [
