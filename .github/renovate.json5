@@ -2,7 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
-    "group:monorepos",
     ":disableDependencyDashboard"
   ],
   "enabledManagers": [
@@ -33,7 +32,7 @@
         "devops/iac/workspaces/io-auth0/**"
       ],
       "updateTypes": ["minor", "patch", "pin"],
-      "labels": ["dependencies", "renovate", "terraform", "iac", "auth0"]
+      "labels": ["dependencies", "renovate", "terraform", "iac"]
     },
     {
       "description": "Pin all Infra Terraform dependencies",
