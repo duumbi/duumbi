@@ -11,7 +11,8 @@
     "every weekday"
   ],
   "includePaths": [
-    "devops/iac/workspaces/io-auth0/**"
+    "devops/iac/workspaces/io-auth0/**",
+    "devops/iac/workspaces/io-infra/**"
   ],
   "groupName": "terraform",
   "labels": ["dependencies", "renovate"],
@@ -25,11 +26,22 @@
       "enabled": false
     },
     {
+      "description": "Pin all Auth0 Terraform dependencies",
       "paths": [
         "devops/iac/workspaces/io-auth0/**"
       ],
-      "updateTypes": ["minor", "patch"],
+      "updateTypes": ["minor", "patch", "pin"],
+      "rangeStrategy": "pin",
       "labels": ["dependencies", "renovate", "terraform", "iac", "auth0"]
+    },
+    {
+      "description": "Pin all Infra Terraform dependencies",
+      "paths": [
+        "devops/iac/workspaces/io-infra/**"
+      ],
+      "updateTypes": ["minor", "patch", "pin"],
+      "rangeStrategy": "pin",
+      "labels": ["dependencies", "renovate", "terraform", "iac"]
     }
   ]
 }
