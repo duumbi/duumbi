@@ -40,7 +40,7 @@ resource "auth0_client" "duumbi_client" {
   }
 }
 
-resource "port_entity" "duumbi_client_entity" {
+resource "port_entity" "duumbi_iam_client_entity" {
   count = var.environment == "live" ? 1 : 0
 
   identifier = lauth0_client.duumbi_client.id
