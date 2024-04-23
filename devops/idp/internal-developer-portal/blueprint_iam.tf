@@ -46,6 +46,23 @@ resource "port_blueprint" "iam" {
     }
   }
 
+  mirror_properties = {
+    "environment" : {
+      "title" : "Environment",
+      "path" : "swa.environment.$identifier"
+    }
+  }
+
+  calculation_properties = {
+    "manageUrl" = {
+      title       = "Manage Url"
+      type        = "string"
+      format      = "url"
+      icon        = "Link"
+      calculation = "'https://manage.auth0.com/dashboard/eu/duumbi-' + .properties. + '/applications/environment' + .identifier + '/settings'"
+    }
+  }
+
   relations = {
     "swa" = {
       title  = "Azure Static Web App"
