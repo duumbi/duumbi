@@ -9,6 +9,8 @@ data "terraform_remote_state" "idp" {
 }
 
 data "terraform_remote_state" "infra" {
+  count = var.environment == "live" ? 1 : 0
+
   backend = "remote"
   config = {
     organization = "duumbi"

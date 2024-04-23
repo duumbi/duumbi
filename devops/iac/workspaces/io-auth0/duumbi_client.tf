@@ -55,7 +55,7 @@ resource "port_entity" "duumbi_iam_client_entity" {
   }
   relations = {
     single_relations = {
-      "swa" = data.terraform_remote_state.infra.outputs.azurerm_site_swa_name
+      "swa" = data.terraform_remote_state.infra[0].outputs.azurerm_site_swa_name
     }
   }
 }
