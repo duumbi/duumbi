@@ -43,7 +43,7 @@ resource "auth0_client" "duumbi_client" {
 resource "port_entity" "duumbi_iam_client_entity" {
   count = var.environment == "live" ? 1 : 0
 
-  identifier = lauth0_client.duumbi_client.id
+  identifier = auth0_client.duumbi_client.id
   title      = auth0_client.duumbi_client.name
   blueprint  = data.terraform_remote_state.idp.outputs.port_iam_identifier
   properties = {
