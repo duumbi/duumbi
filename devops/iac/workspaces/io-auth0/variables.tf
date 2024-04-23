@@ -23,6 +23,17 @@ variable "environment" {
   }
 }
 
+
+variable "region" {
+  type        = string
+  description = "Region name"
+
+  validation {
+    condition     = contains(["eu", "us", "au"], var.region)
+    error_message = "Valid values for var: region are (eu, us, au)"
+  }
+}
+
 variable "port_client_id" {
   type        = string
   default     = ""
@@ -35,4 +46,13 @@ variable "port_secret" {
   default     = ""
   sensitive   = true
   description = "Port Secret. Get it from port UI"
+}
+
+variable "auth0_urls" {
+  type = object({
+    callbacks      = list(string)
+    allowed_logout = list(string)
+    web_origins    = list(string)
+  })
+  description = "Values for allowed callback, logout and web origins"
 }

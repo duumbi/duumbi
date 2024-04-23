@@ -1,18 +1,21 @@
 resource "auth0_client" "duumbi_client" {
   name                                = "Duumbi Web Application"
-  description                         = "Duumbi Web Application"
+  description                         = format("Identity and Access Management for the %s Region", upper(var.region))
   app_type                            = "spa"
   custom_login_page_on                = true
   is_token_endpoint_ip_header_trusted = false
   oidc_conformant                     = true
   allowed_clients                     = []
-  allowed_logout_urls                 = ["http://localhost:5173"]
-  callbacks                           = ["http://localhost:5173"]
-  web_origins                         = ["http://localhost:5173"]
+  allowed_logout_urls                 = var.auth0_urls["allowed_logout"]
+  callbacks                           = var.auth0_urls["callbacks"]
+  web_origins                         = var.auth0_urls["web_origins"]
   logo_uri                            = "https://duumbi.io/img/duumbi.png"
   grant_types                         = ["authorization_code", "implicit", "refresh_token"]
   allowed_origins                     = []
   client_metadata                     = {}
+
+
+
 
   native_social_login {
     apple {
