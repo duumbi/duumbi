@@ -1,6 +1,6 @@
 resource "auth0_client" "duumbi_client" {
   name                                = "Duumbi Web Application"
-  description                         = format("Identity and Access Management for the %s Region", upper(var.region))
+  description                         = local.duumbi_client_desc
   app_type                            = "spa"
   custom_login_page_on                = true
   is_token_endpoint_ip_header_trusted = false

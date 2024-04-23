@@ -18,8 +18,8 @@ variable "environment" {
   description = "Environment name"
 
   validation {
-    condition     = contains(["live", "stage"], var.environment)
-    error_message = "Valid values for var: environment are (live, stage)"
+    condition     = contains(["live", "stage", "dev"], var.environment)
+    error_message = "Valid values for var: environment are (live, stage, dev)"
   }
 }
 
