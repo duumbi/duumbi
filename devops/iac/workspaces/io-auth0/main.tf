@@ -13,7 +13,7 @@ data "terraform_remote_state" "infra" {
   config = {
     organization = "duumbi"
     workspaces = {
-      tags = ["io-infra", format("env:%s", lower(var.environment))]
+      name = format("%s-%s-infra", lower(var.environment), lower(var.project))
     }
   }
 }
