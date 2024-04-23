@@ -14,9 +14,6 @@ resource "auth0_client" "duumbi_client" {
   allowed_origins                     = []
   client_metadata                     = {}
 
-
-
-
   native_social_login {
     apple {
       enabled = false
@@ -40,5 +37,25 @@ resource "auth0_client" "duumbi_client" {
     leeway                       = 0
     rotation_type                = "rotating"
     token_lifetime               = 2592000
+  }
+}
+
+resource "port_entity" "duumbi_client_entity" {
+  count = var.environment == "live" ? 1 : 0
+
+  identifier = lauth0_client.duumbi_client.id
+  title      = auth0_client.duumbi_client.name
+  blueprint  = data.terraform_remote_state.idp.outputs.port_iam_identifier
+  properties = {
+    "string_props" = {
+      "tenant"            = local.tenant
+      "applicationDomain" = local.app_domain
+      "applicationType"   = auth0_client.duumbi_client.app_type
+    }
+  }
+  relations = {
+    single_relations = {
+      "swa" = data.terraform_remote_state.infra.outputs.azurerm_site_swa_name
+    }
   }
 }
