@@ -12,4 +12,12 @@ resource "port_blueprint" "environment" {
       }
     }
   }
+
+  relations = {
+    "region" = {
+      title  = "Region"
+      target = port_blueprint.region.identifier
+      many   = false
+    }
+  }
 }
