@@ -25,14 +25,18 @@ variable "environment" {
 
 variable "location_base" {
   type = object({
-    name       = string
-    short_name = string
+    name        = string
+    short_name  = string
+    region_id   = string
+    region_name = string
   })
   description = "The Azure region in which region bound resources will be deployed. Please see: https://azure.microsoft.com/en-gb/global-infrastructure/geographies/"
 
   default = {
-    name       = "westeurope"
-    short_name = "we"
+    name        = "westeurope"
+    short_name  = "we"
+    region_id   = "eu"
+    region_name = "Europe"
   }
 }
 
