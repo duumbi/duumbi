@@ -51,6 +51,10 @@ resource "port_blueprint" "iam" {
       "title" : "Environment",
       "path" : "swa.environment.$identifier"
     }
+    "region" : {
+      "title" : "Region",
+      "path" : "swa.environment.region.$identifier"
+    }
   }
 
   calculation_properties = {
