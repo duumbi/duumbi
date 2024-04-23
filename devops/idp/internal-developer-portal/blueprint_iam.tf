@@ -11,13 +11,37 @@ resource "port_blueprint" "iam" {
         description = "Tenant name"
         required    = true
       }
-      "application_name" = {
-        title    = "Application name"
-        required = true
-      }
-      "application_domain" = {
+      "applicationDomain" = {
         title    = "Application domain"
         required = true
+      }
+      "applicationType" = {
+        title    = "ApplicationType"
+        required = true
+        enum = [
+          "native",
+          "spa",
+          "regular_web",
+          "non_interactive",
+          "sso_integration",
+          "rms",
+          "box",
+          "cloudbees",
+          "concur",
+          "dropbox",
+          "mscrm",
+          "echosign",
+          "egnyte",
+          "newrelic",
+          "office365",
+          "salesforce",
+          "sentry",
+          "sharepoint",
+          "slack",
+          "springcm",
+          "zendesk",
+          "zoom"
+        ]
       }
     }
   }
