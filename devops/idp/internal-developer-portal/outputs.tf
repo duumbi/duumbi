@@ -12,3 +12,9 @@ output "port_uptime_status_page_identifier" {
   value       = port_blueprint.uptime_status_page.identifier
   description = "identity of uptime status page"
 }
+
+
+output "port_iam_identifier" {
+  value       = port_blueprint.iam.identifier
+  description = "identity of IAM"
+}
