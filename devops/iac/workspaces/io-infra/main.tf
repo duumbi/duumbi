@@ -37,7 +37,7 @@ resource "port_entity" "environment_entity" {
 
   relations = {
     single_relations = {
-      "region" = port_entity.region_entity.id
+      "region" = port_entity.region_entity.identifier
     }
   }
 }
