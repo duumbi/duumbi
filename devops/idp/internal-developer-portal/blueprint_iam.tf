@@ -59,7 +59,7 @@ resource "port_blueprint" "iam" {
       type        = "string"
       format      = "url"
       icon        = "Link"
-      calculation = "'https://manage.auth0.com/dashboard/eu/duumbi-' + .properties. + '/applications/environment' + .identifier + '/settings'"
+      calculation = "'https://manage.auth0.com/dashboard/eu/duumbi-' + .properties.environment + '/applications/' + .identifier + '/settings'"
     }
   }
 
