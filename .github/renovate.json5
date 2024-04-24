@@ -4,7 +4,11 @@
     "config:base",
     ":disableDependencyDashboard"
   ],
-
+  "enabledManagers": [
+    "terraform",
+    "npm",
+    "github-actions"
+  ],
   "schedule": [
     "before 5am on sunday"
   ],
