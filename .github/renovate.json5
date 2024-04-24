@@ -25,6 +25,10 @@
 
   "packageRules": [
     {
+      "matchPackageNames": ["node", "npm"],
+      "enabled": false
+    },
+    {
       "description": "Update all Site Web App dependencies",
       "groupName": "site-web-application",
       "paths": [
