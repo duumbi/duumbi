@@ -21,42 +21,43 @@
   "prHourlyLimit": 3,
   "minimumReleaseAge": "3 days",
   "timezone": "Europe/Budapest",
+  "rangeStrategy": "pin",
 
   "packageRules": [
     {
-      "description": "Pin all Site Web App dependencies",
+      "description": "Update all Site Web App dependencies",
       "groupName": "site-web-application",
       "paths": [
         "applications/site-web-application/**"
       ],
-      "updateTypes": ["minor", "patch", "pin"],
+      "updateTypes": ["minor", "patch"],
       "labels": ["dependencies", "renovate", "npm"]
     },
     {
-      "description": "Pin all Duumbi Web App dependencies",
+      "description": "Update all Duumbi Web App dependencies",
       "groupName": "duumbi-web-application",
       "paths": [
         "applications/duumbi-web-application/**"
       ],
-      "updateTypes": ["minor", "patch", "pin"],
+      "updateTypes": ["minor", "patch"],
       "labels": ["dependencies", "renovate", "npm"]
     },
     {
-      "description": "Pin all Auth0 Terraform dependencies",
+      "description": "Update all Auth0 Terraform dependencies",
       "groupName": "io-auth",
       "paths": [
         "devops/iac/workspaces/io-auth0/**"
       ],
-      "updateTypes": ["minor", "patch", "pin"],
+      "updateTypes": ["minor", "patch"],
       "labels": ["dependencies", "renovate", "terraform", "iac"]
     },
     {
-      "description": "Pin all Infra Terraform dependencies",
+      "description": "Update all Infra Terraform dependencies",
       "groupName": "io-infra",
       "paths": [
         "devops/iac/workspaces/io-infra/**"
       ],
-      "updateTypes": ["minor", "patch", "pin"],
+      "updateTypes": ["minor", "patch"],
       "labels": ["dependencies", "renovate", "terraform", "iac"]
     }
   ]
