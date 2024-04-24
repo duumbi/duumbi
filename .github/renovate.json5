@@ -4,7 +4,10 @@
     "config:base",
     ":disableDependencyDashboard"
   ],
-
+  "enabledManagers": [
+    "terraform",
+    "npm"
+  ],
   "schedule": [
     "every weekday"
   ],
