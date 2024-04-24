@@ -12,6 +12,7 @@
     "before 5am on sunday"
   ],
   "includePaths": [
+    ".github/workflows/**",
     "devops/iac/workspaces/io-auth0/**",
     "devops/iac/workspaces/io-infra/**",
     "applications/site-web-application/**",
@@ -27,6 +28,16 @@
     {
       "matchPackageNames": ["node", "npm"],
       "enabled": false
+    },
+    {
+      "description": "Update all GitGub Action dependencies",
+      "groupName": "workflows",
+      "paths": [
+        ".github/workflows/**",
+      ],
+      "rangeStrategy": "bump",
+      "updateTypes": ["minor", "patch"],
+      "labels": ["dependencies", "renovate", "github_actions"]
     },
     {
       "description": "Update all Site Web App dependencies",
