@@ -4,10 +4,7 @@
     "config:base",
     ":disableDependencyDashboard"
   ],
-  "enabledManagers": [
-    "terraform",
-    "npm"
-  ],
+
   "schedule": [
     "before 5am on sunday"
   ],
@@ -35,8 +32,7 @@
       "paths": [
         ".github/workflows/**",
       ],
-      "rangeStrategy": "bump",
-      "updateTypes": ["minor", "patch"],
+      "updateTypes": ["major", "minor", "patch"],
       "labels": ["dependencies", "renovate", "github_actions"]
     },
     {
