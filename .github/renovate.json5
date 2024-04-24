@@ -4,9 +4,7 @@
     "config:base",
     ":disableDependencyDashboard"
   ],
-  "enabledManagers": [
-    "*"
-  ],
+
   "schedule": [
     "every weekday"
   ],
