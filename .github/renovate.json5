@@ -3,7 +3,7 @@
   "extends": [
     "config:base",
     ":disableDependencyDashboard",
-    "ignoreModulesAndTests"
+    ":ignoreModulesAndTests"
   ],
   "enabledManagers": [
     "terraform",
