@@ -1,0 +1,4 @@
+setup:
+  - project: duumbi-web-application
+    config: dev_personal
+    path: applications/duumbi-web-application/

@@ -5,7 +5,9 @@
     ":disableDependencyDashboard"
   ],
   "enabledManagers": [
-    "terraform"
+    "terraform",
+    "node",
+    "npm"
   ],
   "schedule": [
     "every weekday"
@@ -13,8 +15,8 @@
   "includePaths": [
     "devops/iac/workspaces/io-auth0/**",
     "devops/iac/workspaces/io-infra/**"
+    "applications/site-web-application/**"
   ],
-  "groupName": "terraform",
   "labels": ["dependencies", "renovate"],
   "prHourlyLimit": 3,
   "minimumReleaseAge": "3 days",
@@ -22,8 +24,13 @@
 
   "packageRules": [
     {
-      "matchPackageNames": ["node", "npm"],
-      "enabled": false
+      "description": "Pin all Site Web App dependencies",
+      "groupName": "site-web-application",
+      "paths": [
+        "applications/site-web-application/**"
+      ],
+      "updateTypes": ["minor", "patch", "pin"],
+      "labels": ["dependencies", "renovate", "npm"]
     },
     {
       "description": "Pin all Auth0 Terraform dependencies",
