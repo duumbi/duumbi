@@ -9,12 +9,13 @@
     "npm"
   ],
   "schedule": [
-    "every weekday"
+    "before 5am on sunday"
   ],
   "includePaths": [
     "devops/iac/workspaces/io-auth0/**",
     "devops/iac/workspaces/io-infra/**",
     "applications/site-web-application/**"
+    "applications/duumbi-web-application/**"
   ],
   "labels": ["dependencies", "renovate"],
   "prHourlyLimit": 3,
@@ -27,6 +28,15 @@
       "groupName": "site-web-application",
       "paths": [
         "applications/site-web-application/**"
+      ],
+      "updateTypes": ["minor", "patch", "pin"],
+      "labels": ["dependencies", "renovate", "npm"]
+    },
+    {
+      "description": "Pin all Duumbi Web App dependencies",
+      "groupName": "duumbi-web-application",
+      "paths": [
+        "applications/duumbi-web-application/**"
       ],
       "updateTypes": ["minor", "patch", "pin"],
       "labels": ["dependencies", "renovate", "npm"]
