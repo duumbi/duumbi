@@ -2,7 +2,8 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
-    ":disableDependencyDashboard"
+    ":disableDependencyDashboard",
+    "ignoreModulesAndTests"
   ],
   "enabledManagers": [
     "terraform",
@@ -24,6 +25,11 @@
   "minimumReleaseAge": "3 days",
   "timezone": "Europe/Budapest",
   "rangeStrategy": "pin",
+
+  "npm": {
+    "extends": [":semanticPrefixFixDepsChoreOthers"],
+    "postUpdateOptions": ["npmDedupe"]
+  },
 
   "packageRules": [
     {
