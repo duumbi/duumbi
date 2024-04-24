@@ -30,7 +30,7 @@
       "paths": [
         "applications/site-web-application/**"
       ],
-      "updateTypes": ["minor", "patch"],
+      "updateTypes": ["minor", "patch", "pin"],
       "labels": ["dependencies", "renovate", "npm"]
     },
     {
@@ -39,7 +39,7 @@
       "paths": [
         "applications/duumbi-web-application/**"
       ],
-      "updateTypes": ["minor", "patch"],
+      "updateTypes": ["minor", "patch", "pin"],
       "labels": ["dependencies", "renovate", "npm"]
     },
     {
@@ -48,7 +48,7 @@
       "paths": [
         "devops/iac/workspaces/io-auth0/**"
       ],
-      "updateTypes": ["minor", "patch"],
+      "updateTypes": ["minor", "patch", "pin"],
       "labels": ["dependencies", "renovate", "terraform", "iac"]
     },
     {
@@ -57,7 +57,7 @@
       "paths": [
         "devops/iac/workspaces/io-infra/**"
       ],
-      "updateTypes": ["minor", "patch"],
+      "updateTypes": ["minor", "patch", "pin"],
       "labels": ["dependencies", "renovate", "terraform", "iac"]
     }
   ]
