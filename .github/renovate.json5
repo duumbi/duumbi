@@ -14,7 +14,7 @@
   "includePaths": [
     "devops/iac/workspaces/io-auth0/**",
     "devops/iac/workspaces/io-infra/**",
-    "applications/site-web-application/**"
+    "applications/site-web-application/**",
     "applications/duumbi-web-application/**"
   ],
   "labels": ["dependencies", "renovate"],
