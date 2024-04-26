@@ -1,9 +1,9 @@
 import { Auth0Provider, AppState } from "@auth0/auth0-react";
-import React, { PropsWithChildren } from "react";
 import { useNavigate } from "react-router-dom";
+import { PropsWithChildren, ReactNode } from "react";
 
 interface Auth0ProviderWithNavigateProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const Auth0ProviderWithNavigate = ({
@@ -28,6 +28,7 @@ export const Auth0ProviderWithNavigate = ({
       clientId={clientId}
       authorizationParams={{
         redirect_uri: window.location.origin,
+        // scope: "read:current_user read:current_user_metadata update:current_user_metadata",
       }}
       onRedirectCallback={onRedirectCallback}
     >

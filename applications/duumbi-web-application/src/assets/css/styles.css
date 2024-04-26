@@ -57,7 +57,6 @@ body {
 }
 
 .designer-workspace-toolbar {
-  //position: local;
   top: 80px;
   left: 20px;
   width: 60px;
@@ -80,4 +79,23 @@ body {
 
 .designer-workspace-breadcrumb {
   padding-bottom: 12px;
+}
+
+.currentuser_userdata {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.currentuser_userdata-avatar {
+  padding-left: 10px;
+}
+
+.currentuser_userdata-title {
+  padding-top: 4px;
+  padding-right: 10px;
+  padding-left: 10px;
+  align-items: strecth;
+  justify-content: flex-start;
 }

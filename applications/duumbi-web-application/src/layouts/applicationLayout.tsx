@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-
-import "../../assets/css/styles.css";
-import { Avatar, Breadcrumb, Button, Layout, Menu, Space, Tooltip } from "antd";
+import "../assets/css/styles.css";
+import { Breadcrumb, Button, Layout, Menu, Space, Tooltip } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 
-import { GrHomeRounded } from "react-icons/gr";
 import { MdOutlineHelpOutline } from "react-icons/md";
 import { GoDatabase } from "react-icons/go";
 import { BsCollection } from "react-icons/bs";
@@ -12,13 +9,20 @@ import { MdOutlineSchema } from "react-icons/md";
 import { MdDataSaverOff } from "react-icons/md";
 import { LiaUserEditSolid } from "react-icons/lia";
 import { IoIosGitNetwork } from "react-icons/io";
+import { CurrentUser } from "../components/header/current_user";
 
-export const ApplicationLayout = ({ children }: React.PropsWithChildren) => {
+export const ApplicationLayout = ({
+  children,
+}: React.PropsWithChildren): JSX.Element => {
   const collectionItems = [
     {
-      key: '1',
+      key: "1",
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="http://www.alipay.com/"
+        >
           Other Item
         </a>
       ),
@@ -57,7 +61,7 @@ export const ApplicationLayout = ({ children }: React.PropsWithChildren) => {
           </div>
           <div className="header-avatar">
             <Space size={8}>
-              <Avatar icon={<GrHomeRounded />} />
+              <CurrentUser />
             </Space>
           </div>
         </Header>
@@ -125,7 +129,7 @@ export const ApplicationLayout = ({ children }: React.PropsWithChildren) => {
                       },
                     ]}
                   />
-                  </div>
+                </div>
                 {children}
               </div>
             </div>
