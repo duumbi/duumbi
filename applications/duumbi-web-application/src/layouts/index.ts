@@ -1,1 +1,2 @@
-export * from "./applicationLayout";
+import "../assets/css/styles.css";
+export * from "./application-layout";

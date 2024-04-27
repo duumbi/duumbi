@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Route, Routes } from "react-router-dom";
-import { PageLoader } from "./components/pageloader";
-import { AuthenticationGuard } from "./components/authentication-guard";
+import { PageLoader } from "./components/base/page-loader";
+import { AuthenticationGuard } from "./middleware/authentication";
 import { lazy } from "react";
 
 const Home = lazy(() => import("./pages/home"));
@@ -12,8 +12,6 @@ function App() {
 
   if (isLoading) {
     return (
-
-
       <div className="page-layout">
         <PageLoader />
       </div>

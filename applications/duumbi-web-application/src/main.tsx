@@ -4,6 +4,7 @@ import App from "./App.tsx";
 import { ConfigProvider } from "antd";
 import { BrowserRouter } from "react-router-dom";
 import { Auth0ProviderWithNavigate } from "./auth/auth0-provider-with-navigate.tsx";
+import { AppTheme } from "./constants/theme.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -28,8 +29,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                 // itemBg: "#ffffff",
                 // itemColor: "#cffafe",
                 // itemHoverColor: "#dbceff",
-                horizontalItemSelectedColor: "#9c36b5",
-                horizontalItemHoverColor: "#dbceff",
+                horizontalItemSelectedColor: AppTheme.colors.primary,
+                horizontalItemHoverColor: AppTheme.colors.primary,
               },
             },
           }}

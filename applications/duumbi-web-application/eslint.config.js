@@ -28,7 +28,6 @@ export default [
         '@stylistic/indent': ['error', 2],
         '@stylistic/spaced-comment': ['error', 'always'],
         '@stylistic/arrow-spacing': ['error'],
-
         '@stylistic/jsx-indent': ['error', 2],
         '@stylistic/jsx-closing-bracket-location': ['error', 'tag-aligned'],
         '@stylistic/jsx-pascal-case': ['error', { allowAllCaps: true }],

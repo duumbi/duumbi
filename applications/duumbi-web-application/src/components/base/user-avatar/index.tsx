@@ -1,11 +1,11 @@
 import { Avatar } from "antd";
 import type { AvatarProps } from "antd";
 
-interface CustomAvatarProps extends AvatarProps {
+interface UserAvatarProps extends AvatarProps {
   name?: string;
 }
 
-export const CustomAvatar = ({ name = "", style, ...rest }: CustomAvatarProps) => {
+export const UserAvatar = ({ name = "", style, ...rest }: UserAvatarProps) => {
   return (
     <Avatar
       alt={name}
