@@ -1,9 +1,7 @@
-import { IconType } from "react-icons";
-
 export interface ToolbarItem {
     key?: string;
     title: string;
-    icon: IconType;
+    icon: JSX.Element;
 }
 
 export interface CoreProperties {
