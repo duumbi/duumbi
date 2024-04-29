@@ -7,11 +7,9 @@ export const ToolbarButton = ({
   title,
   icon,
 }: ToolbarItem): JSX.Element => {
-  const Icon = icon;
-
   return (
     <Tooltip title={title}>
-      <Button shape="default" size="large" type="dashed" icon={<Icon />} />
+      <Button shape="default" size="large" type="dashed" icon={icon} />
     </Tooltip>
   );
 };

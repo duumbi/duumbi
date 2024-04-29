@@ -7,17 +7,17 @@ const DesignerToolbarItems: ToolbarItem[]  = [
     {
         key: "schema",
         title: "Schema",
-        icon: MdOutlineSchema,
+        icon: <MdOutlineSchema />,
     },
     {
         key: "ingest",
         title: "Ingest",
-        icon: MdDataSaverOff,
+        icon: <MdDataSaverOff />,
     },
     {
         key: "content-editor",
         title: "Content editor",
-        icon: LiaUserEditSolid,
+        icon: <LiaUserEditSolid />,
     },
 ]
 
