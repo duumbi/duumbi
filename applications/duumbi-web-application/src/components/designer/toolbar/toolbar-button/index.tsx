@@ -1,15 +1,12 @@
 import { Button, Tooltip } from "antd";
-import { IconType } from "react-icons";
+import { ToolbarItem } from "../../../../types";
 
-interface ToolbarButtonProps {
-  title: string;
-  icon: IconType;
-}
+
 
 export const ToolbarButton = ({
   title,
   icon,
-}: ToolbarButtonProps): JSX.Element => {
+}: ToolbarItem): JSX.Element => {
   const Icon = icon;
 
   return (

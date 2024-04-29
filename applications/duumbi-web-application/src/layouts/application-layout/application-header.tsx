@@ -1,12 +1,10 @@
 import { Menu, Space } from "antd";
 import { Header } from "antd/es/layout/layout";
-import { GoDatabase } from "react-icons/go";
-import { BsCollection } from "react-icons/bs";
-import { MdOutlineHelpOutline } from "react-icons/md";
 import { AvatarWithMenu } from "../../components/header";
 
 import { styled } from "styled-components";
 import { AppTheme } from "../../constants/theme";
+import { ApplicationHeaderConst } from "../../constants/header-menu";
 
 const StyledHeader = styled(Header)`
   display: flex;
@@ -47,23 +45,7 @@ export const ApplicationHeader = () => {
         <Menu
           mode="horizontal"
           selectable={false}
-          items={[
-            {
-              key: "database",
-              label: "Databased",
-              icon: <GoDatabase />,
-            },
-            {
-              key: "collection",
-              label: "Collection",
-              icon: <BsCollection />,
-            },
-            {
-              key: "help",
-              label: "Help",
-              icon: <MdOutlineHelpOutline />,
-            },
-          ]}
+          items={ ApplicationHeaderConst.menuItems }
         />
       </StyledMenu>
       <StyledAvatar>
