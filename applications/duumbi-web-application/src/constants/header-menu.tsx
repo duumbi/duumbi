@@ -2,12 +2,15 @@ import { GoDatabase } from "react-icons/go";
 import { BsCollection } from "react-icons/bs";
 import { MdOutlineHelpOutline } from "react-icons/md";
 import { MenuProps } from "antd";
+import { IoIosGitNetwork } from "react-icons/io";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
+export const MENUITEM_DATABASE = "database";
+
 const HeaderMenuItems: MenuItem[] = [
   {
-    key: "database",
+    key: MENUITEM_DATABASE,
     label: "Database",
     icon: <GoDatabase />,
   },
@@ -15,6 +18,11 @@ const HeaderMenuItems: MenuItem[] = [
     key: "collection",
     label: "Collection",
     icon: <BsCollection />,
+  },
+  {
+    key: "environment",
+    label: "Environment",
+    icon: <IoIosGitNetwork />,
   },
   {
     key: "help",

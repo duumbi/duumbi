@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <ConfigProvider
           theme={{
             token: {
-              // colorPrimary: "#0991b1",
+              colorPrimary: AppTheme.colors.primary,
               // colorInfo: "#0991b1"
             },
             components: {
@@ -31,6 +31,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                 // itemHoverColor: "#dbceff",
                 horizontalItemSelectedColor: AppTheme.colors.primary,
                 horizontalItemHoverColor: AppTheme.colors.primary,
+              },
+              Button: {
+                // primaryColor: AppTheme.colors.primary,
               },
             },
           }}

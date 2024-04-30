@@ -4,6 +4,11 @@ export const AppTheme = {
         headerBorder: "#dbceff",
         designerBackground: "#f5f5f5",
         designerToolbarBackground: "#ffffff",
+        drawerHeaderBackground: "#f5f5f5",
+        drawerHeaderBorder: "#dbceff"
+    },
+    border: {
+        drawerHeaderBorder: "1px solid #dbceff"
     }
 
 }
