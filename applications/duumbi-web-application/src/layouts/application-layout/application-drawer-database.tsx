@@ -1,39 +1,64 @@
-import { Button, Col, Drawer, Form, Input, Row, Space, Spin } from "antd";
+import { Button, Drawer, Empty, Space, Spin } from "antd";
 import { AppTheme } from "../../constants/theme";
-import { LuClipboardCopy } from "react-icons/lu";
 import React from "react";
+import { DrawerDatabaseUpdateForm, DrawerDatabaseCreateForm } from "../../components/drawer/drawer-database";
+import { ApplicationContext } from "../../context/application-context";
+import { ApplicationContextType } from "../../types";
 
 interface DrawerProps {
   drawerState: boolean;
   updateDrawer: () => void;
 }
 
+type FormType = "create" | "update";
+
+type FormDataType = {
+  title: string;
+  button: string;
+  formType: FormType;
+};
+
 export default function ApplicationDrawerDatabase({
   drawerState,
   updateDrawer,
 }: DrawerProps): JSX.Element {
-
-  const [form] = Form.useForm();
   const [loading, setLoading] = React.useState<boolean>(false);
-
-  const onFinish = (values: any) => {
-    // Make API call to save the database
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      onClosed();
-    }, 500);
-  };
+  const [closeState, setCloseState] = React.useState<boolean>(false);
+  const [formData, setFormData] = React.useState<FormDataType>({title: "Database", button: "Create new database", formType: "update"});
+  const {application} = React.useContext(ApplicationContext) as ApplicationContextType;
 
   const onClosed = () => {
-    form.resetFields();
+    setCloseState(!closeState);
+    setFormData({title: "Database", button: "Create new database", formType: "update"});
     updateDrawer();
   };
+
+  const handleFormData = (formType: FormType) => {
+    if (formType === "create") {
+      setFormData({title: "Database", button: "Create new database", formType: "update"});
+    } else {
+      setFormData({title: "New database", button: "Back", formType: "create"});
+    }
+  }
+
+  let drawerContent = <Empty />;
+
+  if (formData.formType === "create") {
+    drawerContent = ( <DrawerDatabaseCreateForm drawerCloseState={closeState} setLoading={setLoading} onClosed={onClosed} />);
+  } else if (application.database) {
+    drawerContent = (
+      <DrawerDatabaseUpdateForm
+        drawerCloseState={closeState}
+        setLoading={setLoading}
+        onClosed={onClosed}
+      />
+    );
+  }
 
   return (
     <Drawer
       open={drawerState}
-      title="Database"
+      title={formData.title}
       closable={true}
       maskClosable={true}
       width={720}
@@ -49,91 +74,13 @@ export default function ApplicationDrawerDatabase({
       }}
       extra={
         <Space>
-          <Button onClick={() => updateDrawer()} type="primary">
-            Create new database
+          <Button onClick={() => handleFormData(formData.formType)} type={formData.formType === "update" ? "primary": "default"}>
+            {formData.button}
           </Button>
         </Space>
       }
     >
-      <Spin spinning={loading}>
-
-        <Form
-          form={form}
-          autoComplete="off"
-          onFinish={onFinish}
-          layout="vertical"
-          initialValues={{
-            ["name"]: "Hello, antdee!",
-          }}
-        >
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item name={"id"} label="Database ID">
-                <Space.Compact style={{ width: "100%" }}>
-                  <Input disabled value="435MND-363" />
-                  <Button icon={<LuClipboardCopy />} />
-                </Space.Compact>
-              </Form.Item>
-            </Col>
-
-            <Col span={12}>
-              <Form.Item name={"region"} label="Database region">
-                <Space.Compact style={{ width: "100%" }}>
-                  <Input disabled value="435MND-363" />
-                </Space.Compact>
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name={"name"}
-                label="Name"
-                validateFirst={true}
-                tooltip="Name should be between 3 and 30 characters"
-                rules={[
-                  { required: true, message: "Please enter database name" },
-                  { min: 3, message: "Name should be at least 3 characters" },
-                  { max: 30, message: "Name should be at most 30 characters" },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-
-            <Col span={12}></Col>
-          </Row>
-
-          <Row gutter={16}>
-            <Col span={24}>
-              <Form.Item
-                name="description"
-                label="Description"
-                rules={[
-                  {
-                    required: false,
-                    message: "please enter url description",
-                  },
-                ]}
-              >
-                <Input.TextArea
-                  rows={4}
-                  placeholder="please enter url description"
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row gutter={16}>
-            <Col span={24}>
-              <Button htmlType="submit" type="primary">
-                Save
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-      </Spin>
+      <Spin spinning={loading}>{drawerContent}</Spin>
     </Drawer>
   );
 }

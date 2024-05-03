@@ -2,14 +2,17 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Route, Routes } from "react-router-dom";
 import { PageLoader } from "./components/base/page-loader";
 import { AuthenticationGuard } from "./middleware/authentication";
-import { lazy } from "react";
+// import { lazy } from "react";
+import Region from "./pages/region";
+import Application from "./pages/application";
+import NotFoundPage from "./pages/not-found-page";
 
-const Home = lazy(() => import("./pages/home"));
-const Profile = lazy(() => import("./pages/profile"));
+// const Application = lazy(() => import("./pages/application"));
+// const Region = lazy(() => import("./pages/region"));
+// const NotFoundPage = lazy(() => import("./pages/not-found-page"));
 
 function App() {
   const { isLoading } = useAuth0();
-
   if (isLoading) {
     return (
       <div className="page-layout">
@@ -20,11 +23,9 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<AuthenticationGuard component={Home} />} />
-      <Route
-        path="/profile"
-        element={<AuthenticationGuard component={Profile} />}
-      />
+      <Route path="/region" element={<Region />} />
+      <Route path="/" element={<AuthenticationGuard component={Application} />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
