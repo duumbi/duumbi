@@ -13,6 +13,14 @@
 			"path": "../applications/duumbi-web-application"
 		},
 		{
+			"name": "Service - Customer Service",
+			"path": "../services/customer-service"
+		},
+		{
+			"name": "Service - Duumbi Service",
+			"path": "../services/duumbi-service"
+		},
+		{
 			"name": "DevOps - Internal Developer Portal",
 			"path": "../devops/idp"
 		},

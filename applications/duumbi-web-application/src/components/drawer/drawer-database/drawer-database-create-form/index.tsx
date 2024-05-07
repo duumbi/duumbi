@@ -51,7 +51,7 @@ export const DrawerDatabaseCreateForm = ({
 
   const onFinish = (values: any) => {
     // Make API call to save the database
-    !application.database && setDatabase(values.name);
+    setDatabase({key: "bab", name: values.name});
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
