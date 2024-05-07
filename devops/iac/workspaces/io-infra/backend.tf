@@ -1,5 +1,5 @@
 terraform {
-  required_version = "1.8.1"
+  required_version = "1.8.2"
 
   cloud {
     hostname     = "app.terraform.io"
@@ -17,12 +17,12 @@ terraform {
 
     doppler = {
       source  = "DopplerHQ/doppler"
-      version = "1.7.0"
+      version = "1.7.1"
     }
 
     betteruptime = {
       source  = "BetterStackHQ/better-uptime"
-      version = "0.8.0"
+      version = "0.9.0"
     }
   }
 }
