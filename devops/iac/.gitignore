@@ -4,3 +4,7 @@
 *.tfstate.backup
 *.tfvars
 *.lock.hcl
+
+### Docker
+**/local/data/
+**/local/letsencrypt
