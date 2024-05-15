@@ -101,7 +101,8 @@ resource "azurerm_dns_txt_record" "default_domainkey_github_challenge_duumbi_org
   }
 }
 
-resource "azurerm_dns_a_record" "auth_local_duumbi_io" {
+### Local DNS records ---------------------------------------------------------
+resource "azurerm_dns_a_record" "whoami_local_duumbi_io" {
   count = var.environment == "live" ? 1 : 0
 
   name                = "whoami.local"
@@ -112,7 +113,7 @@ resource "azurerm_dns_a_record" "auth_local_duumbi_io" {
   tags                = local.tags
 }
 
-resource "azurerm_dns_a_record" "auth_local_duumbi_io" {
+resource "azurerm_dns_a_record" "maildev_local_duumbi_io" {
   count = var.environment == "live" ? 1 : 0
 
   name                = "maildev.local"
