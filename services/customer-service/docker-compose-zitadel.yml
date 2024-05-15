@@ -1,0 +1,51 @@
+services:
+  postgresql:
+    image: docker.io/library/postgres:16.2
+    container_name: zitadel-db
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?error}
+      - POSTGRES_DB=${POSTGRES_DB:-zitadel}
+      - TZ=${TZ:-UTC}
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "${POSTGRES_USER:-zitadel}"']
+      start_period: 30s
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - database:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - backend
+  zitadel:
+    image: ghcr.io/zitadel/zitadel:latest
+    container_name: zitadel-server
+    command: 'start-from-init --masterkey ${ZITADEL_MASTER_KEY} --tlsMode disabled'
+    environment:
+      - 'ZITADEL_DATABASE_POSTGRES_HOST=zitadel-db'
+      - 'ZITADEL_DATABASE_POSTGRES_PORT=5432'
+      - 'ZITADEL_DATABASE_POSTGRES_DATABASE=${POSTGRES_DB:-zitadel}'
+      - 'ZITADEL_DATABASE_POSTGRES_USER_USERNAME=${POSTGRES_ZITADEL_USER:-zitadel}'
+      - 'ZITADEL_DATABASE_POSTGRES_USER_PASSWORD=${POSTGRES_ZITADEL_PASSWORD:?error}'
+      - 'ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE=disable'
+      - 'ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME=${POSTGRES_USER:-postgres}'
+      - 'ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD=${POSTGRES_PASSWORD:?error}'
+      - 'ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE=disable'
+      - 'ZITADEL_EXTERNALSECURE=false'
+    depends_on:
+      postgresql:
+        condition: 'service_healthy'
+    ports:
+      - '8080:8080'
+    restart: unless-stopped
+    networks:
+      - backend
+
+volumes:
+  database:
+    driver: local
+
+networks:
+  backend:
+    external: true

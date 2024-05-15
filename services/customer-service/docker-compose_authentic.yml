@@ -35,7 +35,7 @@ services:
     networks:
       - backend
   server:
-    image: ghcr.io/goauthentik/server:2024.4.1
+    image: ghcr.io/goauthentik/server:2024.4.2
     container_name: authentik-server
     command: server
     environment:
@@ -68,7 +68,7 @@ services:
     networks:
       - backend
   worker:
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2024.4.1}
+    image: ghcr.io/goauthentik/server:2024.4.2
     container_name: authentik-worker
     command: worker
     environment:
