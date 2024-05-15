@@ -29,6 +29,7 @@ resource "betteruptime_monitor" "site_monitor" {
   request_timeout      = 30
   ssl_expiration       = 7
   verify_ssl           = true
+  checks_version       = "v1"
 }
 
 resource "betteruptime_status_page" "site_status_page" {
