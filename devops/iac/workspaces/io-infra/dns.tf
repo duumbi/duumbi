@@ -104,10 +104,10 @@ resource "azurerm_dns_txt_record" "default_domainkey_github_challenge_duumbi_org
 resource "azurerm_dns_a_record" "auth_local_duumbi_io" {
   count = var.environment == "live" ? 1 : 0
 
-  name                = "auth.local"
+  name                = "whoami"
   zone_name           = local.zone_name
   resource_group_name = azurerm_resource_group.main_rg.name
   ttl                 = 300
-  records             = ["192.168.100.40"]
+  records             = ["127.0.0.1"]
   tags                = local.tags
 }
