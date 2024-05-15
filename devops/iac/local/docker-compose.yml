@@ -2,22 +2,35 @@ services:
   maildev:
     image: maildev/maildev
     container_name: maildev
+    environment:
+      - TZ=${TZ:-UTC}
     ports:
       - '1080:1080'
       - '1025:1025'
     networks:
       - backend
-  app:
-    image: docker.io/jc21/nginx-proxy-manager:latest
-    container_name: nginx-proxy-manager
-    restart: unless-stopped
+
+  reverse-proxy:
+    image: traefik:v3.0
+    container_name: traefik
+    command: --api.insecure=true --providers.docker
     ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
+      - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
     volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - backend
+
+  whoami:
+    image: traefik/whoami
+    container_name: traefik-whoami
+    labels:
+      # This rule will match requests to http://whoami.docker.localhost/
+      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+    networks:
+      - backend
 
 networks:
   backend:
