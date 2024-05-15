@@ -23,7 +23,7 @@ data "terraform_remote_state" "infra" {
 resource "auth0_prompt" "duumbi_prompt" {
   universal_login_experience     = "new"
   identifier_first               = false
-  webauthn_platform_first_factor = true
+  webauthn_platform_first_factor = false
 }
 
 resource "auth0_role" "owner" {
