@@ -1,25 +1,39 @@
 services:
-  maildev:
-    image: maildev/maildev
-    container_name: maildev
-    environment:
-      - TZ=${TZ:-UTC}
-    ports:
-      - '1080:1080'
-      - '1025:1025'
-    networks:
-      - backend
-
   reverse-proxy:
     image: traefik:v3.0
     container_name: traefik
-    command: --api.insecure=true --providers.docker
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.address=:80"
+      - "--certificatesresolvers.letsencrypt.acme.email=mail@duumbi.io"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+
+      # - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      # - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.dnsChallenge.provider=azure"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.resolvers=150.171.10.35:53,168.63.129.16:53"
+      # - "--certificatesresolvers.letsencrypt.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
     ports:
       - "80:80"
+      - "443:443"
       # The Web UI (enabled by --api.insecure=true)
       - "8080:8080"
+    environment:
+      - AZURE_ENVIRONMENT=public
+      - AZURE_RESOURCE_GROUP=${AZURE_RESOURCE_GROUP}
+      - AZURE_ZONE_NAME=${AZURE_ZONE_NAME}
+      - AZURE_SUBSCRIPTION_ID=${AZURE_SUBSCRIPTION_ID}
+      - AZURE_TENANT_ID=${AZURE_TENANT_ID}
+      - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
+      - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - traefik:/letsencrypt
     networks:
       - backend
 
@@ -28,11 +42,33 @@ services:
     container_name: traefik-whoami
     labels:
       # This rule will match requests to http://whoami.docker.localhost/
-      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.local.duumbi.io`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.whoami.service=whoami"
+      - "traefik.http.services.whoami.loadbalancer.server.port=80"
     networks:
       - backend
+
+  # maildev:
+  #   image: maildev/maildev
+  #   container_name: maildev
+  #   environment:
+  #     - TZ=${TZ:-UTC}
+  #   ports:
+  #     - '1080:1080'
+  #     - '1025:1025'
+  #   networks:
+  #     - backend
 
 networks:
   backend:
     driver: bridge
     name: backend
+
+volumes:
+  traefik:
+
+
+# certbot certonly --agree-tos --manual --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory -d "whoami.duumbi.io"

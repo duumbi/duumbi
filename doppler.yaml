@@ -5,3 +5,6 @@ setup:
   - project: duumbi-customer-service
     config: dev_personal
     path: services/customer-service/
+  - project: ias
+    config: local_personal
+    path: devops/iac/local/
