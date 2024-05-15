@@ -12,7 +12,7 @@ terraform {
   required_providers {
     port = {
       source  = "port-labs/port-labs"
-      version = "1.11.1"
+      version = "2.0.1"
     }
 
     doppler = {
