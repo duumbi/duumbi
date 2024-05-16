@@ -10,6 +10,11 @@ terraform {
   }
 
   required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "3.103.1"
+    }
+
     port = {
       source  = "port-labs/port-labs"
       version = "2.0.1"

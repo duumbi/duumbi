@@ -51,16 +51,28 @@ services:
     networks:
       - backend
 
-  # maildev:
-  #   image: maildev/maildev
-  #   container_name: maildev
-  #   environment:
-  #     - TZ=${TZ:-UTC}
-  #   ports:
-  #     - '1080:1080'
-  #     - '1025:1025'
-  #   networks:
-  #     - backend
+  maildev:
+    image: maildev/maildev
+    container_name: maildev
+    environment:
+      - TZ=${TZ:-UTC}
+    healthcheck:
+      test: netstat -l | grep 1025
+      interval: 1m
+      timeout: 10s
+      retries: 3
+    ports:
+      - '1080:1080'
+      - '1025:1025'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.maildev.rule=Host(`maildev.local.duumbi.io`)"
+      - "traefik.http.routers.maildev.entrypoints=websecure"
+      - "traefik.http.routers.maildev.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.maildev.service=maildev"
+      - "traefik.http.services.maildev.loadbalancer.server.port=1080"
+    networks:
+      - backend
 
 networks:
   backend:
