@@ -42,13 +42,20 @@ variable "location_base" {
 
 variable "tags_base" {
   type        = map(string)
-  description = "If specified, will set the default tags for all resources deployed by this module where supported."
+  description = "If specified, will set the default tags for all resources deployed by this module where supported"
 
   default = {
     managed_by = "terraform"
   }
 }
 
+variable "vnet_address_space" {
+  type        = list(string)
+  default     = ["10.0.0.0/16"]
+  description = "The address space that is used in the virtual networks"
+}
+
+# PORT.IO ---------------------------------------------------------------------
 variable "port_client_id" {
   type        = string
   default     = ""
