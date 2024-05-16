@@ -55,6 +55,14 @@ variable "vnet_address_space" {
   description = "The address space that is used in the virtual networks"
 }
 
+variable "subnets_address_prefixes" {
+  type = map(list(string))
+  default = {
+    "aks" = ["10.0.0.0/19"] # AKS subnet - cidrsubnet("10.0.0.0/16", 3, 0)
+  }
+  description = "The address prefixes that are used in the subnets."
+}
+
 # PORT.IO ---------------------------------------------------------------------
 variable "port_client_id" {
   type        = string
