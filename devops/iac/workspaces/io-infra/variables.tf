@@ -23,20 +23,38 @@ variable "environment" {
   }
 }
 
-variable "location_base" {
-  type = object({
+variable "region" {
+  type        = string
+  description = "Region name"
+
+  validation {
+    condition     = contains(["eu", "us", "au"], var.region)
+    error_message = "Valid values for var: region are (eu, us, au)"
+  }
+}
+
+variable "location" {
+  type = map(object({
     name        = string
     short_name  = string
     region_id   = string
     region_name = string
-  })
+  }))
   description = "The Azure region in which region bound resources will be deployed. Please see: https://azure.microsoft.com/en-gb/global-infrastructure/geographies/"
 
   default = {
-    name        = "westeurope"
-    short_name  = "we"
-    region_id   = "eu"
-    region_name = "Europe"
+    "eu" = {
+      name        = "westeurope"
+      short_name  = "we"
+      region_id   = "eu"
+      region_name = "Europe"
+    },
+    "eu-aks" = {
+      name        = "northeurope"
+      short_name  = "ne"
+      region_id   = "eu"
+      region_name = "Europe"
+    }
   }
 }
 
@@ -83,6 +101,25 @@ variable "aks_network_dns_service_ip" {
 variable "authorized_ip_to_aks_api_server" {
   type        = list(string)
   description = "Set of authorized IP ranges to allow access to API server"
+}
+
+# -- AKS NODE POOL ------------------------------------------------------------------------------------------------------------------------------------------------------|
+# Name              | CPU      | vCPU | Memory  | Temp Storage | Premium Storage | Ephemeral OS Disk | IOPS | Net Mbps | Price ne | Quota Name                   | Quota |
+# ------------------|----------|------|---------|--------------|-----------------|-------------------|------|----------|-----------------------------------------|-------|
+# Standard_D2ads_v5 |  AMD 3rd |    2 |   8 GiB |        75 GB |       Supported |         Supported | 9000 |    12500 | $0.115/h | Standard DADSv5 Family vCPUs |     0 |
+# Standard_D2ds_v4  | Xeon 3rd |    2 |   8 GiB |        75 GB |       Supported |         Supported | 9000 |     5000 | $0.126/h |   Standard DSv4 Family vCPUs |    10 |
+# Standard_D2ds_v5  | Xeon 3rd |    2 |   8 GiB |        75 GB |       Supported |         Supported | 9000 |    12500 | $0.126/h |   Standard DSv5 Family vCPUs |     0 |
+# Standard_D2pds_v5 |      Arm |    2 |   8 GiB |        75 GB |       Supported |         Supported | 9375 |    12500 | $0.101/h | Standard DPDSv5 Family vCPUs |    10 |
+variable "vm_size_aks_system_pool" {
+  type        = string
+  description = "The size of the Virtual Machine"
+  default     = "Standard_D2ads_v5"
+}
+
+variable "vm_size_aks_user_spot_pool" {
+  type        = string
+  description = "The size of the Virtual Machine"
+  default     = "Standard_D2pds_v5"
 }
 
 # PORT.IO ---------------------------------------------------------------------

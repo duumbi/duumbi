@@ -1,6 +1,6 @@
 resource "azurerm_static_web_app" "site_swa" {
   name                = local.site_swa_name
-  location            = var.location_base.name
+  location            = local.location_name
   resource_group_name = azurerm_resource_group.main_rg.name
   sku_size            = "Free"
   sku_tier            = "Free"

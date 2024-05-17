@@ -10,17 +10,17 @@ data "terraform_remote_state" "idp" {
 
 resource "azurerm_resource_group" "main_rg" {
   name     = local.main_rg_name
-  location = var.location_base.name
+  location = local.location_name
   tags     = local.tags
 }
 
 resource "port_entity" "region_entity" {
   identifier = var.location_base.region_id
-  title      = title(var.location_base.region_name)
+  title      = title(local.location_region_name)
   blueprint  = data.terraform_remote_state.idp.outputs.port_region_identifier
   properties = {
     "string_props" = {
-      "name" = var.location_base.region_name
+      "name" = local.location_region_name
     }
   }
 }

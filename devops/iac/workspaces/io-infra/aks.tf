@@ -1,6 +1,6 @@
 resource "azurerm_user_assigned_identity" "aks_id" {
   name                = "aks-id"
-  location            = var.location_base.name
+  location            = local.aks_location_name
   resource_group_name = azurerm_resource_group.main_rg.name
 }
 
@@ -13,7 +13,7 @@ resource "azurerm_role_assignment" "aks_ra" {
 #trivy:ignore:avd-azu-0040
 resource "azurerm_kubernetes_cluster" "aks" {
   name                      = local.aks_name
-  location                  = var.location_base.name
+  location                  = local.aks_location_name
   resource_group_name       = azurerm_resource_group.main_rg.name
   dns_prefix                = "aks-cluster"
   sku_tier                  = "Free"
@@ -37,7 +37,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   default_node_pool {
     name                 = "general"
-    vm_size              = "Standard_D2ads_v5"
+    vm_size              = var.vm_size_aks_system_pool
     vnet_subnet_id       = azurerm_subnet.aks.id
     orchestrator_version = var.kubernetes_version
     type                 = "VirtualMachineScaleSets"
@@ -80,7 +80,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 resource "azurerm_kubernetes_cluster_node_pool" "spot" {
   name                  = "spot"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-  vm_size               = "Standard_D2ads_v5"
+  vm_size               = var.vm_size_aks_user_spot_pool
   vnet_subnet_id        = azurerm_subnet.aks.id
   orchestrator_version  = var.kubernetes_version
   priority              = "Spot"
