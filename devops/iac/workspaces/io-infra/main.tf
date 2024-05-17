@@ -15,7 +15,7 @@ resource "azurerm_resource_group" "main_rg" {
 }
 
 resource "port_entity" "region_entity" {
-  identifier = var.location_base.region_id
+  identifier = local.location_region_id
   title      = title(local.location_region_name)
   blueprint  = data.terraform_remote_state.idp.outputs.port_region_identifier
   properties = {

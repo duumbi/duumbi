@@ -2,7 +2,8 @@ locals {
   location_name        = var.location[var.region].name
   location_short_name  = var.location[var.region].short_name
   location_region_name = var.location[var.region].region_name
-  aks_location_name    = var.location[var.region + "-aks"].name
+  location_region_id   = var.location[var.region].region_id
+  aks_location_name    = var.location[format("%s-aks", var.region)].name
 
   zone_name        = "duumbi.io"
   main_rg_name     = lower(format("%s-%s-%s-%s-rg", var.organization, var.project, var.environment, local.location_short_name))
