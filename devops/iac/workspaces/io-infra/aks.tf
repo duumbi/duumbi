@@ -1,8 +1,3 @@
-data "azuread_group" "aks_admins" {
-  display_name = "DUUMBI_AKS_ADMINISTRATORS"
-}
-
-
 resource "azurerm_user_assigned_identity" "aks_id" {
   name                = "aks-id"
   location            = var.location_base.name
@@ -68,7 +63,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   azure_active_directory_role_based_access_control {
     managed                = true
     azure_rbac_enabled     = true
-    admin_group_object_ids = [data.azuread_group.aks_admins.object_id]
+    admin_group_object_ids = [var.duumbi_aks_administrators_object_id]
   }
 
   tags = local.tags

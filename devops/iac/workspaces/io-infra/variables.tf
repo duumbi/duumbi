@@ -136,3 +136,9 @@ variable "dns_privateemail_dkim_txt_record" {
   sensitive   = true
   description = "value for the DNS TXT record for the privateemail DKIM key"
 }
+
+variable "duumbi_aks_administrators_object_id" {
+  type        = string
+  sensitive   = true
+  description = "Azure AD Object ID of the duumbi.io AKS administrators"
+}
