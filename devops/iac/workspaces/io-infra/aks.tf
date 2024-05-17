@@ -81,3 +81,37 @@ resource "azurerm_kubernetes_cluster" "aks" {
     azurerm_role_assignment.aks_ra
   ]
 }
+
+resource "azurerm_kubernetes_cluster_node_pool" "spot" {
+  name                  = "spot"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
+  vm_size               = "Standard_D2ads_v5"
+  vnet_subnet_id        = azurerm_subnet.aks.id
+  orchestrator_version  = var.kubernetes_version
+  priority              = "Spot"
+  spot_max_price        = -1
+  eviction_policy       = "Delete"
+  enable_auto_scaling   = true
+  node_count            = 1
+  min_count             = 1
+  max_count             = 2
+  max_pods              = 30
+  os_disk_size_gb       = 75
+  os_disk_type          = "Ephemeral"
+
+  node_labels = {
+    role                                    = "spot"
+    "kubernetes.azure.com/scalesetpriority" = "spot"
+  }
+
+  node_taints = [
+    "spot:NoSchedule",
+    "kubernetes.azure.com/scalesetpriority=spot:NoSchedule"
+  ]
+
+  tags = local.tags
+
+  lifecycle {
+    ignore_changes = [node_count]
+  }
+}
