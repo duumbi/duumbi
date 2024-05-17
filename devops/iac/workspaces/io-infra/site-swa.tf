@@ -31,7 +31,7 @@ resource "betteruptime_monitor" "site_monitor" {
   verify_ssl           = true
 
   lifecycle {
-    ignore_changes = [check_version]
+    ignore_changes = [checks_version]
   }
 }
 
