@@ -15,6 +15,11 @@ terraform {
       version = "3.103.1"
     }
 
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "2.50.0"
+    }
+
     port = {
       source  = "port-labs/port-labs"
       version = "2.0.1"

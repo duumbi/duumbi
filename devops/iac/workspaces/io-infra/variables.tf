@@ -58,9 +58,31 @@ variable "vnet_address_space" {
 variable "subnets_address_prefixes" {
   type = map(list(string))
   default = {
-    "aks" = ["10.0.0.0/19"] # AKS subnet - cidrsubnet("10.0.0.0/16", 3, 0)
+    "aks" = ["10.0.0.0/19"] # AKS Subnet - cidrsubnet("10.0.0.0/16", 3, 0)
   }
-  description = "The address prefixes that are used in the subnets."
+  description = "The address prefixes that are used in the subnets"
+}
+
+variable "kubernetes_version" {
+  type        = string
+  description = "Version of Kubernetes specified when creating the AKS managed cluster"
+}
+
+variable "aks_network_service_cidr" {
+  type        = string
+  default     = "10.0.64.0/19" # AKS Network Range - cidrsubnet("10.0.0.0/16", 3, 2)
+  description = "The Network Range used by the Kubernetes service."
+}
+
+variable "aks_network_dns_service_ip" {
+  type        = string
+  default     = "10.0.64.10"
+  description = "IP address within the Kubernetes service address range that will be used by cluster service discovery (kube-dns)."
+}
+
+variable "authorized_ip_to_aks_api_server" {
+  type        = list(string)
+  description = "Set of authorized IP ranges to allow access to API server"
 }
 
 # PORT.IO ---------------------------------------------------------------------
