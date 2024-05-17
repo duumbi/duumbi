@@ -93,7 +93,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "spot" {
   eviction_policy       = "Delete"
   enable_auto_scaling   = true
   node_count            = 1
-  min_count             = 1
+  min_count             = 0
   max_count             = 2
   max_pods              = 30
   os_disk_size_gb       = 75
