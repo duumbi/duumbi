@@ -67,13 +67,13 @@ variable "tags_base" {
   }
 }
 
-variable "vnet_address_space" {
+variable "aks_vnet_address_space" {
   type        = list(string)
   default     = ["10.0.0.0/16"]
   description = "The address space that is used in the virtual networks"
 }
 
-variable "subnets_address_prefixes" {
+variable "aks_subnets_address_prefixes" {
   type = map(list(string))
   default = {
     "aks" = ["10.0.0.0/19"] # AKS Subnet - cidrsubnet("10.0.0.0/16", 3, 0)

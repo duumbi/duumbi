@@ -14,6 +14,12 @@ resource "azurerm_resource_group" "main_rg" {
   tags     = local.tags
 }
 
+resource "azurerm_resource_group" "aks_rg" {
+  name     = local.aks_rg_name
+  location = local.aks_location_name
+  tags     = local.tags
+}
+
 resource "port_entity" "region_entity" {
   identifier = local.location_region_id
   title      = title(local.location_region_name)
