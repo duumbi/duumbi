@@ -113,7 +113,7 @@ variable "authorized_ip_to_aks_api_server" {
 variable "vm_size_aks_system_pool" {
   type        = string
   description = "The size of the Virtual Machine"
-  default     = "Standard_D2ads_v5"
+  default     = "Standard_D2pds_v5"
 }
 
 variable "vm_size_aks_user_spot_pool" {
