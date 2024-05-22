@@ -49,6 +49,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
     os_disk_size_gb      = 75
     os_disk_type         = "Ephemeral"
     os_sku               = "Ubuntu"
+    upgrade_settings {
+      max_surge = "10%"
+    }
 
     node_labels = {
       role = "general"
