@@ -29,5 +29,10 @@ terraform {
       source  = "BetterStackHQ/better-uptime"
       version = "0.9.1"
     }
+
+    helm = {
+      source  = "hashicorp/helm"
+      version = "2.13.2"
+    }
   }
 }

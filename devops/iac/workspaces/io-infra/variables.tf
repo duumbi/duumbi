@@ -108,7 +108,7 @@ variable "authorized_ip_to_aks_api_server" {
 # ------------------|----------|------|---------|--------------|-----------------|-------------------|------|----------|-----------------------------------------|-------|
 # Standard_D2ads_v5 |  AMD 3rd |    2 |   8 GiB |        75 GB |       Supported |         Supported | 9000 |    12500 | $0.115/h | Standard DADSv5 Family vCPUs |     0 |
 # Standard_D2ds_v4  | Xeon 3rd |    2 |   8 GiB |        75 GB |       Supported |         Supported | 9000 |     5000 | $0.126/h |   Standard DSv4 Family vCPUs |    10 |
-# Standard_D2ds_v5  | Xeon 3rd |    2 |   8 GiB |        75 GB |       Supported |         Supported | 9000 |    12500 | $0.126/h |   Standard DSv5 Family vCPUs |     0 |
+# Standard_D2ds_v5  | Xeon 3rd |    2 |   8 GiB |        75 GB |       Supported |         Supported | 9000 |    12500 | $0.126/h |   Standard DSv5 Family vCPUs |     2 |
 # Standard_D2pds_v5 |      Arm |    2 |   8 GiB |        75 GB |       Supported |         Supported | 9375 |    12500 | $0.101/h | Standard DPDSv5 Family vCPUs |    10 |
 variable "vm_size_aks_system_pool" {
   type        = string
