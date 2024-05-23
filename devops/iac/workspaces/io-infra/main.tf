@@ -7,11 +7,6 @@ data "terraform_remote_state" "idp" {
     }
   }
 }
-
-data "http" "myip" {
-  url = "https://ipv4.icanhazip.com"
-}
-
 resource "azurerm_resource_group" "main_rg" {
   name     = local.main_rg_name
   location = local.location_name

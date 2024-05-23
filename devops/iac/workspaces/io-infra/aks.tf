@@ -25,7 +25,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   workload_identity_enabled = true
 
   api_server_access_profile {
-    authorized_ip_ranges = concat(["${chomp(data.http.myip.response_body)}/32"], var.authorized_ip_to_aks_api_server)
+    authorized_ip_ranges = var.authorized_ip_to_aks_api_server
   }
 
   network_profile {
