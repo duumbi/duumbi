@@ -67,6 +67,9 @@ variable "tags_base" {
   }
 }
 
+# ----------------------------------------------------------------------------|
+# -- AKS ---------------------------------------------------------------------|
+# ----------------------------------------------------------------------------|
 variable "aks_vnet_address_space" {
   type        = list(string)
   default     = ["10.0.0.0/16"]
@@ -79,11 +82,6 @@ variable "aks_subnets_address_prefixes" {
     "aks" = ["10.0.0.0/19"] # AKS Subnet - cidrsubnet("10.0.0.0/16", 3, 0)
   }
   description = "The address prefixes that are used in the subnets"
-}
-
-variable "kubernetes_version" {
-  type        = string
-  description = "Version of Kubernetes specified when creating the AKS managed cluster"
 }
 
 variable "aks_network_service_cidr" {
@@ -120,6 +118,18 @@ variable "vm_size_aks_user_spot_pool" {
   type        = string
   description = "The size of the Virtual Machine"
   default     = "Standard_D2pds_v5"
+}
+
+variable "aks_system_pool_admin_username" {
+  type        = string
+  sensitive   = true
+  description = "The Admin Username for the Cluster"
+}
+
+variable "aks_system_pool_ssh_public_key" {
+  type        = string
+  sensitive   = true
+  description = "The SSH Public Key for the Cluster"
 }
 
 # PORT.IO ---------------------------------------------------------------------
