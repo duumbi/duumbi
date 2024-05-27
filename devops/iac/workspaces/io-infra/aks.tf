@@ -16,6 +16,17 @@ resource "azurerm_role_assignment" "aks_ra" {
   principal_id         = azurerm_user_assigned_identity.aks_id.principal_id
 }
 
+#  Public IP for Ingress Controller
+resource "azurerm_public_ip" "ingress" {
+  name                = local.aks_ingress_ip_name
+  location            = local.aks_location_name
+  resource_group_name = azurerm_resource_group.aks_rg.name
+  sku                 = "Standard"
+  allocation_method   = "Static"
+  domain_name_label   = lower(format("%s-%s-aks-ingress", var.organization, var.project))
+  tags                = local.tags
+}
+
 #trivy:ignore:avd-azu-0040
 resource "azurerm_kubernetes_cluster" "aks" {
   name                      = local.aks_name
