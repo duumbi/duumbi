@@ -20,7 +20,7 @@ resource "azurerm_role_assignment" "aks_ra" {
 resource "azurerm_public_ip" "ingress" {
   name                = local.aks_ingress_ip_name
   location            = local.aks_location_name
-  resource_group_name = azurerm_resource_group.aks_rg.name
+  resource_group_name = local.aks_node_rg_name
   sku                 = "Standard"
   allocation_method   = "Static"
   domain_name_label   = lower(format("%s-%s-aks-ingress", var.organization, var.project))
