@@ -9,7 +9,6 @@ output "azurerm_site_swa_name" {
 }
 
 # Azure AKS Outputs
-
 output "azurerm_aks_cluster_id" {
   value       = azurerm_kubernetes_cluster.aks.id
   description = "The Kubernetes Managed Cluster ID"
@@ -23,4 +22,9 @@ output "azurerm_aks_cluster_name" {
 output "azurerm_aks_cluster_kubernetes_version" {
   value       = azurerm_kubernetes_cluster.aks.kubernetes_version
   description = "Version of Kubernetes Cluster"
+}
+
+output "azurerm_aks_cluster_ingress_ip" {
+  value       = azurerm_public_ip.ingress.ip_address
+  description = "The IP address of the Managed Kubernetes Cluster Ingress"
 }
