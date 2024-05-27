@@ -16,16 +16,22 @@ resource "azurerm_role_assignment" "aks_ra" {
   principal_id         = azurerm_user_assigned_identity.aks_id.principal_id
 }
 
+# resource "azurerm_role_assignment" "dns_zone_contributor" {
+#   scope                = azurerm_dns_zone.duumbi_io.id
+#   role_definition_name = "DNS Zone Contributor"
+#   principal_id         = azurerm_user_assigned_identity.aks_id.principal_id
+# }
+
 #  Public IP for Ingress Controller
-resource "azurerm_public_ip" "ingress" {
-  name                = local.aks_ingress_ip_name
-  location            = local.aks_location_name
-  resource_group_name = local.aks_node_rg_name
-  sku                 = "Standard"
-  allocation_method   = "Static"
-  domain_name_label   = lower(format("%s-%s-aks-ingress", var.organization, var.project))
-  tags                = local.tags
-}
+# resource "azurerm_public_ip" "ingress" {
+#   name                = local.aks_ingress_ip_name
+#   location            = local.aks_location_name
+#   resource_group_name = local.aks_node_rg_name
+#   sku                 = "Standard"
+#   allocation_method   = "Static"
+#   domain_name_label   = lower(format("%s-%s-aks-ingress", var.organization, var.project))
+#   tags                = local.tags
+# }
 
 #trivy:ignore:avd-azu-0040
 resource "azurerm_kubernetes_cluster" "aks" {
@@ -149,3 +155,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
     ignore_changes = [node_count]
   }
 } */
+
+# resource "azurerm_federated_identity_credential" "this" {
+#   name                = "${var.kubernetes_cluster.name}-ServiceAccount-${var.oidc.kubernetes_namespace}-${var.oidc.kubernetes_serviceaccount_name}"
+#   resource_group_name = azurerm_resource_group.aks_rg.name
+#   audience            = "api://AzureADTokenExchange"
+#   issuer              = azurerm_kubernetes_cluster.aks.oidc_issuer_url
+#   parent_id           = azurerm_user_assigned_identity.aks_id.principal_id
+#   subject             = "system:serviceaccount:${var.oidc.kubernetes_namespace}:${var.oidc.kubernetes_serviceaccount_name}"
+# }

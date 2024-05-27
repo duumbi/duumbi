@@ -24,7 +24,7 @@ output "azurerm_aks_cluster_kubernetes_version" {
   description = "Version of Kubernetes Cluster"
 }
 
-output "azurerm_aks_cluster_ingress_ip" {
-  value       = azurerm_public_ip.ingress.ip_address
-  description = "The IP address of the Managed Kubernetes Cluster Ingress"
-}
+# output "azurerm_aks_cluster_ingress_ip" {
+#   value       = azurerm_public_ip.ingress.ip_address
+#   description = "The IP address of the Managed Kubernetes Cluster Ingress"
+# }
