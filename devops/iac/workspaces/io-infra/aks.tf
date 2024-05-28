@@ -16,11 +16,11 @@ resource "azurerm_role_assignment" "aks_ra" {
   principal_id         = azurerm_user_assigned_identity.aks_id.principal_id
 }
 
-# resource "azurerm_role_assignment" "dns_zone_contributor" {
-#   scope                = azurerm_dns_zone.duumbi_io.id
-#   role_definition_name = "DNS Zone Contributor"
-#   principal_id         = azurerm_user_assigned_identity.aks_id.principal_id
-# }
+resource "azurerm_role_assignment" "dns_zone_contributor" {
+  scope                = azurerm_dns_zone.duumbi_io.id
+  role_definition_name = "DNS Zone Contributor"
+  principal_id         = azurerm_user_assigned_identity.aks_id.principal_id
+}
 
 # Public IP for Ingress Controller
 resource "azurerm_public_ip" "ingress" {
