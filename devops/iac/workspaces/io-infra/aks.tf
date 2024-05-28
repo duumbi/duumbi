@@ -17,7 +17,7 @@ resource "azurerm_role_assignment" "aks_ra" {
 }
 
 resource "azurerm_role_assignment" "dns_zone_contributor" {
-  scope                = azurerm_dns_zone.duumbi_io.id
+  scope                = azurerm_dns_zone.duumbi_io[0].id
   role_definition_name = "DNS Zone Contributor"
   principal_id         = azurerm_user_assigned_identity.aks_id.principal_id
 }
