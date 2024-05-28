@@ -96,6 +96,13 @@ variable "aks_network_dns_service_ip" {
   description = "IP address within the Kubernetes service address range that will be used by cluster service discovery (kube-dns)."
 }
 
+variable "aks_enable_ingress" {
+  type        = bool
+  default     = true
+  description = "Enable Ingress Controller"
+}
+
+
 variable "authorized_ip_to_aks_api_server" {
   type        = list(string)
   description = "Set of authorized IP ranges to allow access to API server"

@@ -22,16 +22,18 @@ resource "azurerm_role_assignment" "aks_ra" {
 #   principal_id         = azurerm_user_assigned_identity.aks_id.principal_id
 # }
 
-#  Public IP for Ingress Controller
-# resource "azurerm_public_ip" "ingress" {
-#   name                = local.aks_ingress_ip_name
-#   location            = local.aks_location_name
-#   resource_group_name = local.aks_node_rg_name
-#   sku                 = "Standard"
-#   allocation_method   = "Static"
-#   domain_name_label   = lower(format("%s-%s-aks-ingress", var.organization, var.project))
-#   tags                = local.tags
-# }
+# Public IP for Ingress Controller
+resource "azurerm_public_ip" "ingress" {
+  count = var.aks_enable_ingress ? 1 : 0
+
+  name                = local.aks_ingress_ip_name
+  location            = local.aks_location_name
+  resource_group_name = local.aks_node_rg_name
+  sku                 = "Standard"
+  allocation_method   = "Static"
+  domain_name_label   = lower(format("%s-%s-aks-ingress", var.organization, var.project))
+  tags                = local.tags
+}
 
 #trivy:ignore:avd-azu-0040
 resource "azurerm_kubernetes_cluster" "aks" {
