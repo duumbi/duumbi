@@ -172,3 +172,12 @@ resource "azurerm_federated_identity_credential" "external_dns" {
   parent_id           = azurerm_user_assigned_identity.aks_id.id
   subject             = "system:serviceaccount:infra:external-dns"
 }
+
+resource "azurerm_federated_identity_credential" "cert_manager" {
+  name                = "${local.aks_name}-sa-infra-cert-manager"
+  resource_group_name = azurerm_resource_group.aks_rg.name
+  audience            = ["api://AzureADTokenExchange"]
+  issuer              = azurerm_kubernetes_cluster.aks.oidc_issuer_url
+  parent_id           = azurerm_user_assigned_identity.aks_id.id
+  subject             = "system:serviceaccount:infra:cert-manager"
+}
