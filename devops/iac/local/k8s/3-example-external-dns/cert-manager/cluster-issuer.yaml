@@ -1,0 +1,19 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+spec:
+  acme:
+    email: mail@duumbi.io
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt
+    solvers:
+    - dns01:
+        azureDNS:
+          hostedZoneName: duumbi.io
+          subscriptionID: $AZURE_SUBSCRIPTION_ID
+          resourceGroupName: $AZURE_RESOURCE_GROUP
+          environment: AzurePublicCloud
+          managedIdentity:
+            clientID: $AZURE_AKS_DNS_CLIENT_ID
