@@ -5,7 +5,7 @@ terraform {
     hostname     = "app.terraform.io"
     organization = "duumbi"
     workspaces {
-      tags = ["io-infra-k8s"]
+      tags = ["io-infra", "k8s"]
     }
   }
 
