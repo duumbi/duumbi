@@ -102,13 +102,13 @@ resource "azurerm_dns_txt_record" "default_domainkey_github_challenge_duumbi_org
 }
 
 resource "azurerm_dns_a_record" "argocd_devops_duumbi_io" {
-  count = var.environment == "live" ? 1 : 0
+  count = var.environment == "live" && var.aks_enable_ingress ? 1 : 0
 
   name                = "argocd.devops"
   zone_name           = local.zone_name
   resource_group_name = azurerm_resource_group.main_rg.name
   ttl                 = 300
-  records             = ["172.205.11.188"]
+  records             = [azurerm_public_ip.ingress[0].ip_address]
   tags                = local.tags
 }
 
