@@ -1,0 +1,10 @@
+controller:
+    replicaCount: 2
+    nodeSelector:
+        kubernetes.io/os: linux
+    service:
+        externalTrafficPolicy: Local
+        loadBalancerIP: {{ requiredEnv "AKS_LOADBALANCER_IP" }}
+defaultBackend:
+    nodeSelector:
+        kubernetes.io/os: linux

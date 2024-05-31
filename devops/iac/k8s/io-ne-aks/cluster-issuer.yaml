@@ -4,16 +4,16 @@ metadata:
   name: letsencrypt
 spec:
   acme:
-    email: mail@duumbi.io
+    email: $ORG_EMAIL
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt
     solvers:
     - dns01:
         azureDNS:
-          hostedZoneName: duumbi.io
+          hostedZoneName: $HOSTED_ZONE
           subscriptionID: $AZURE_SUBSCRIPTION_ID
-          resourceGroupName: $AZURE_RESOURCE_GROUP
+          resourceGroupName: $AZURE_DNS_RESOURCE_GROUP
           environment: AzurePublicCloud
           managedIdentity:
-            clientID: $AZURE_AKS_DNS_CLIENT_ID
+            clientID: $K8S_AKS_DNS_CLIENT_ID
