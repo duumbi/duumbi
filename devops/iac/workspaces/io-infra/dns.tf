@@ -101,10 +101,10 @@ resource "azurerm_dns_txt_record" "default_domainkey_github_challenge_duumbi_org
   }
 }
 
-resource "azurerm_dns_a_record" "argocd_devops_duumbi_io" {
+resource "azurerm_dns_a_record" "argocd_infra_ne_duumbi_io" {
   count = var.environment == "live" && var.aks_enable_ingress ? 1 : 0
 
-  name                = "argocd.devops"
+  name                = "argocd.infra-ne"
   zone_name           = local.zone_name
   resource_group_name = azurerm_resource_group.main_rg.name
   ttl                 = 300
