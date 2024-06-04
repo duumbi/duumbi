@@ -1,0 +1,85 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema#",
+    "title": "Values",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "app": {
+            "description": "Application properties",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "environment": {
+                    "description": "Application environment",
+                    "type": "string",
+                    "enum": ["dev", "stage", "live"]
+                },
+                "replicaCount": {
+                    "description": "Number of replicas",
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 30
+                },
+                "type": {
+                    "description": "Application type",
+                    "type": "string",
+                    "enum": ["service"]
+                },
+                "container": {
+                    "description": "Container properties",
+                    "type": "object",
+                    "properties": {
+                        "image": {
+                            "description": "Container image",
+                            "type": "string"
+                        },
+                        "tag": {
+                            "description": "Container tag",
+                            "type": "string"
+                        },
+                        "pullPolicy": {
+                            "description": "Container pull policy",
+                            "type": "string"
+                        }
+                    },
+                    "required": ["image"]
+                }
+            },
+            "required": ["environment", "container"]
+        },
+        "service": {
+            "description": "Service properties",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "description": "Service type",
+                    "type": "string",
+                    "enum": ["LoadBalancer"]
+                },
+                "port": {
+                    "description": "Service port",
+                    "type": "integer"
+                },
+                "targetPort": {
+                    "description": "Service target port",
+                    "type": "integer"
+                }
+            },
+            "required": ["type", "port"]
+        },
+        "config": {
+            "description": "Config properties",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "description": "Config name",
+                    "type": "string"
+                }
+            },
+            "required": ["name"]
+        }
+    },
+    "required": ["app", "service"]
+}

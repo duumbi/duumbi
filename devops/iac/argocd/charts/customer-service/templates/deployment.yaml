@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ include "service.fullname" . }}
+  labels:
+    {{- include "service.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      name: {{ printf "%v-pod" .Chart.Name }}
+      labels:
+        {{- include "service.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.app.container.image }}:{{ .Values.app.container.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.app.container.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+  replicas: {{ .Values.app.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "service.selectorLabels" . | nindent 6 }}

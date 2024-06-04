@@ -1,0 +1,15 @@
+app:
+  environment: live
+  replicaCount: 1
+  type: service
+  container:
+    image: arm64v8/nginx
+    tag: 1.25.5
+    pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+
+config:
+  name: config.yml
