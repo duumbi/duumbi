@@ -1,0 +1,58 @@
+client_secret := env('ARGO_SSO_CLIENT_SECRET', '')
+admin_group := env('AZURE_K8S_ADMINISTRATOR_GROUP', '')
+
+# List tasks
+[private]
+default:
+    @just --list --unsorted
+
+# Initialize Doppler CLI and Azure CLI
+init:
+    doppler setup -p ias-k8s
+    @doppler run -- just _init-az
+
+_init-az:
+    @az account set --subscription=$AZURE_SUBSCRIPTION_ID
+    @echo "\nAzure CLI configured:"
+    @az account show --query "{EnvironmentName:environmentName,Name:name}" -o table
+
+# Installing Helm charts
+[group('helm')]
+install-charts:
+    kubectl create namespace infra
+    kubectl label namespace infra cert-manager.io/disable-validation=true
+    @helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+    @helm repo add bitnami https://charts.bitnami.com/bitnami
+    @helm repo add jetstack https://charts.jetstack.io
+    @helm repo update
+    @doppler run -- just _install-charts
+
+_install-charts:
+    #!/usr/bin/env sh
+    export AKS_LOADBALANCER_IP=$(az network public-ip show -g duumbi-io-$K8S_ENVIRONMENT-$K8S_LOCATION-aks-node-rg -n duumbi-io-$K8S_ENVIRONMENT-$K8S_LOCATION-aks-ingress-ip | jq -c --raw-output '.ipAddress')
+    echo "AKS LoadBalancer IP: $AKS_LOADBALANCER_IP"
+    helmfile apply --file helmfile.yaml sync
+    envsubst < cluster-issuer.yaml | kubectl apply -f -
+
+# Install ArgoCD
+[group('argocd')]
+install-argocd:
+    kubectl create namespace argocd
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+# Configure ArgoCD
+[group('argocd')]
+config-argocd:
+    @doppler run -- just _config-argocd
+
+_config-argocd:
+    #!/usr/bin/env sh
+    echo "K8S Location: $K8S_LOCATION"
+    echo "K8S Environment: $K8S_ENVIRONMENT"
+    #envsubst < argocd-ingress.yaml | kubectl apply -f -
+    #envsubst '$AZURE_TENANT_ID $ARGO_SSO_CLIENT_ID $ARGO_URL' < argocd/argocd-cm.yaml | kubectl apply -f -
+    export K8S_ADMIN_GROUP_ID=$(az ad group show --group {{admin_group}} | jq -c --raw-output '.id')
+    envsubst < argocd/argocd-rbac-cm.yaml | kubectl apply -f -
+    echo "Encoded secret: $(echo {{client_secret}} | base64)"
+
+
