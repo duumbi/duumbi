@@ -27,4 +27,4 @@ echo "\nInstalling ArgoCD"
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 echo "\nCreating ArgoCD Ingress"
-kubectl apply -f argocd-ingress.yaml
+envsubst < argocd-ingress.yaml | kubectl apply -f -

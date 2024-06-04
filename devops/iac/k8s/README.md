@@ -24,3 +24,19 @@ Setup [Argo CD CLI](https://argo-cd.readthedocs.io/en/stable/cli_installation/)
 ``` shell
 > doppler run -- ./config.sh
 ```
+- Set AKS LoadBalancer IP
+- Creating namespaces:
+    - infra
+    - argocd
+- Installing Helm charts
+    - ingress-nginx
+    - cert-manager
+- Creating Cluster Issuer
+- Installing ArgoCD
+- Creating ArgoCD Ingress
+
+### Argo CD - SSO Configuration
+``` shell
+> cd sso
+> doppler run -- ./config-argocd-sso.sh
+```
