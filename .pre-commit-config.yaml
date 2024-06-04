@@ -18,7 +18,7 @@ repos:
       # Common errors
       - id: check-json
       - id: check-yaml
-        exclude: ^devops/iac/argocd/charts/customer-service/templates/
+        exclude: ^devops/iac/argocd/charts/.*/templates/
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
 
