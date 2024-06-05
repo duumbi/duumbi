@@ -1,15 +1,16 @@
 client_secret := env('ARGO_SSO_CLIENT_SECRET', '')
 admin_group := env('AZURE_K8S_ADMINISTRATOR_GROUP', '')
 
-export AZURE_TENANT_ID := `az account show | jq -c --raw-output '.tenantId'`
+azure_dns_zone := "duumbi.io"
+azure_tenant_id := `az account show | jq -c --raw-output '.tenantId'`
+exec_azure_dns_resource_group := "az group list --tag dns_zone --query \"[?contains(tags.dns_zone, '" + azure_dns_zone + "')].{name:name}\" | jq -c --raw-output '.[]|.name'"
+exec_argo_host := "az network dns record-set a list -g $azure_dns_resource_group -z " + azure_dns_zone + " --query \"[?metadata.service != null && contains(metadata.service, 'argocd')]\" | jq -c --raw-output '.[]|.fqdn'"
+
 
 # List tasks
 [private]
 default:
     @just --list --unsorted
-
-demo:
-    @echo "Env: $AZURE_TENANT_ID"
 
 # Initialize Doppler CLI and Azure CLI
 init:
@@ -21,16 +22,42 @@ _init-az:
     @echo "\nAzure CLI configured:"
     @az account show --query "{EnvironmentName:environmentName,Name:name}" -o table
 
-# Installing Helm charts
-[group('helm')]
-install-charts:
-    kubectl create namespace infra
-    kubectl label namespace infra cert-manager.io/disable-validation=true
+# Install K8s resources
+install:
+    @just install-infra-charts
+
+# Uninstall K8s resources
+uninstall:
+    @just uninstall-infra-charts
+    @just uninstall-argocd
+
+# Installing Infra charts
+[group('infra')]
+install-infra-charts:
+    @echo "\nCreating Infra namespace..."
+    -@kubectl create namespace infra
+    @kubectl label namespace infra cert-manager.io/disable-validation=true
     @helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
     @helm repo add bitnami https://charts.bitnami.com/bitnami
     @helm repo add jetstack https://charts.jetstack.io
     @helm repo update
-    @doppler run -- just _install-charts
+    @doppler run -- just _install-infra-charts
+
+_install-infra-charts:
+    #!/usr/bin/env sh
+    export AKS_LOADBALANCER_IP=$(az network public-ip show -g duumbi-io-$K8S_ENVIRONMENT-$K8S_LOCATION-aks-node-rg -n duumbi-io-$K8S_ENVIRONMENT-$K8S_LOCATION-aks-ingress-ip | jq -c --raw-output '.ipAddress')
+    echo "\nAKS LoadBalancer IP: $AKS_LOADBALANCER_IP"
+    cd infra-charts && helmfile apply --file helmfile.yaml sync
+
+demo:
+    #!/usr/bin/env bash
+    echo "AZURE_DNS_ZONE: {{azure_dns_zone}}"
+    echo "AZURE_TENANT_ID: {{azure_tenant_id}}"
+    azure_dns_resource_group=$({{exec_azure_dns_resource_group}})
+    echo $azure_dns_resource_group
+    _argo_host=$({{exec_argo_host}})
+    argo_host="https://${_argo_host%.}"
+    echo $argo_host
 
 _install-charts:
     #!/usr/bin/env sh
@@ -38,6 +65,30 @@ _install-charts:
     echo "AKS LoadBalancer IP: $AKS_LOADBALANCER_IP"
     helmfile apply --file helmfile.yaml sync
     envsubst < cluster-issuer.yaml | kubectl apply -f -
+
+
+
+# Uninstall Infra charts
+[group('infra')]
+[confirm("Are you sure you want to delete Infra charts?")]
+uninstall-infra-charts:
+    @echo "Deleting ClusterIssuer..."
+    -@kubectl delete -f cert-manager/cluster-issuer.yaml
+    @echo "Deleting Infra charts..."
+    cd infra-charts && helmfile destroy --file helmfile.yaml
+    @echo "\nDeleting Infra namespace..."
+    -@kubectl delete namespace infra
+
+# Uninstall ArgoCD
+[group('argocd')]
+[confirm("Are you sure you want to delete Argo CD?")]
+uninstall-argocd:
+    @echo "Deleting Argo CD..."
+    -@kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    @echo "\nArgo CD namespace:"
+    @kubectl get all -n argocd
+    @echo "\nDeleting Argo CD namespace..."
+    -@kubectl delete namespace argocd
 
 # Install ArgoCD
 [group('argocd')]

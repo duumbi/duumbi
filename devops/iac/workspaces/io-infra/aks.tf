@@ -7,7 +7,7 @@ data "azurerm_kubernetes_service_versions" "current" {
 resource "azurerm_resource_group" "aks_rg" {
   name     = local.aks_rg_name
   location = local.aks_location_name
-  tags     = local.tags
+  tags     = merge(local.tags, { "service" = "aks" })
 }
 
 resource "azurerm_user_assigned_identity" "aks_id" {
