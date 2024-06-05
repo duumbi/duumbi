@@ -109,7 +109,7 @@ resource "azurerm_dns_a_record" "argocd_infra_ne_duumbi_io" {
   resource_group_name = azurerm_resource_group.main_rg.name
   ttl                 = 300
   records             = [azurerm_public_ip.ingress[0].ip_address]
-  tags                = local.tags
+  tags                = merge(local.tags, { "kubernetes" = "ingress", "service" = "argocd" })
 }
 
 ### Local DNS records ---------------------------------------------------------

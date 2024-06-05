@@ -1,10 +1,15 @@
 client_secret := env('ARGO_SSO_CLIENT_SECRET', '')
 admin_group := env('AZURE_K8S_ADMINISTRATOR_GROUP', '')
 
+export AZURE_TENANT_ID := `az account show | jq -c --raw-output '.tenantId'`
+
 # List tasks
 [private]
 default:
     @just --list --unsorted
+
+demo:
+    @echo "Env: $AZURE_TENANT_ID"
 
 # Initialize Doppler CLI and Azure CLI
 init:
@@ -49,7 +54,7 @@ _config-argocd:
     #!/usr/bin/env sh
     echo "K8S Location: $K8S_LOCATION"
     echo "K8S Environment: $K8S_ENVIRONMENT"
-    #envsubst < argocd-ingress.yaml | kubectl apply -f -
+    #envsubst < argocd-ingress.yaml | kubectl apply -f - && sleep 1
     #envsubst '$AZURE_TENANT_ID $ARGO_SSO_CLIENT_ID $ARGO_URL' < argocd/argocd-cm.yaml | kubectl apply -f -
     export K8S_ADMIN_GROUP_ID=$(az ad group show --group {{admin_group}} | jq -c --raw-output '.id')
     envsubst < argocd/argocd-rbac-cm.yaml | kubectl apply -f -
