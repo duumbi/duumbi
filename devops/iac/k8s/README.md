@@ -73,6 +73,17 @@ Edit the argocd-secret:
 ``` shell
 > kubectl edit secret argocd-secret -n argocd
 ```
+``` yaml
+apiVersion: v1
+kind: Secret
+data:
+  oidc.azure.clientSecret: <base64_encoded_secret>
+  ...
+```
+Save the changes, and close the editor. You’ll see the changes reflected in Kubernetes when you run this:
+``` shell
+> kubectl get secret argocd-secret -n argocd
+```
 
 Restart Argo CD:
 ``` shell
@@ -83,3 +94,6 @@ just argocd-restart
 ``` shell
 > just uninstall
 ```
+
+## Further reading
+- [Entra ID App Registration Auth using OIDC](https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/microsoft/#entra-id-app-registration-auth-using-oidc)
