@@ -159,7 +159,7 @@ _argocd-initial-password:
     argocd account update-password --account admin --current-password $INIT_ARGO_PWD --new-password $ARGO_ADMIN_PASSWORD
     kubectl delete secret argocd-initial-admin-secret -n argocd
 
-# ArgoCD - Initial Passord
+# ArgoCD - Restart
 [group('argocd')]
 argocd-restart:
     #!/usr/bin/env sh
