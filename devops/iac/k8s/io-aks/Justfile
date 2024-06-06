@@ -4,15 +4,24 @@ admin_group := env('AZURE_K8S_ADMINISTRATOR_GROUP', '')
 azure_dns_zone := "duumbi.io"
 azure_tenant_id := `az account show | jq -c --raw-output '.tenantId'`
 exec_azure_dns_resource_group := "az group list --tag dns_zone --query \"[?contains(tags.dns_zone, '" + azure_dns_zone + "')].{name:name}\" | jq -c --raw-output '.[]|.name'"
+exec_azure_aks_resource_group := "az group list --tag service --query \"[?tags.service=='aks'].{name:name}\" | jq -c --raw-output '.[]|.name'"
 exec_argo_host := "az network dns record-set a list -g $azure_dns_resource_group -z " + azure_dns_zone + " --query \"[?metadata.service != null && contains(metadata.service, 'argocd')]\" | jq -c --raw-output '.[]|.fqdn'"
-
 
 # List tasks
 [private]
 default:
-    @just --list --unsorted
+    @echo "Azure:"
+    @echo "\tDNS Zone: \t\t{{azure_dns_zone}}"
+    @echo "\tEnvironment Name: \t$(az account show | jq -c --raw-output '.environmentName')"
+    @echo "\tTenant Name: \t\t$(az account show | jq -c --raw-output '.tenantDisplayName')"
+    @echo "\tSubscription Name: \t$(az account show | jq -c --raw-output '.name')\n"
+    @echo "Doppler Config:"
+    @doppler configs get
+    @echo ""
+    @just --list
 
 # Initialize Doppler CLI and Azure CLI
+[group('setup')]
 init:
     doppler setup -p ias-k8s
     @doppler run -- just _init-az
@@ -23,17 +32,20 @@ _init-az:
     @az account show --query "{EnvironmentName:environmentName,Name:name}" -o table
 
 # Install K8s resources
+[group('setup')]
 install:
-    @just install-infra-charts
+    @just infra-charts-install
+    @just argocd-install
 
 # Uninstall K8s resources
+[group('setup')]
 uninstall:
-    @just uninstall-infra-charts
-    @just uninstall-argocd
+    @just infra-charts-uninstall
+    @just argocd-uninstall
 
 # Installing Infra charts
 [group('infra')]
-install-infra-charts:
+infra-charts-install:
     @echo "\nCreating Infra namespace..."
     -@kubectl create namespace infra
     @kubectl label namespace infra cert-manager.io/disable-validation=true
@@ -41,37 +53,25 @@ install-infra-charts:
     @helm repo add bitnami https://charts.bitnami.com/bitnami
     @helm repo add jetstack https://charts.jetstack.io
     @helm repo update
-    @doppler run -- just _install-infra-charts
+    @doppler run -- just _infra-charts-install
 
-_install-infra-charts:
+_infra-charts-install:
     #!/usr/bin/env sh
     export AKS_LOADBALANCER_IP=$(az network public-ip show -g duumbi-io-$K8S_ENVIRONMENT-$K8S_LOCATION-aks-node-rg -n duumbi-io-$K8S_ENVIRONMENT-$K8S_LOCATION-aks-ingress-ip | jq -c --raw-output '.ipAddress')
     echo "\nAKS LoadBalancer IP: $AKS_LOADBALANCER_IP"
+    azure_aks_resource_group=$({{exec_azure_aks_resource_group}})
+    echo "\nAKS Resource Group: $azure_aks_resource_group"
+    export K8S_AKS_DNS_CLIENT_ID=$(az identity list -g $azure_aks_resource_group --query "[?name=='aks-id']"  | jq -c --raw-output '.[]|.clientId')
     cd infra-charts && helmfile apply --file helmfile.yaml sync
-
-demo:
-    #!/usr/bin/env bash
-    echo "AZURE_DNS_ZONE: {{azure_dns_zone}}"
-    echo "AZURE_TENANT_ID: {{azure_tenant_id}}"
-    azure_dns_resource_group=$({{exec_azure_dns_resource_group}})
-    echo $azure_dns_resource_group
-    _argo_host=$({{exec_argo_host}})
-    argo_host="https://${_argo_host%.}"
-    echo $argo_host
-
-_install-charts:
-    #!/usr/bin/env sh
-    export AKS_LOADBALANCER_IP=$(az network public-ip show -g duumbi-io-$K8S_ENVIRONMENT-$K8S_LOCATION-aks-node-rg -n duumbi-io-$K8S_ENVIRONMENT-$K8S_LOCATION-aks-ingress-ip | jq -c --raw-output '.ipAddress')
-    echo "AKS LoadBalancer IP: $AKS_LOADBALANCER_IP"
-    helmfile apply --file helmfile.yaml sync
-    envsubst < cluster-issuer.yaml | kubectl apply -f -
-
-
+    export HOSTED_ZONE={{azure_dns_zone}}
+    export AZURE_DNS_RESOURCE_GROUP=$({{exec_azure_dns_resource_group}})
+    echo "nCreating ClusterIssuer..."
+    envsubst < cert-manager/cluster-issuer.yaml | kubectl apply -f -
 
 # Uninstall Infra charts
 [group('infra')]
 [confirm("Are you sure you want to delete Infra charts?")]
-uninstall-infra-charts:
+infra-charts-uninstall:
     @echo "Deleting ClusterIssuer..."
     -@kubectl delete -f cert-manager/cluster-issuer.yaml
     @echo "Deleting Infra charts..."
@@ -79,10 +79,16 @@ uninstall-infra-charts:
     @echo "\nDeleting Infra namespace..."
     -@kubectl delete namespace infra
 
+# Install ArgoCD
+[group('argocd')]
+argocd-install:
+    kubectl create namespace argocd
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
 # Uninstall ArgoCD
 [group('argocd')]
 [confirm("Are you sure you want to delete Argo CD?")]
-uninstall-argocd:
+argocd-uninstall:
     @echo "Deleting Argo CD..."
     -@kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
     @echo "\nArgo CD namespace:"
@@ -90,25 +96,74 @@ uninstall-argocd:
     @echo "\nDeleting Argo CD namespace..."
     -@kubectl delete namespace argocd
 
-# Install ArgoCD
-[group('argocd')]
-install-argocd:
-    kubectl create namespace argocd
-    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
 # Configure ArgoCD
 [group('argocd')]
-config-argocd:
-    @doppler run -- just _config-argocd
+argocd-config:
+    @doppler run -- just argocd-ingress-config
+    @doppler run -- just _argocd-initial-password
+    @doppler run -- just argocd-cm-config
+    @doppler run -- just argocd-rbac-cm-config
+    @doppler run -- just _argocd-sso-secret
 
-_config-argocd:
+# Configure ArgoCD - Ingress
+[group('argocd')]
+argocd-ingress-config:
     #!/usr/bin/env sh
-    echo "K8S Location: $K8S_LOCATION"
-    echo "K8S Environment: $K8S_ENVIRONMENT"
-    #envsubst < argocd-ingress.yaml | kubectl apply -f - && sleep 1
-    #envsubst '$AZURE_TENANT_ID $ARGO_SSO_CLIENT_ID $ARGO_URL' < argocd/argocd-cm.yaml | kubectl apply -f -
+    azure_dns_resource_group=$({{exec_azure_dns_resource_group}})
+    _argo_host=$({{exec_argo_host}})
+    export ARGO_HOST="${_argo_host%.}"
+    echo "ArgoCD Host: $ARGO_HOST"
+    envsubst < argocd/argocd-ingress.yaml | kubectl apply -f - && sleep 1
+
+# Configure ArgoCD - CM
+[group('argocd')]
+argocd-cm-config:
+    #!/usr/bin/env sh
+    azure_dns_resource_group=$({{exec_azure_dns_resource_group}})
+    _argo_host=$({{exec_argo_host}})
+    export ARGO_HOST="${_argo_host%.}"
+    export ARGO_URL="https://${ARGO_HOST}"
+    export AZURE_TENANT_ID={{azure_tenant_id}}
+    echo "ArgoCD URL: $ARGO_URL"
+    envsubst '$AZURE_TENANT_ID $ARGO_SSO_CLIENT_ID $ARGO_URL' < argocd/argocd-cm.yaml | kubectl apply -f - && sleep 1
+
+# Configure ArgoCD - RBAC-CM
+[group('argocd')]
+argocd-rbac-cm-config:
+    #!/usr/bin/env sh
     export K8S_ADMIN_GROUP_ID=$(az ad group show --group {{admin_group}} | jq -c --raw-output '.id')
     envsubst < argocd/argocd-rbac-cm.yaml | kubectl apply -f -
     echo "Encoded secret: $(echo {{client_secret}} | base64)"
+    echo "Run: kubectl edit secret argocd-secret -n argocd"
 
+# ArgoCD - SSO Secret
+[group('argocd')]
+argocd-sso-secret:
+    @doppler run -- just _argocd-sso-secret
 
+_argocd-sso-secret:
+    #!/usr/bin/env sh
+    echo "Encoded secret: \n\n\t$(echo {{client_secret}} | base64)"
+    echo "\nEdit the argocd-secret and restart Argo CD: \n> kubectl edit secret argocd-secret -n argocd"
+
+# ArgoCD - Initial Passord
+[group('argocd')]
+argocd-initial-password:
+    @doppler run -- just _argocd-initial-password
+
+[confirm("Please check whether the ArgoCD Ingress Controller is available?")]
+_argocd-initial-password:
+    #!/usr/bin/env sh
+    export INIT_ARGO_PWD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
+    argocd login argocd.infra-ne.duumbi.io --username admin --password $INIT_ARGO_PWD --grpc-web
+    argocd account update-password --account admin --current-password $INIT_ARGO_PWD --new-password $ARGO_ADMIN_PASSWORD
+    kubectl delete secret argocd-initial-admin-secret -n argocd
+
+# ArgoCD - Initial Passord
+[group('argocd')]
+argocd-restart:
+    #!/usr/bin/env sh
+    export ARGO_POD_NAMES=$(kubectl get pods -n argocd -o jsonpath='{.items[*].metadata.name}')
+    for pod in $ARGO_POD_NAMES; do
+        kubectl delete pod "$pod" -n argocd
+    done

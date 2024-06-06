@@ -1,3 +1,13 @@
+# K8S
+
+- Namespaces:
+    - infra
+    - argocd
+- Services
+    - [Ingress NGINX Controller](https://kubernetes.github.io/ingress-nginx/)
+    - [Cloud native certificate management](https://cert-manager.io/)
+    - [ArgoCD](https://argo-cd.readthedocs.io/)
+
 
 ## Prerequisites
 
@@ -19,24 +29,57 @@ Setup [Argo CD CLI](https://argo-cd.readthedocs.io/en/stable/cli_installation/)
 > brew install argocd
 ```
 
-## K8S Configuration
+### just
+Setup [just](https://github.com/casey/just)
 
 ``` shell
-> doppler run -- ./config.sh
+> brew install just
 ```
-- Set AKS LoadBalancer IP
-- Creating namespaces:
-    - infra
-    - argocd
-- Installing Helm charts
-    - ingress-nginx
-    - cert-manager
-- Creating Cluster Issuer
-- Installing ArgoCD
-- Creating ArgoCD Ingress
 
-### Argo CD - SSO Configuration
+
+## K8S Setup
+
+### 1, Initialize Doppler CLI and Azure CLI
 ``` shell
-> cd sso
-> doppler run -- ./config-argocd-sso.sh
+> just init
+```
+
+### 2, Install K8s resources
+``` shell
+> just install
+```
+
+Check initial secret:
+``` shell
+> kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+
+If secrets "argocd-initial-admin-secret" not found.
+``` shell
+# Invalidating Admin Credentials:
+> kubectl patch secret argocd-secret -n argocd -p '{"data": {"admin.password": null, "admin.passwordMtime": null}}'
+
+# Restart Argo CD
+just argocd-restart
+```
+
+### 3, Configure ArgoCD
+> **_NOTE:_**  Before you start, check the Argo CD URL.
+``` shell
+> just argocd-config
+```
+
+Edit the argocd-secret:
+``` shell
+> kubectl edit secret argocd-secret -n argocd
+```
+
+Restart Argo CD:
+``` shell
+just argocd-restart
+```
+
+## K8S Uninstall
+``` shell
+> just uninstall
 ```
