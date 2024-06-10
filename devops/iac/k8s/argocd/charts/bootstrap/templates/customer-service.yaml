@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: customer-service
+  namespace: argocd
+spec:
+  destination:
+    namespace: {{ .Values.namespace }}
+    server: {{ .Values.cluster }}
+  project: {{ .Values.project }}
+  source:
+    helm:
+        releaseName: customer-service
+        valueFiles:
+        - values-live.yaml
+    path: devops/iac/k8s/argocd/charts/customer-service
+    repoURL: https://github.com/duumbi/duumbi.git
+    targetRevision: main

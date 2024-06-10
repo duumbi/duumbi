@@ -8,6 +8,12 @@ metadata:
     app.kubernetes.io/part-of: argocd
 data:
   policy.csv: |
-    g, $K8S_ADMIN_GROUP_ID, role:admin
+    p, role:org-admin, applications, *, */*, allow
+    p, role:org-admin, clusters, get, *, allow
+    p, role:org-admin, repositories, get, *, allow
+    p, role:org-admin, repositories, create, *, allow
+    p, role:org-admin, repositories, update, *, allow
+    p, role:org-admin, repositories, delete, *, allow
+    g, $K8S_ADMIN_GROUP_ID, role:org-admin
 
   #policy.default: role:readonly

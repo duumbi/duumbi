@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: duumbi
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  description: "Duumbi Project"
+  destinations:
+    - namespace: "duumbi"
+      server: https://kubernetes.default.svc
+      name: in-cluster
+  orphanedResources:
+    warn: true
+  sourceRepos:
+    - "https://github.com/duumbi/duumbi.git"
