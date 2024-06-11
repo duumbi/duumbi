@@ -16,4 +16,7 @@ spec:
     repoURL: https://github.com/duumbi/duumbi.git
     targetRevision: HEAD
   syncPolicy:
-    automated: {}
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
