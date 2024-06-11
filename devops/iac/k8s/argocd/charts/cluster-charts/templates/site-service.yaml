@@ -1,10 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: customer-service
+  name: site-service
   namespace: argocd
   labels:
-     environment: live
+     environment: {{ .Values.environment }}
+     location: {{ .Values.location }}
 spec:
   destination:
     namespace: {{ .Values.namespace }}
@@ -12,10 +13,10 @@ spec:
   project: {{ .Values.project }}
   source:
     helm:
-        releaseName: customer-service
+        releaseName: site-service
         valueFiles:
-        - values-live.yaml
-    path: devops/iac/k8s/argocd/charts/customer-service
+        - values-live-ne.yaml
+    path: devops/iac/k8s/argocd/charts/site-service
     repoURL: https://github.com/duumbi/duumbi.git
     targetRevision: main
   syncPolicy:

@@ -11,7 +11,7 @@ spec:
   source:
     helm:
       valueFiles:
-      - values.yaml
+      - values-$K8S_ENVIRONMENT-$K8S_LOCATION.yaml
     path: devops/iac/k8s/argocd/charts/cluster-charts
     repoURL: https://github.com/duumbi/duumbi.git
     targetRevision: HEAD

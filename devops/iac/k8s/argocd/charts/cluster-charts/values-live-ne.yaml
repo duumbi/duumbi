@@ -6,3 +6,5 @@ location: ne
 
 host:
   argo: argocd.infra-ne.duumbi.io
+  site-api: api.site-ne.duumbi.io
+  duumbi-api: api.duumbi-ne.duumbi.io

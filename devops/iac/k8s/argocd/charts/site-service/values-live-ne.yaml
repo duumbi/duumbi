@@ -1,5 +1,6 @@
 app:
   environment: live
+  location: ne
   replicaCount: 1
   type: service
   container:

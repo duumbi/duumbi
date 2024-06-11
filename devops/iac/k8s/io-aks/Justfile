@@ -168,20 +168,6 @@ argocd-restart:
         kubectl delete pod "$pod" -n argocd
     done
 
-# Configure ArgoCD - GitHub
-[group('argocd')]
-argocd-github-config:
-    @doppler run -- just _argocd-github-config
-
-_argocd-github-config:
-    #!/usr/bin/env bash
-    export GITHUB_TYPE_B64=$(echo -n "git")
-    export GITHUB_URL_B64=$(echo -n "https://github.com/duumbi")
-    export GITHUB_PROJECT_B64=$(echo -n "duumbi")
-    export GITHUB_APP_ID_B64=$(echo -n $GITHUB_APP_ID)
-    export GITHUB_APP_INSTALLATION_ID_B64=$(echo -n $GITHUB_APP_INSTALLATION_ID)
-    export GITHUB_APP_PRIVATE_KEY_B64=$(echo -n $GITHUB_APP_PRIVATE_KEY)
-    envsubst < argocd/argocd-repo-duumbi-secret.yaml | kubectl apply -f -
 
 # Configure ArgoCD - Project
 [group('argocd')]
@@ -191,4 +177,7 @@ argocd-project-config:
 # Configure ArgoCD - Application Bootstrap
 [group('argocd')]
 argocd-app-bootstrap:
-    kubectl apply -f argocd/argocd-application-bootstrap.yaml
+    @doppler run -- just _argocd-app-bootstrap
+
+_argocd-app-bootstrap:
+    envsubst < argocd/argocd-application-bootstrap.yaml | kubectl apply -f -
