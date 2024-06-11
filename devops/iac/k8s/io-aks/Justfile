@@ -31,21 +31,21 @@ _init-az:
     @echo "\nAzure CLI configured:"
     @az account show --query "{EnvironmentName:environmentName,Name:name}" -o table
 
-# Install K8s resources
+# Install K8s resources (Infra, ArgoCD)
 [group('setup')]
 install:
-    @just infra-charts-install
+    @just infra-install
     @just argocd-install
 
-# Uninstall K8s resources
+# Uninstall K8s resources (Infra, ArgoCD)
 [group('setup')]
 uninstall:
-    @just infra-charts-uninstall
+    @just infra-uninstall
     @just argocd-uninstall
 
-# Installing Infra charts
-[group('infra')]
-infra-charts-install:
+# Installing Infra
+[group('setup-infra')]
+infra-install:
     @echo "\nCreating Infra namespace..."
     -@kubectl create namespace infra
     @kubectl label namespace infra cert-manager.io/disable-validation=true
@@ -53,9 +53,9 @@ infra-charts-install:
     @helm repo add bitnami https://charts.bitnami.com/bitnami
     @helm repo add jetstack https://charts.jetstack.io
     @helm repo update
-    @doppler run -- just _infra-charts-install
+    @doppler run -- just _infra-install
 
-_infra-charts-install:
+_infra-install:
     #!/usr/bin/env sh
     export AKS_LOADBALANCER_IP=$(az network public-ip show -g duumbi-io-$K8S_ENVIRONMENT-$K8S_LOCATION-aks-node-rg -n duumbi-io-$K8S_ENVIRONMENT-$K8S_LOCATION-aks-ingress-ip | jq -c --raw-output '.ipAddress')
     echo "\nAKS LoadBalancer IP: $AKS_LOADBALANCER_IP"
@@ -68,10 +68,10 @@ _infra-charts-install:
     echo "nCreating ClusterIssuer..."
     envsubst < cert-manager/cluster-issuer.yaml | kubectl apply -f -
 
-# Uninstall Infra charts
-[group('infra')]
+# Uninstall Infra
+[group('setup-infra')]
 [confirm("Are you sure you want to delete Infra charts?")]
-infra-charts-uninstall:
+infra-uninstall:
     @echo "Deleting ClusterIssuer..."
     -@kubectl delete -f cert-manager/cluster-issuer.yaml
     @echo "Deleting Infra charts..."
@@ -80,13 +80,13 @@ infra-charts-uninstall:
     -@kubectl delete namespace infra
 
 # Install ArgoCD
-[group('argocd')]
+[group('setup-argocd')]
 argocd-install:
     kubectl create namespace argocd
     kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 # Uninstall ArgoCD
-[group('argocd')]
+[group('setup-argocd')]
 [confirm("Are you sure you want to delete Argo CD?")]
 argocd-uninstall:
     @echo "Deleting Argo CD..."
@@ -183,12 +183,12 @@ _argocd-github-config:
     export GITHUB_APP_PRIVATE_KEY_B64=$(echo -n $GITHUB_APP_PRIVATE_KEY | base64)
     envsubst < argocd/argocd-repo-creds.yaml | kubectl apply -f -
 
-# Configure ArgoCD - GitHub
+# Configure ArgoCD - Project
 [group('argocd')]
 argocd-project-config:
     kubectl apply -f argocd/argocd-project.yaml
 
-# Configure ArgoCD - GitHub
+# Configure ArgoCD - Application Bootstrap
 [group('argocd')]
 argocd-app-bootstrap:
     kubectl apply -f argocd/argocd-application-bootstrap.yaml
