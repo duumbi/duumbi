@@ -73,6 +73,18 @@
             },
             "required": ["type", "port"]
         },
+        "ingress": {
+            "description": "Ingress properties",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "host": {
+                    "description": "Host",
+                    "type": "string"
+                }
+            },
+            "required": ["host"]
+        },
         "config": {
             "description": "Config properties",
             "type": "object",

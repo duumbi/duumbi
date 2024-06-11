@@ -12,5 +12,8 @@ service:
   type: LoadBalancer
   port: 80
 
+ingress:
+  host: api.site-ne.duumbi.io
+
 config:
   name: config.yml
