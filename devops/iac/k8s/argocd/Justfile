@@ -1,4 +1,0 @@
-# List tasks
-[private]
-default:
-    @just --list

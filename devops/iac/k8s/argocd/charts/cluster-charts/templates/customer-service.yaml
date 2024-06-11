@@ -16,3 +16,5 @@ spec:
     path: devops/iac/k8s/argocd/charts/customer-service
     repoURL: https://github.com/duumbi/duumbi.git
     targetRevision: main
+  syncPolicy:
+    automated: {}
