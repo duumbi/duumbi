@@ -22,4 +22,4 @@ spec:
           service:
             name: {{ include "service.fullname" . }}
             port:
-              name: 80
+              number: 80
