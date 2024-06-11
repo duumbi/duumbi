@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: customer-service
   namespace: argocd
+  labels:
+     environment: live
 spec:
   destination:
     namespace: {{ .Values.namespace }}
@@ -17,4 +19,7 @@ spec:
     repoURL: https://github.com/duumbi/duumbi.git
     targetRevision: main
   syncPolicy:
-    automated: {}
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
