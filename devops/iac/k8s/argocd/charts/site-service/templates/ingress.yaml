@@ -4,8 +4,6 @@ metadata:
   name: {{ include "service.fullname" . }}
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
   ingressClassName: nginx
   tls:
@@ -22,4 +20,4 @@ spec:
           service:
             name: {{ include "service.fullname" . }}
             port:
-              name: https
+              name: http
