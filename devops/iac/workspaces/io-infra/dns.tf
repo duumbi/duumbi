@@ -112,6 +112,28 @@ resource "azurerm_dns_a_record" "argocd_infra_ne_duumbi_io" {
   tags                = merge(local.tags, { "ingress" = "kubernetes", "service" = "argocd" })
 }
 
+resource "azurerm_dns_a_record" "api_site_ne_duumbi_io" {
+  count = var.environment == "live" && var.aks_enable_ingress ? 1 : 0
+
+  name                = "api.site-ne"
+  zone_name           = local.zone_name
+  resource_group_name = azurerm_resource_group.main_rg.name
+  ttl                 = 300
+  records             = [azurerm_public_ip.ingress[0].ip_address]
+  tags                = merge(local.tags, { "ingress" = "kubernetes", "service" = "site" })
+}
+
+
+resource "azurerm_dns_a_record" "api_ne_duumbi_io" {
+  count = var.environment == "live" && var.aks_enable_ingress ? 1 : 0
+
+  name                = "api.duumbi-ne"
+  zone_name           = local.zone_name
+  resource_group_name = azurerm_resource_group.main_rg.name
+  ttl                 = 300
+  records             = [azurerm_public_ip.ingress[0].ip_address]
+  tags                = merge(local.tags, { "ingress" = "kubernetes", "service" = "duumbi" })
+}
 ### Local DNS records ---------------------------------------------------------
 resource "azurerm_dns_a_record" "whoami_local_duumbi_io" {
   count = var.environment == "live" ? 1 : 0
