@@ -60,7 +60,7 @@
                 "type": {
                     "description": "Service type",
                     "type": "string",
-                    "enum": ["LoadBalancer"]
+                    "enum": ["LoadBalancer", "ClusterIP", "NodePort"]
                 },
                 "port": {
                     "description": "Service port",
