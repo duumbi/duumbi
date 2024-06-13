@@ -1,10 +1,47 @@
 openapi: 3.0.0
 info:
-  title: Duumbi Site Service API
-  description: This is a Duumbi Site Service API documentation
-  version: 0.0.1
+  title: Duumbi Site Service API v1
+  description: "This is a Duumbi Site Service API documentation. API has resource-oriented\
+    \ URLs, accepts JSON-encoded request bodies and returns JSON-encoded responses."
+  contact:
+    name: Duumbi
+    url: https://duumbi.io/
+    email: mail@duumbi.io
+  version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/duumbi/site/0.0.1
+- url: https://virtserver.swaggerhub.com/duumbi/site/1.0.0
   description: SwaggerHub API Auto Mocking
-paths: {}
-components: {}
+- url: "https://api.site-{location}.duumbi.io/{basePath}"
+  description: The production API server
+  variables:
+    location:
+      default: ne
+      enum:
+      - ne
+      - eu
+    basePath:
+      default: v1
+tags:
+- name: user
+  description: User operations
+paths:
+  /user:
+    get:
+      tags:
+      - user
+      summary: Retrieve a user data.
+      operationId: GetUserData
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserData'
+components:
+  schemas:
+    UserData:
+      type: object
+      properties:
+        name:
+          type: string
