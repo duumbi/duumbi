@@ -1,0 +1,10 @@
+openapi: 3.0.0
+info:
+  title: Duumbi Site Service API
+  description: This is a Duumbi Site Service API documentation
+  version: 0.0.1
+servers:
+- url: https://virtserver.swaggerhub.com/duumbi/site/0.0.1
+  description: SwaggerHub API Auto Mocking
+paths: {}
+components: {}
