@@ -3,8 +3,22 @@ info:
   title: Duumbi Site Service API
   description: This is a Duumbi Site Service API documentation
   version: 0.0.1
+  contact:
+    name: 'Duumbi'
+    url: 'https://duumbi.io/'
+    email: mail@duumbi.io
 servers:
 - url: https://virtserver.swaggerhub.com/duumbi/site/0.0.1
   description: SwaggerHub API Auto Mocking
+- url: https://api.site-{location}.duumbi.io/{basePath}
+  description: The production API server
+  variables:
+    location:
+      enum:
+      - ne
+      - eu
+      default: ne
+    basePath:
+      default: v1
 paths: {}
 components: {}
