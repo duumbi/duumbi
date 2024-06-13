@@ -41,6 +41,8 @@ paths:
 components:
   schemas:
     UserData:
+      required:
+      - name
       type: object
       properties:
         name:
