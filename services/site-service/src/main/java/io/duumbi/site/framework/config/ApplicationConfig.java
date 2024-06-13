@@ -11,7 +11,7 @@ import io.duumbi.site.framework.property.ApplicationProperty;
 @EnableCaching
 @EnableConfigurationProperties({ ApplicationProperty.class })
 @ComponentScan({
-        "io.duumbi.site.application.**.controller"
+                "io.duumbi.site.application.**.controller"
 })
 public class ApplicationConfig {
 
