@@ -13,8 +13,8 @@
 			"path": "../applications/duumbi-web-application"
 		},
 		{
-			"name": "Service - Customer Service",
-			"path": "../services/customer-service"
+			"name": "Service - Site Service",
+			"path": "../services/site-service"
 		},
 		{
 			"name": "Service - Duumbi Service",
@@ -31,6 +31,8 @@
 	],
 	"settings": {
 		"liveServer.settings.multiRootWorkspaceName": "Duumbi",
+		"java.configuration.updateBuildConfiguration": "automatic",
+		"java.compile.nullAnalysis.mode": "automatic",
 	},
 	"launch": {
 		"configurations": [
