@@ -71,6 +71,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.okta.spring</groupId>
+			<artifactId>okta-spring-boot-starter</artifactId>
+			<version>3.0.6</version>
+		</dependency>
+		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 			<version>1.5.5.Final</version>
@@ -225,6 +230,7 @@
 								<interfaceOnly>true</interfaceOnly>
 								<asyncNative>true</asyncNative>
 								<useJakartaEe>true</useJakartaEe>
+								<useSpringBoot3>true</useSpringBoot3>
 								<reactive>true</reactive>
 								<dateLibrary>java8</dateLibrary>
 								<skipDefaultInterface>true</skipDefaultInterface>
@@ -255,6 +261,24 @@
 				<spring.profiles.active>dev</spring.profiles.active>
 			</properties>
 		</profile>
+		<profile>
+            <id>mac-aarch64</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                    <arch>aarch64</arch>
+                </os>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty-resolver-dns-native-macos</artifactId>
+                    <scope>runtime</scope>
+                    <classifier>osx-aarch_64</classifier>
+                    <version>4.1.111.Final</version>
+                </dependency>
+            </dependencies>
+        </profile>
 
 	</profiles>
 

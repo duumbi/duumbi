@@ -11,6 +11,7 @@ spring:
 # Server properties
 # --------------------------------------------------------------------------------------------------
 server:
+  port: 3010
   error:
     include-message: always
 
@@ -39,18 +40,28 @@ management:
       enabled: true
 
 # --------------------------------------------------------------------------------------------------
+# Okta properties
+# --------------------------------------------------------------------------------------------------
+okta:
+  oauth2:
+    # Replace with the domain of your Auth0 tenant.
+    issuer: ${AUTH_SITE_API_ISSUER}
+    # Replace with the API Identifier for your Auth0 API.
+    audience: ${AUTH_SITE_API_AUDIENCE}
+
+# --------------------------------------------------------------------------------------------------
 # Application properties
 # --------------------------------------------------------------------------------------------------
 application:
-  environment: ${ENVIRONMENT}
+  environment: ${DOPPLER_ENVIRONMENT}
 
 # --------------------------------------------------------------------------------------------------
 # Logging properties
 # --------------------------------------------------------------------------------------------------
 logging:
   level:
-    root: info
+    root: warn
     org:
-      springframework: info
+      springframework: warn
     io:
       duumbi: info

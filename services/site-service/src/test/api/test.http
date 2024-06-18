@@ -1,0 +1,7 @@
+### Group list
+GET {{siteHost}}/api/v1/user
+Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
+
+### Group list
+GET {{siteHost}}/api/v1/me
+Authorization: Bearer {{$dotenv ACCESS_TOKEN}}

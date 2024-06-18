@@ -3,6 +3,7 @@
 
 # Spring Boot Application
 application-dev.yaml
+.env
 
 # Java
 .java-version
