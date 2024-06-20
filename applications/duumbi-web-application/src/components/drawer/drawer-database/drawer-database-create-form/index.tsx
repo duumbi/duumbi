@@ -43,7 +43,7 @@ export const DrawerDatabaseCreateForm = ({
   onClosed,
 }: FormProps): JSX.Element => {
   const [form] = Form.useForm();
-  const {application, setDatabase} = React.useContext(ApplicationContext) as ApplicationContextType;
+  const {setDatabase} = React.useContext(ApplicationContext) as ApplicationContextType;
 
   useEffect(() => {
     form.resetFields();

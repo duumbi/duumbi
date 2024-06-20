@@ -22,4 +22,11 @@ public class ApplicationProperty {
     @NotNull
     @NotEmpty
     private String environment;
+
+    /**
+     * The URL of the client used to make it an allowed CORS origin.
+     */
+    @NotNull
+    @NotEmpty
+    private String clientOriginUrl;
 }

@@ -5,12 +5,8 @@ import { GoDatabase } from "react-icons/go";
 import { ToolbarButton } from "../../components/designer/toolbar";
 import { ApplicationDesignerConst } from "../../constants/designer-toolbar";
 import { AppTheme } from "../../constants/theme";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import {
-  Database,
-  Collection,
-  Environment,
-  CurrentState,
   CoreProperties,
   ApplicationContextType,
   ApplicationInterface,
@@ -71,16 +67,15 @@ function createBreadcrumbItem(
   };
 }
 
-function createBreadcrumb(application : ApplicationInterface
-): ItemType[] {
+function createBreadcrumb(application: ApplicationInterface): ItemType[] {
   return [
     application?.database
       ? createBreadcrumbItem(application.database, <GoDatabase />)
       : {},
-      application?.database && application?.collection
+    application?.database && application?.collection
       ? createBreadcrumbItem(application.collection, <BsCollection />)
       : {},
-      application?.database && application?.collection && application?.environment
+    application?.database && application?.collection && application?.environment
       ? createBreadcrumbItem(application.environment, <IoIosGitNetwork />)
       : {},
   ];
@@ -89,7 +84,6 @@ function createBreadcrumb(application : ApplicationInterface
 export const ApplicationDesigner = ({
   children,
 }: React.PropsWithChildren): JSX.Element => {
-
   const { application } = useContext(
     ApplicationContext
   ) as ApplicationContextType;
@@ -99,18 +93,15 @@ export const ApplicationDesigner = ({
       <Content>
         <StyledWorkspace>
           <StyledToolbar>
-            {ApplicationDesignerConst.toolbarItems.map((item) => (
-              <ToolbarButton {...item} />
-            ))}
+            {ApplicationDesignerConst.toolbarItems.map(
+              ({ key, ...itemProps }) => (
+                <ToolbarButton key={key} {...itemProps} />
+              )
+            )}
           </StyledToolbar>
           <StyledContent>
             <StyledContentBreadcrumb>
-              <Breadcrumb
-                separator=">"
-                items={createBreadcrumb(
-                  application
-                )}
-              />
+              <Breadcrumb separator=">" items={createBreadcrumb(application)} />
             </StyledContentBreadcrumb>
             {children}
           </StyledContent>

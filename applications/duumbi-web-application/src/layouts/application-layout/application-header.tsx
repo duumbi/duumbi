@@ -53,6 +53,7 @@ export default function ApplicationHeader({
 
   const onClick: MenuProps["onClick"] = (e) => {
     setMenuState(e.key);
+    console.log(`Menu state: ${menuState}`);
 
     if (e.key === MENUITEM_DATABASE) {
       updateDatabaseDrawer();

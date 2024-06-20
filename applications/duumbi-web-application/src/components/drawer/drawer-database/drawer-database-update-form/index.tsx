@@ -20,7 +20,7 @@ export const DrawerDatabaseUpdateForm = ({
         form.resetFields();
     }, [drawerCloseState]);
 
-    const onFinish = (values: any) => {
+    const onFinish = () => {
         // Make API call to save the database
         setLoading(true);
         setTimeout(() => {

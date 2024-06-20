@@ -158,7 +158,7 @@
 			<plugin>
 				<groupId>pl.project13.maven</groupId>
 				<artifactId>git-commit-id-plugin</artifactId>
-				<version>5.0.0</version>
+				<version>4.9.10</version>
 				<configuration>
 					<offline>true</offline>
 				</configuration>
@@ -208,6 +208,7 @@
 						</goals>
 						<configuration>
 							<inputSpec>${project.basedir}/src/main/resources/api/openapi.yaml</inputSpec>
+							<templateDirectory>${project.basedir}/src/main/resources/templates/openapitools</templateDirectory>
 							<generatorName>spring</generatorName>
 							<library>spring-boot</library>
 							<generateApis>true</generateApis>
