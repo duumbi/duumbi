@@ -22,28 +22,87 @@ servers:
     basePath:
       default: v1
 tags:
-- name: user
-  description: User operations
+- name: profile
+  description: Profile operations
 paths:
-  /user:
+  /profiles/{id}:
     get:
       tags:
-      - user
-      summary: Retrieve a user data.
-      operationId: GetUserData
+      - profile
+      summary: Retrieve a user profile.
+      operationId: GetProfile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         "200":
-          description: Success response
+          description: User successfully retrieved.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserData'
+                $ref: '#/components/schemas/Profile'
+        "404":
+          description: Non-existent resource is requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
-    UserData:
+    Profile:
       required:
       - name
       type: object
       properties:
         name:
           type: string
+        email:
+          type: string
+          format: email
+        picture:
+          type: string
+    Error:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: The request is malformed.
+  responses:
+    BadRequest:
+      description: The request is malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authorization information is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Authenticated user doesn't have access to the resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Non-existent resource is requested.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
