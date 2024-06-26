@@ -32,7 +32,24 @@
 		<test.skipUnitTest>false</test.skipUnitTest>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.konghq</groupId>
+				<artifactId>unirest-java-bom</artifactId>
+				<version>4.4.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -85,6 +102,22 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>com.konghq</groupId>
+			<artifactId>unirest-java-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.konghq</groupId>
+			<artifactId>unirest-modules-jackson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.newrelic.agent.java</groupId>
+			<artifactId>newrelic-java</artifactId>
+			<version>8.12.0</version>
+			<scope>provided</scope>
+			<type>zip</type>
+		</dependency>
+
 
 		<!-- openapi-generator-maven-plugin dependencies-->
 		<dependency>
@@ -152,9 +185,40 @@
 							<artifactId>spring-boot-configuration-processor</artifactId>
 							<version>3.3.0</version>
 						</path>
+						<dependency>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>0.2.0</version>
+						</dependency>
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+			<!-- Unzip New Relic Java agent into target/ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.7.1</version>
+				<executions>
+					<execution>
+						<id>unpack-newrelic</id>
+						<phase>package</phase>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<configuration>
+							<includeGroupIds>com.newrelic.agent.java</includeGroupIds>
+							<includeArtifactIds>newrelic-java</includeArtifactIds>
+							<!-- you can optionally exclude files -->
+							<!-- <excludes>**/newrelic.yml</excludes> -->
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>pl.project13.maven</groupId>
 				<artifactId>git-commit-id-plugin</artifactId>
@@ -167,9 +231,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<profiles>
-						<profile>live</profile>
-					</profiles>
+
 					<image>
 						<name>${project.artifactId}</name>
 					</image>
@@ -208,7 +270,8 @@
 						</goals>
 						<configuration>
 							<inputSpec>${project.basedir}/src/main/resources/api/openapi.yaml</inputSpec>
-							<templateDirectory>${project.basedir}/src/main/resources/templates/openapitools</templateDirectory>
+							<templateDirectory>
+								${project.basedir}/src/main/resources/templates/openapitools</templateDirectory>
 							<generatorName>spring</generatorName>
 							<library>spring-boot</library>
 							<generateApis>true</generateApis>
@@ -263,23 +326,23 @@
 			</properties>
 		</profile>
 		<profile>
-            <id>mac-aarch64</id>
-            <activation>
-                <os>
-                    <family>mac</family>
-                    <arch>aarch64</arch>
-                </os>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>io.netty</groupId>
-                    <artifactId>netty-resolver-dns-native-macos</artifactId>
-                    <scope>runtime</scope>
-                    <classifier>osx-aarch_64</classifier>
-                    <version>4.1.111.Final</version>
-                </dependency>
-            </dependencies>
-        </profile>
+			<id>mac-aarch64</id>
+			<activation>
+				<os>
+					<family>mac</family>
+					<arch>aarch64</arch>
+				</os>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>io.netty</groupId>
+					<artifactId>netty-resolver-dns-native-macos</artifactId>
+					<scope>runtime</scope>
+					<classifier>osx-aarch_64</classifier>
+					<version>4.1.111.Final</version>
+				</dependency>
+			</dependencies>
+		</profile>
 
 	</profiles>
 

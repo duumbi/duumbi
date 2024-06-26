@@ -27,8 +27,11 @@ public class SecurityConfig {
         return http
                 .authorizeExchange((auth) -> {
                     auth
-                            .pathMatchers("/actuator/health", "/actuator/info").permitAll()
-                            .pathMatchers("/api/v1/*").authenticated();
+                            .pathMatchers(
+                                    "/actuator/health",
+                                    "/actuator/info")
+                            .permitAll()
+                            .pathMatchers("/api/v1/profiles/*").authenticated();
                     // .pathMatchers("/api/v1/*").hasAuthority("SCOPE_read:profile");
                 })
                 .cors(withDefaults())

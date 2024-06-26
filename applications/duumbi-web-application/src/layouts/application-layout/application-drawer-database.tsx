@@ -4,10 +4,11 @@ import React from "react";
 import { DrawerDatabaseUpdateForm, DrawerDatabaseCreateForm } from "../../components/drawer/drawer-database";
 import { ApplicationContext } from "../../context/application-context";
 import { ApplicationContextType } from "../../types";
+import { ApplicationDrawerType } from "../../constants/enums";
 
 interface DrawerProps {
-  drawerState: boolean;
-  updateDrawer: () => void;
+  drawerState: ApplicationDrawerType;
+  updateDrawer: (drawerType: ApplicationDrawerType) => void;
 }
 
 type FormType = "create" | "update";
@@ -30,7 +31,7 @@ export default function ApplicationDrawerDatabase({
   const onClosed = () => {
     setCloseState(!closeState);
     setFormData({title: "Database", button: "Create new database", formType: "update"});
-    updateDrawer();
+    updateDrawer(ApplicationDrawerType.NONE);
   };
 
   const handleFormData = (formType: FormType) => {
@@ -57,7 +58,7 @@ export default function ApplicationDrawerDatabase({
 
   return (
     <Drawer
-      open={drawerState}
+      open={drawerState === ApplicationDrawerType.DATABASE}
       title={formData.title}
       closable={true}
       maskClosable={true}

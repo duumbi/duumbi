@@ -3,24 +3,23 @@ import { BsCollection } from "react-icons/bs";
 import { MdOutlineHelpOutline } from "react-icons/md";
 import { MenuProps } from "antd";
 import { IoIosGitNetwork } from "react-icons/io";
+import { ApplicationDrawerType } from "./enums";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
-export const MENUITEM_DATABASE = "database";
-
 const HeaderMenuItems: MenuItem[] = [
   {
-    key: MENUITEM_DATABASE,
+    key: ApplicationDrawerType.DATABASE,
     label: "Database",
     icon: <GoDatabase />,
   },
   {
-    key: "collection",
+    key: ApplicationDrawerType.COLLECTION,
     label: "Collection",
     icon: <BsCollection />,
   },
   {
-    key: "environment",
+    key: ApplicationDrawerType.ENVIRONMENT,
     label: "Environment",
     icon: <IoIosGitNetwork />,
   },

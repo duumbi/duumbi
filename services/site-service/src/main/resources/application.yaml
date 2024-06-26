@@ -53,7 +53,7 @@ okta:
 # Application properties
 # --------------------------------------------------------------------------------------------------
 application:
-  environment: ${DOPPLER_ENVIRONMENT}
+  environment: ${SERVICE_ENVIRONMENT}
   client-origin-url: ${CLIENT_ORIGIN_URL}
 
 # --------------------------------------------------------------------------------------------------

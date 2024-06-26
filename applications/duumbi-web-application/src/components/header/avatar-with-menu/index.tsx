@@ -4,6 +4,7 @@ import { CiUser } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { Text, UserAvatar } from "../../base";
 import { styled } from "styled-components";
+import { ApplicationDrawerType } from "../../../constants/enums";
 
 const StyledUserData = styled.div`
   display: flex;
@@ -23,8 +24,13 @@ const StyledDescriptionUserData = styled.div`
   align-items: strecth;
   justify-content: flex-start;
 `;
+interface AvatarWithMenuProps {
+  updateDrawerState: (drawerType: ApplicationDrawerType) => void;
+}
 
-export const AvatarWithMenu = () => {
+export default function AvatarWithMenu({
+  updateDrawerState,
+}: AvatarWithMenuProps) {
   const {user, logout} = useAuth0();
 
   // const {user, logout, getAccessTokenSilently} = useAuth0();
@@ -103,7 +109,7 @@ export const AvatarWithMenu = () => {
               {user?.name}
             </Text>
             <Text disabled style={{ justifyContent: "flex-start" }}>
-              {user?.nickname}
+              {user?.email ? user?.email : user?.nickname}
             </Text>
           </Flex>
         </StyledDescriptionUserData>
@@ -117,6 +123,9 @@ export const AvatarWithMenu = () => {
             key: "profile",
             label: "Your profile",
             icon: <CiUser />,
+            onClick: () => {
+              updateDrawerState(ApplicationDrawerType.PROFILE);
+            }
           },
           {
             key: "signout",

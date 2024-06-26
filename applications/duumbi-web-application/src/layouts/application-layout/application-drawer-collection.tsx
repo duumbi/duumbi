@@ -1,9 +1,10 @@
 import { Button, Col, Drawer, Form, Input, Row, Space } from "antd";
 import { AppTheme } from "../../constants/theme";
+import { ApplicationDrawerType } from "../../constants/enums";
 
 interface DrawerProps {
-  drawerState: boolean;
-  updateDrawer: () => void;
+  drawerState: ApplicationDrawerType;
+  updateDrawer: (drawerType: ApplicationDrawerType) => void;
 }
 
 export default function ApplicationDrawerCollection({
@@ -12,12 +13,12 @@ export default function ApplicationDrawerCollection({
 }: DrawerProps): JSX.Element {
   return (
     <Drawer
-      open={drawerState}
+      open={drawerState === ApplicationDrawerType.COLLECTION}
       title="Collection"
       closable={true}
       maskClosable={true}
       width={720}
-      onClose={() => updateDrawer()}
+      onClose={() => updateDrawer(ApplicationDrawerType.NONE)}
       styles={{
         body: {
           paddingBottom: 80,
@@ -29,7 +30,7 @@ export default function ApplicationDrawerCollection({
       }}
       extra={
         <Space>
-          <Button onClick={() => updateDrawer()} type="primary">
+          <Button onClick={() => updateDrawer(ApplicationDrawerType.NONE)} type="primary">
             Create new collection
           </Button>
         </Space>

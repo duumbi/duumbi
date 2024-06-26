@@ -6,6 +6,8 @@ import ApplicationHeader from "./application-header";
 import ApplicationDrawerDatabase from "./application-drawer-database";
 import ApplicationDrawerCollection from "./application-drawer-collection";
 import ApplicationDrawerEnvironment from "./application-drawer-environment";
+import { ApplicationDrawerType } from "../../constants/enums";
+import ApplicationDrawerProfile from "./application-drawer-profile";
 
 const StyledLayout = styled(Layout)`
   height: 100vh;
@@ -15,36 +17,55 @@ const StyledLayout = styled(Layout)`
 export const ApplicationLayout = ({
   children,
 }: React.PropsWithChildren): JSX.Element => {
-  const [databaseState, setDatabaseState] = useState(false);
-  const [collectionState, setCollectionState] = useState(false);
-  const [environmentState, setEnvironmentState] = useState(false);
+  const [drawerState, setDrawerState] = useState<ApplicationDrawerType>(ApplicationDrawerType.NONE);
 
-  function updateDatabaseDrawer() {
-    setDatabaseState(!databaseState);
+  // const [databaseState, setDatabaseState] = useState(false);
+  // const [collectionState, setCollectionState] = useState(false);
+  // const [environmentState, setEnvironmentState] = useState(false);
+
+  function updateDrawerState(drawerType: ApplicationDrawerType) {
+    setDrawerState(drawerType);
   }
 
-  function updateCollectionDrawer() {
-    setCollectionState(!collectionState);
-  }
+  // function updateDatabaseDrawer() {
+  //   setDatabaseState(!databaseState);
+  // }
 
-  function updateEnvironmentDrawer() {
-    setEnvironmentState(!environmentState);
-  }
+  // function updateCollectionDrawer() {
+  //   setCollectionState(!collectionState);
+  // }
+
+  // function updateEnvironmentDrawer() {
+  //   setEnvironmentState(!environmentState);
+  // }
 
   return (
     <>
       <StyledLayout>
         <ApplicationHeader
-          updateDatabaseDrawer={updateDatabaseDrawer}
-          updateCollectionDrawer={updateCollectionDrawer}
-          updateEnvironmentDrawer={updateEnvironmentDrawer}
+          updateDrawerState={updateDrawerState}
         />
         <ApplicationDesigner>{children}</ApplicationDesigner>
       </StyledLayout>
 
-      <ApplicationDrawerDatabase drawerState={databaseState} updateDrawer={updateDatabaseDrawer} />
-      <ApplicationDrawerCollection drawerState={collectionState} updateDrawer={updateCollectionDrawer} />
-      <ApplicationDrawerEnvironment drawerState={environmentState} updateDrawer={updateEnvironmentDrawer} />
+      <ApplicationDrawerDatabase
+        drawerState={drawerState}
+        updateDrawer={updateDrawerState}
+      />
+      <ApplicationDrawerCollection
+        drawerState={drawerState}
+        updateDrawer={updateDrawerState}
+      />
+      <ApplicationDrawerEnvironment
+        drawerState={drawerState}
+        updateDrawer={updateDrawerState}
+      />
+
+      <ApplicationDrawerProfile
+        drawerState={drawerState}
+        updateDrawer={updateDrawerState}
+      />
+
     </>
   );
 };

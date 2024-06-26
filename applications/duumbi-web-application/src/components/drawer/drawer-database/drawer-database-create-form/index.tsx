@@ -43,7 +43,9 @@ export const DrawerDatabaseCreateForm = ({
   onClosed,
 }: FormProps): JSX.Element => {
   const [form] = Form.useForm();
-  const {setDatabase} = React.useContext(ApplicationContext) as ApplicationContextType;
+  const { setDatabase } = React.useContext(
+    ApplicationContext
+  ) as ApplicationContextType;
 
   useEffect(() => {
     form.resetFields();
@@ -51,7 +53,7 @@ export const DrawerDatabaseCreateForm = ({
 
   const onFinish = (values: any) => {
     // Make API call to save the database
-    setDatabase({key: "bab", name: values.name});
+    setDatabase({ key: "bab", name: values.name });
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -104,11 +106,10 @@ export const DrawerDatabaseCreateForm = ({
                   {option.data.label}
                 </Space>
               )}
-            ></Select>
+            />
           </Form.Item>
         </Col>
       </Row>
-
 
       <Row gutter={16}>
         <Col span={24}>

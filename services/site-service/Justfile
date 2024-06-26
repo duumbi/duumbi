@@ -1,3 +1,7 @@
+package := 'package'
+compile := 'compile'
+docker_secrets :=`doppler secrets download --no-file --format docker`
+
 # List tasks
 [private]
 default:
@@ -11,8 +15,6 @@ access_token:
     #!/usr/bin/env sh
     echo "ACCESS_TOKEN=$(doppler run -- just _access_token | jq -c --raw-output '.access_token')" > src/test/api/.env
 
-
-
 _access_token:
     #!/usr/bin/env python3
     import http.client
@@ -25,3 +27,36 @@ _access_token:
     res = conn.getresponse()
     data = res.read()
     print(data.decode("utf-8"))
+
+# Build application
+build GOAL=package:
+    doppler run -- just _run {{GOAL}}
+
+_build GOAL=package:
+    mvn clean {{GOAL}}
+
+# Launch application
+dev GOAL=compile:
+    doppler run -- just _build {{GOAL}}
+    doppler run -- just _run
+
+_run:
+    mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev"
+
+build_image:
+    docker rm -f site-service
+    docker rmi -f site-service
+    docker build -f Dockerfile -t site-service .
+
+dev_container: build_image
+    just run_container
+
+run_container:
+    doppler secrets download --no-file --format docker > .env
+    docker run -d --name site-service --env-file .env -p 3010:3010 -d site-service
+    rm .env
+
+
+
+
+

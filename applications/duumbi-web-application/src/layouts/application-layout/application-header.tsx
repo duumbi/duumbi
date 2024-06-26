@@ -1,14 +1,12 @@
 import { Menu, MenuProps, Space } from "antd";
 import { Header } from "antd/es/layout/layout";
-import { AvatarWithMenu } from "../../components/header";
+
 
 import { styled } from "styled-components";
 import { AppTheme } from "../../constants/theme";
-import {
-  ApplicationHeaderConst,
-  MENUITEM_DATABASE,
-} from "../../constants/header-menu";
-import { useState } from "react";
+import { ApplicationHeaderConst } from "../../constants/header-menu";
+import { ApplicationDrawerType } from "../../constants/enums";
+import AvatarWithMenu from "../../components/header/avatar-with-menu";
 
 const StyledHeader = styled(Header)`
   display: flex;
@@ -39,28 +37,20 @@ const StyledAvatar = styled.div`
   margin-right: 0;
 `;
 interface ApplicationHeaderProps {
-  updateDatabaseDrawer: () => void;
-  updateCollectionDrawer: () => void;
-  updateEnvironmentDrawer: () => void;
+  updateDrawerState: (drawerType: ApplicationDrawerType) => void;
 }
 
 export default function ApplicationHeader({
-  updateDatabaseDrawer,
-  updateCollectionDrawer,
-  updateEnvironmentDrawer,
+  updateDrawerState,
 }: ApplicationHeaderProps) {
-  const [menuState, setMenuState] = useState("");
 
   const onClick: MenuProps["onClick"] = (e) => {
-    setMenuState(e.key);
-    console.log(`Menu state: ${menuState}`);
-
-    if (e.key === MENUITEM_DATABASE) {
-      updateDatabaseDrawer();
-    } else if (e.key === "collection") {
-      updateCollectionDrawer();
-    } else if (e.key === "environment") {
-      updateEnvironmentDrawer();
+    if (e.key === ApplicationDrawerType.DATABASE) {
+      updateDrawerState(ApplicationDrawerType.DATABASE);
+    } else if (e.key === ApplicationDrawerType.COLLECTION) {
+      updateDrawerState(ApplicationDrawerType.COLLECTION);
+    } else if (e.key === ApplicationDrawerType.ENVIRONMENT) {
+      updateDrawerState(ApplicationDrawerType.ENVIRONMENT);
     }
   };
 
@@ -79,7 +69,7 @@ export default function ApplicationHeader({
       </StyledMenu>
       <StyledAvatar>
         <Space size={8}>
-          <AvatarWithMenu />
+          <AvatarWithMenu updateDrawerState={updateDrawerState}/>
         </Space>
       </StyledAvatar>
     </StyledHeader>
