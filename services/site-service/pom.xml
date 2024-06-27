@@ -193,7 +193,31 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-			<!-- Unzip New Relic Java agent into target/ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+				<executions>
+					<execution>
+						<id>copy-newrelic-yml</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.outputDirectory}/../newrelic</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/resources</directory>
+									<includes>
+										<include>newrelic.yml</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -208,8 +232,7 @@
 						<configuration>
 							<includeGroupIds>com.newrelic.agent.java</includeGroupIds>
 							<includeArtifactIds>newrelic-java</includeArtifactIds>
-							<!-- you can optionally exclude files -->
-							<!-- <excludes>**/newrelic.yml</excludes> -->
+							<excludes>**/newrelic.yml</excludes>
 							<overWriteReleases>false</overWriteReleases>
 							<overWriteSnapshots>false</overWriteSnapshots>
 							<overWriteIfNewer>true</overWriteIfNewer>

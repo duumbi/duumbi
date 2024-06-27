@@ -1,6 +1,5 @@
 package := 'package'
 compile := 'compile'
-docker_secrets :=`doppler secrets download --no-file --format docker`
 
 # List tasks
 [private]
@@ -30,7 +29,7 @@ _access_token:
 
 # Build application
 build GOAL=package:
-    doppler run -- just _run {{GOAL}}
+    doppler run -- just _build {{GOAL}}
 
 _build GOAL=package:
     mvn clean {{GOAL}}
@@ -40,8 +39,12 @@ dev GOAL=compile:
     doppler run -- just _build {{GOAL}}
     doppler run -- just _run
 
+# Run application
+run:
+    doppler run -- just _run
+
 _run:
-    mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev"
+    mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev -Dnewrelic.environment=development -javaagent:./target/newrelic/newrelic.jar"
 
 build_image:
     docker rm -f site-service
