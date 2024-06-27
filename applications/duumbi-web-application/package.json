@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "doppler run -- vite",
+    "tsc": "tsc",
     "build": "tsc && vite build",
     "lint": "eslint . ",
     "preview": "vite preview",
-    "codegen": "rm -rf src/generated-sources/openapi; openapi-generator-cli generate -i ../../services/site-service/src/main/resources/api/openapi.yaml -g typescript-fetch -o src/generated-sources/openapi --additional-properties=supportsES6=true,npmVersion=10.2.3,typescriptThreePlus=true"
+    "codegen": "rm -rf src/generated-sources/openapi; openapi-generator-cli generate -i ../../services/site-service/src/main/resources/api/openapi.yaml -g typescript-fetch -o src/generated-sources/openapi --template-dir custom-templates --additional-properties=supportsES6=true,npmVersion=10.2.3,typescriptThreePlus=true"
   },
   "dependencies": {
     "@auth0/auth0-react": "2.2.4",

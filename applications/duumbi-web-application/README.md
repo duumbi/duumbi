@@ -7,6 +7,12 @@ duumbi web application.
 
 ## Available Scripts
 
+### Generate API
+
+```bash
+    npm run codegen
+```
+
 ### Running the development server.
 
 ```bash
