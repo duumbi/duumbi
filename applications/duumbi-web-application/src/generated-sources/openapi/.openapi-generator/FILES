@@ -1,8 +1,0 @@
-.openapi-generator-ignore
-apis/ProfileApi.ts
-apis/index.ts
-index.ts
-models/ModelError.ts
-models/Profile.ts
-models/index.ts
-runtime.ts
