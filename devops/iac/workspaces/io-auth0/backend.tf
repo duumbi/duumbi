@@ -13,12 +13,12 @@ terraform {
 
     port = {
       source  = "port-labs/port-labs"
-      version = "2.0.8"
+      version = "2.0.9"
     }
 
     auth0 = {
       source  = "auth0/auth0"
-      version = "1.2.1"
+      version = "1.3.0"
     }
   }
 }
