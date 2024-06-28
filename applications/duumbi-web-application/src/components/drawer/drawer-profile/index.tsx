@@ -2,7 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Alert, Descriptions } from "antd";
 import { useEffect, useState } from "react";
 import { Profile } from "../../../generated-sources/openapi";
-import { getProfile } from "../../../middleware/http";
+import { getUserInfo } from "../../../middleware/http";
 
 interface DrawerProfileProps {
   setIsLoading: (value: React.SetStateAction<boolean>) => void;
@@ -11,7 +11,7 @@ interface DrawerProfileProps {
 export const DrawerProfile = ({
   setIsLoading,
 }: DrawerProfileProps): JSX.Element => {
-  const {user, getAccessTokenSilently} = useAuth0();
+  const {getAccessTokenSilently} = useAuth0();
   const [apiResponse, setApiResponse] = useState<Profile>();
   const [error, setError] = useState<string>();
 
@@ -21,12 +21,12 @@ export const DrawerProfile = ({
 
       const token = await getAccessTokenSilently({
         authorizationParams: {
-          scope: "read:profile",
+          scope: "openid profile email",
         },
       });
 
       try {
-        const response = await getProfile(user?.sub ? user.sub : "", token);
+        const response = await getUserInfo(token);
         setApiResponse(response);
         setIsLoading(false);
       } catch (e) {
@@ -64,8 +64,6 @@ export const DrawerProfile = ({
       <Descriptions.Item label="API:Email">
         {apiResponse?.email}
       </Descriptions.Item>
-      <Descriptions.Item label="Auth0:Email">{user?.email}</Descriptions.Item>
-      <Descriptions.Item label="Auth0:name">{user?.name}</Descriptions.Item>
       <Descriptions.Item label="Address">
         No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
       </Descriptions.Item>
