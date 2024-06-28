@@ -17,13 +17,14 @@ import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import io.duumbi.site.framework.property.ApplicationProperty;
+import io.duumbi.site.framework.property.Auth0ManagementApiProperty;
 
 /**
  * Configuration class for the application.
  */
 @Configuration
 @EnableCaching
-@EnableConfigurationProperties({ ApplicationProperty.class })
+@EnableConfigurationProperties({ ApplicationProperty.class, Auth0ManagementApiProperty.class })
 @ComponentScan({
         "io.duumbi.site.application.**.controller",
         "io.duumbi.site.application.**.service"

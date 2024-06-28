@@ -1,7 +1,5 @@
 package io.duumbi.site.application.profile.service;
 
-import java.util.Optional;
-
 import org.springframework.lang.NonNull;
 
 import io.duumbi.site.application.profile.model.ProfileEntity;
@@ -19,17 +17,7 @@ public class ProfileQueryService {
 
     @NonNull
     public Mono<ProfileEntity> getProfile(String id) {
-        var bb = auth0ManagementService.getUser(id)
-                .map(user -> {
-                    ProfileEntity profileEntity = ProfileEntity.builder()
-                            .name(user.getString("name"))
-                            .email(Optional.of(user.optString("email", "")))
-                            .picture(Optional.of(user.getString("picture")))
-                            .build();
-                    return profileEntity;
-                });
-
-        return Mono.justOrEmpty(bb);
+        return Mono.justOrEmpty(auth0ManagementService.getUser(id));
     }
 
 }

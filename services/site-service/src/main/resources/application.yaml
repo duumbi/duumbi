@@ -6,6 +6,9 @@ spring:
     name: site-service
   main:
     banner-mode: "off"
+  cache:
+    cache-names: instruments
+    type: hazelcast
 
 # --------------------------------------------------------------------------------------------------
 # Server properties
@@ -19,6 +22,8 @@ server:
 # Management
 # --------------------------------------------------------------------------------------------------
 management:
+  server:
+    port: 3011
   endpoints:
     web:
       exposure:
@@ -44,10 +49,16 @@ management:
 # --------------------------------------------------------------------------------------------------
 okta:
   oauth2:
-    # Replace with the domain of your Auth0 tenant.
     issuer: ${AUTH_SITE_API_ISSUER}
-    # Replace with the API Identifier for your Auth0 API.
     audience: ${AUTH_SITE_API_AUDIENCE}
+
+auth0:
+  management:
+    api:
+      domain: ${AUTH_MANAGEMENT_API_DOMAIN}
+      client-id: ${AUTH_MANAGEMENT_API_CLIENT_ID}
+      client-secret: ${AUTH_MANAGEMENT_API_CLIENT_SECRET}
+      identifier: ${AUTH_MANAGEMENT_API_IDENTIFIER}
 
 # --------------------------------------------------------------------------------------------------
 # Application properties

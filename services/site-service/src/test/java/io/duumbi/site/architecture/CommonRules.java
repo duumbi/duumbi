@@ -24,8 +24,6 @@ import com.tngtech.archunit.lang.ArchRule;
 
 import io.duumbi.site.framework.stereotype.service.CommandService;
 import io.duumbi.site.framework.stereotype.service.QueryService;
-import io.duumbi.site.framework.stereotype.service.domainservice.DomainCommandService;
-import io.duumbi.site.framework.stereotype.service.domainservice.DomainQueryService;
 
 public class CommonRules {
     //Classes
@@ -57,8 +55,6 @@ public class CommonRules {
                 .andShould().notBeAnnotatedWith(Repository.class)
                 .andShould().notBeAnnotatedWith(QueryService.class)
                 .andShould().notBeAnnotatedWith(CommandService.class)
-                .andShould().notBeAnnotatedWith(DomainCommandService.class)
-                .andShould().notBeAnnotatedWith(DomainQueryService.class)
                 .because(String.format("Classes in %s should not be annotated with Spring annotations",
                         Arrays.toString(packageNames)));
     }
