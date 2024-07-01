@@ -1,5 +1,5 @@
 terraform {
-  required_version = "1.8.5"
+  required_version = "1.9.0"
 
   cloud {
     hostname     = "app.terraform.io"
@@ -13,7 +13,7 @@ terraform {
 
     port = {
       source  = "port-labs/port-labs"
-      version = "2.0.9"
+      version = "2.0.10"
     }
 
     auth0 = {
