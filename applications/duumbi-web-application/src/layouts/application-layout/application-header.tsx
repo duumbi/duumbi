@@ -1,4 +1,4 @@
-import { Menu, MenuProps, Space } from "antd";
+import { Menu, MenuProps, Space, Segmented } from "antd";
 import { Header } from "antd/es/layout/layout";
 
 
@@ -7,12 +7,17 @@ import { AppTheme } from "../../constants/theme";
 import { ApplicationHeaderConst } from "../../constants/header-menu";
 import { ApplicationDrawerType } from "../../constants/enums";
 import AvatarWithMenu from "../../components/header/avatar-with-menu";
+import { CiLight, CiDark } from "react-icons/ci";
 
 const StyledHeader = styled(Header)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 2px solid ${AppTheme.colors.headerBorder};
+`;
+
+const StyledSegmented = styled(Segmented)`
+  margin: 0 38px 0 18px;
 `;
 
 const StyledLogo = styled.div`
@@ -68,6 +73,12 @@ export default function ApplicationHeader({
         />
       </StyledMenu>
       <StyledAvatar>
+        <StyledSegmented
+          options={[
+            { value: 'light', icon: <CiLight /> },
+            { value: 'dark', icon: <CiDark /> },
+          ]}
+        />
         <Space size={8}>
           <AvatarWithMenu updateDrawerState={updateDrawerState}/>
         </Space>

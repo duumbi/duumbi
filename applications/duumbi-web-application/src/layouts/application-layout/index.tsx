@@ -19,25 +19,9 @@ export const ApplicationLayout = ({
 }: React.PropsWithChildren): JSX.Element => {
   const [drawerState, setDrawerState] = useState<ApplicationDrawerType>(ApplicationDrawerType.NONE);
 
-  // const [databaseState, setDatabaseState] = useState(false);
-  // const [collectionState, setCollectionState] = useState(false);
-  // const [environmentState, setEnvironmentState] = useState(false);
-
   function updateDrawerState(drawerType: ApplicationDrawerType) {
     setDrawerState(drawerType);
   }
-
-  // function updateDatabaseDrawer() {
-  //   setDatabaseState(!databaseState);
-  // }
-
-  // function updateCollectionDrawer() {
-  //   setCollectionState(!collectionState);
-  // }
-
-  // function updateEnvironmentDrawer() {
-  //   setEnvironmentState(!environmentState);
-  // }
 
   return (
     <>
