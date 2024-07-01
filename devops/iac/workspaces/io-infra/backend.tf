@@ -1,5 +1,5 @@
 terraform {
-  required_version = "1.8.5"
+  required_version = "1.9.0"
 
   cloud {
     hostname     = "app.terraform.io"
@@ -12,12 +12,12 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.109.0"
+      version = "3.110.0"
     }
 
     port = {
       source  = "port-labs/port-labs"
-      version = "2.0.9"
+      version = "2.0.10"
     }
 
     doppler = {
