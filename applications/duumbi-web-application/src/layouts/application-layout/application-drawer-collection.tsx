@@ -1,5 +1,4 @@
 import { Button, Col, Drawer, Form, Input, Row, Space } from "antd";
-import { AppTheme } from "../../constants/theme";
 import { ApplicationDrawerType } from "../../constants/enums";
 
 interface DrawerProps {
@@ -22,10 +21,6 @@ export default function ApplicationDrawerCollection({
       styles={{
         body: {
           paddingBottom: 80,
-        },
-        header: {
-          backgroundColor: AppTheme.colors.drawerHeaderBackground,
-          borderBottom: AppTheme.border.drawerHeaderBorder,
         },
       }}
       extra={

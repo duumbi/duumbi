@@ -1,5 +1,4 @@
 import { Drawer, Spin } from "antd";
-import { AppTheme } from "../../constants/theme";
 import { ApplicationDrawerType } from "../../constants/enums";
 import React from "react";
 import { DrawerProfile } from "../../components/drawer/drawer-profile";
@@ -30,10 +29,6 @@ export default function ApplicationDrawerProfile({
       styles={{
         body: {
           paddingBottom: 80,
-        },
-        header: {
-          backgroundColor: AppTheme.colors.drawerHeaderBackground,
-          borderBottom: AppTheme.border.drawerHeaderBorder,
         },
       }}
     >

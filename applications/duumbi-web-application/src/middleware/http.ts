@@ -1,8 +1,9 @@
 import { Configuration, ConfigurationParameters, GetProfileRequest, Profile, ProfileApi, ProfileFromJSONTyped } from "../generated-sources/openapi";
 
 async function createApiConfiguration(token: string): Promise<Configuration> {
+    const service = import.meta.env.VITE_REACT_APP_SITE_SERVICE
     const configParams: ConfigurationParameters = {
-        basePath: 'http://localhost:3010/api/v1',
+        basePath: `${service}/api/v1`,
         headers: {
             'Authorization': 'Bearer ' + token,
         },
@@ -34,8 +35,6 @@ export async function getUserInfo(token: string): Promise<Profile> {
     });
 
     const resData = await response.json();
-
-    console.log(resData);
 
     if (!response.ok) {
         throw new Error('Failed to update user data.');

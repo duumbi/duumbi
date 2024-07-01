@@ -4,7 +4,6 @@ import { styled } from "styled-components";
 import { GoDatabase } from "react-icons/go";
 import { ToolbarButton } from "../../components/designer/toolbar";
 import { ApplicationDesignerConst } from "../../constants/designer-toolbar";
-import { AppTheme } from "../../constants/theme";
 import { useContext } from "react";
 import {
   CoreProperties,
@@ -16,12 +15,7 @@ import { BsCollection } from "react-icons/bs";
 import { IoIosGitNetwork } from "react-icons/io";
 import { ApplicationContext } from "../../context/application-context";
 
-const StyledDesigner = styled(Layout)`
-  background-color: ${AppTheme.colors.designerBackground};
-`;
-
 const StyledWorkspace = styled.div`
-  background-color: ${AppTheme.colors.designerBackground};
   display: flex;
   padding-top: 17px;
   padding-left: 17px;
@@ -31,7 +25,7 @@ const StyledToolbar = styled.div`
   top: 80px;
   left: 20px;
   width: 60px;
-  background-color: ${AppTheme.colors.designerToolbarBackground};
+  background-color: ${props => props.theme.toolbarBg};
   border-radius: 27px 27px 27px 27px;
   padding-top: 17px;
   padding-bottom: 17px;
@@ -89,7 +83,7 @@ export const ApplicationDesigner = ({
   ) as ApplicationContextType;
 
   return (
-    <StyledDesigner>
+    <Layout>
       <Content>
         <StyledWorkspace>
           <StyledToolbar>
@@ -107,6 +101,6 @@ export const ApplicationDesigner = ({
           </StyledContent>
         </StyledWorkspace>
       </Content>
-    </StyledDesigner>
+    </Layout>
   );
 };

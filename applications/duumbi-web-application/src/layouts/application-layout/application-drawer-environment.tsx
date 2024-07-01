@@ -1,5 +1,4 @@
 import { Button, Col, Drawer, Form, Input, Row, Space } from "antd";
-import { AppTheme } from "../../constants/theme";
 import { LuClipboardCopy } from "react-icons/lu";
 import { ApplicationDrawerType } from "../../constants/enums";
 
@@ -23,10 +22,6 @@ export default function ApplicationDrawerEnvironment({
       styles={{
         body: {
           paddingBottom: 80,
-        },
-        header: {
-          backgroundColor: AppTheme.colors.drawerHeaderBackground,
-          borderBottom: AppTheme.border.drawerHeaderBorder,
         },
       }}
       extra={

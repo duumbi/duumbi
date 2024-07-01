@@ -1,16 +1,33 @@
 export const AppTheme = {
     colors: {
-        primary: "#9C36B5",
-        headerBorder: "#dbceff",
-        designerBackground: "#f5f5f5",
-        designerToolbarBackground: "#ffffff",
-        drawerHeaderBackground: "#f5f5f5",
-        drawerHeaderBorder: "#dbceff",
         informationTextColor: "#a5f3fc",
         informationBackground: "#0891b2",
     },
-    border: {
-        drawerHeaderBorder: "1px solid #dbceff"
+    light: {
+        colors: {
+            primary: "#9C36B5",
+            toolbarBg: "#ffffff",
+        },
+        layout: {
+            bodyBg: "#f5f5f5",
+            headerBg: "#ffffff",
+        },
+        menu: {
+            itemBg: "#ffffff"
+        }
+    },
+    dark: {
+        colors: {
+            primary: "#9C36B5",
+            toolbarBg: "#1f1f1f",
+        },
+        layout: {
+            bodyBg: "#1a1a1a",
+            headerBg: "#1a1a1a",
+        },
+        menu: {
+            itemBg: "#1a1a1a"
+        }
     }
 
 }

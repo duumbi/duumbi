@@ -1,5 +1,4 @@
 import { Button, Drawer, Empty, Space, Spin } from "antd";
-import { AppTheme } from "../../constants/theme";
 import React from "react";
 import { DrawerDatabaseUpdateForm, DrawerDatabaseCreateForm } from "../../components/drawer/drawer-database";
 import { ApplicationContext } from "../../context/application-context";
@@ -67,10 +66,6 @@ export default function ApplicationDrawerDatabase({
       styles={{
         body: {
           paddingBottom: 80,
-        },
-        header: {
-          backgroundColor: AppTheme.colors.drawerHeaderBackground,
-          borderBottom: AppTheme.border.drawerHeaderBorder,
         },
       }}
       extra={

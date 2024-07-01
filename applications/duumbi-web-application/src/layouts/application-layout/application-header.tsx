@@ -1,11 +1,8 @@
 import { Menu, MenuProps, Space, Segmented } from "antd";
 import { Header } from "antd/es/layout/layout";
-
-
 import { styled } from "styled-components";
-import { AppTheme } from "../../constants/theme";
 import { ApplicationHeaderConst } from "../../constants/header-menu";
-import { ApplicationDrawerType } from "../../constants/enums";
+import { ApplicationDrawerType, ThemeType } from "../../constants/enums";
 import AvatarWithMenu from "../../components/header/avatar-with-menu";
 import { CiLight, CiDark } from "react-icons/ci";
 
@@ -13,7 +10,6 @@ const StyledHeader = styled(Header)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom: 2px solid ${AppTheme.colors.headerBorder};
 `;
 
 const StyledSegmented = styled(Segmented)`
@@ -26,7 +22,7 @@ const StyledLogo = styled.div`
 `;
 
 const StyledMenu = styled.div`
-  flex-grow: 1;
+  flex-grow: 1000;
   margin-left: auto;
   margin-right: 0;
   align-items: right;
@@ -43,12 +39,12 @@ const StyledAvatar = styled.div`
 `;
 interface ApplicationHeaderProps {
   updateDrawerState: (drawerType: ApplicationDrawerType) => void;
+  setTheme: (t: ThemeType) => void;
 }
 
 export default function ApplicationHeader({
-  updateDrawerState,
+  updateDrawerState, setTheme
 }: ApplicationHeaderProps) {
-
   const onClick: MenuProps["onClick"] = (e) => {
     if (e.key === ApplicationDrawerType.DATABASE) {
       updateDrawerState(ApplicationDrawerType.DATABASE);
@@ -75,9 +71,12 @@ export default function ApplicationHeader({
       <StyledAvatar>
         <StyledSegmented
           options={[
-            { value: 'light', icon: <CiLight /> },
-            { value: 'dark', icon: <CiDark /> },
+            { value: ThemeType.light, icon: <CiLight /> },
+            { value: ThemeType.dark, icon: <CiDark /> },
           ]}
+          onChange={(value) => {
+            setTheme(value === ThemeType.light ? ThemeType.light : ThemeType.dark);
+          }}
         />
         <Space size={8}>
           <AvatarWithMenu updateDrawerState={updateDrawerState}/>
