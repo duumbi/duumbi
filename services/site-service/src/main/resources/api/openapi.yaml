@@ -59,7 +59,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    put:
+    delete:
+      tags:
+      - profile
+      summary: Delete a user profile
+      description: Delete an existing profile.
+      operationId: DeleteProfile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Profile successfully deleted.
+        "400":
+          description: The request is malformed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Authorization information is missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Authenticated user doesn't have access to the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "429":
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Non-existent resource is requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
       tags:
       - profile
       summary: Update a user profile
@@ -88,35 +135,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Profile'
-        "400":
-          description: The request is malformed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        "404":
-          description: Non-existent resource is requested.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    delete:
-      tags:
-      - profile
-      summary: Delete a user profile
-      description: Delete an existing profile.
-      operationId: DeleteProfile
-      parameters:
-      - name: id
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      responses:
-        "204":
-          description: Profile deleted successfully.
         "400":
           description: The request is malformed.
           content:
@@ -173,6 +191,12 @@ components:
             $ref: '#/components/schemas/Error'
     NotFound:
       description: Non-existent resource is requested.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Too many requests
       content:
         application/json:
           schema:
