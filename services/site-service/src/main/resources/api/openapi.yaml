@@ -30,6 +30,7 @@ paths:
       tags:
       - profile
       summary: Retrieve a user profile.
+      description: Retrieves the details of an existing profile.
       operationId: GetProfile
       parameters:
       - name: id
@@ -46,6 +47,64 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Profile'
+        "404":
+          description: Non-existent resource is requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - profile
+      summary: Update a user profile
+      description: Update an existing profile. Returns a profile object if the update
+        is succeded.
+      operationId: UpdateProfile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Profile object that you would like to update.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Profile'
+        required: true
+      responses:
+        "200":
+          description: User successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+        "404":
+          description: Non-existent resource is requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - profile
+      summary: Delete a user profile
+      description: Delete an existing profile.
+      operationId: DeleteProfile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Profile deleted successfully.
         "404":
           description: Non-existent resource is requested.
           content:
