@@ -37,7 +37,7 @@ repos:
     rev: v8.18.2
     hooks:
       - id: gitleaks
-        exclude: applications/(site-web-application|duumbi-web-application/public)/js/new_relic.js
+        exclude: applications/(site-web-application|app-web-application/public)/js/new_relic.js
 # SPECIFIC CONF FOR WEB APPLICATION REPOSITORIES
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: "v4.0.0-alpha.8"

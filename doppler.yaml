@@ -1,7 +1,7 @@
 setup:
-  - project: duumbi-web-application
+  - project: app-web-application
     config: dev_personal
-    path: applications/duumbi-web-application/
+    path: applications/app-web-application/
   - project: site-service
     config: dev_personal
     path: services/site-service/

@@ -37,18 +37,3 @@ updates:
     labels:
       - "terraform"
       - "dependencies"
-  # Enable version updates for web-application
-  - package-ecosystem: "npm"
-    directory: /applications/site-web-application
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "04:00"
-      timezone: "Europe/Budapest"
-    labels:
-      - "npm"
-      - "dependencies"
-    groups:
-      npm:
-        patterns:
-          - '*'

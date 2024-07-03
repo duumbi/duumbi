@@ -1,4 +1,0 @@
-identifier: duumbi-web-application
-blueprint: web_application
-properties:
-  applicationName: Duumbi (app.duumbi.io)

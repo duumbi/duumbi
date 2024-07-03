@@ -5,8 +5,8 @@
 			"path": ".."
 		},
 		{
-			"name": "Web Application - Site",
-			"path": "../applications/site-web-application"
+			"name": "Web Application - App",
+			"path": "../applications/app-web-application"
 		},
 		{
 			"name": "Web Application - Duumbi",
