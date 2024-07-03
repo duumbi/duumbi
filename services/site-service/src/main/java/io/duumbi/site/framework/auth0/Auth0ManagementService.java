@@ -3,11 +3,21 @@ package io.duumbi.site.framework.auth0;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 import io.duumbi.site.application.profile.model.ProfileEntity;
 import io.duumbi.site.framework.property.Auth0ManagementApiProperty;
+import kong.unirest.core.JsonNode;
 import kong.unirest.core.Unirest;
 import kong.unirest.core.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +28,18 @@ public class Auth0ManagementService {
 
     @Autowired
     private Auth0ManagementApiProperty auth0ManagementApiProperty;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private record ApiAccess(String apiUrl, Optional<String> accessToken) {}
+
+    private ApiAccess getApiAccess() {
+        return new ApiAccess(
+            String.format("https://%s/api/v2/", auth0ManagementApiProperty.getDomain()),
+            fetchAccessToken()
+        );
+    }
 
     private Optional<String> fetchAccessToken() {
         var apiUrl = String.format("https://%s/oauth/token", auth0ManagementApiProperty.getDomain());
@@ -47,18 +69,17 @@ public class Auth0ManagementService {
     private ProfileEntity translateProfileEntity(JSONObject object) {
         return ProfileEntity.builder()
                 .name(object.getString("name"))
-                .email(Optional.of(object.optString("email", "")))
-                .picture(Optional.of(object.getString("picture")))
+                .email(Optional.ofNullable(object.optString("email", null)))
+                .picture(Optional.ofNullable(object.optString("picture", null)))
                 .build();
     }
 
-    @Cacheable("profile")
+    @Cacheable(value = "profile", key = "#id")
     public ProfileEntity getUser(String id) {
-        var apiUrl = String.format("https://%s/api/v2/", auth0ManagementApiProperty.getDomain());
-        var accessToken = fetchAccessToken();
+        var apiAccess = getApiAccess();
 
-        return accessToken.map(token -> {
-            var response = Unirest.get(apiUrl + "users/{id}")
+        return apiAccess.accessToken.map(token -> {
+            var response = Unirest.get(apiAccess.apiUrl + "users/{id}")
                     .routeParam("id", id)
                     .header("Accept", "application/json")
                     .header("Authorization", "Bearer " + token)
@@ -76,4 +97,61 @@ public class Auth0ManagementService {
         }).orElse(ProfileEntity.empty());
     }
 
+    @CacheEvict(value = "profile", key = "#id")
+    public int deleteUser(String id) {
+        var apiAccess = getApiAccess();
+
+        return apiAccess.accessToken.map(token -> {
+            var response = Unirest.delete(apiAccess.apiUrl + "users/{id}")
+                    .routeParam("id", id)
+                    .header("Authorization", "Bearer " + token)
+                    .asJson();
+
+            if (response.isSuccess()) {
+                log.info("Deleted the remote user profile.");
+                return HttpStatus.NO_CONTENT.value();
+            } else {
+                log.error("Failed to delete user profile (status: {}, message: {})", response.getStatus(),
+                        response.getStatusText());
+                return response.getStatus();
+            }
+        }).orElse(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @CacheEvict(value = "profile", key = "#id")
+    public ProfileEntity updateUser(String id, ProfileEntity profile) {
+        var apiAccess = getApiAccess();
+
+        var apiBodyParam = String.format("\"name\":\"%s\"", profile.getName());
+
+        if (profile.getEmail().isPresent()) {
+            apiBodyParam += String.format(",\"email\":\"%s\"", profile.getEmail().get());
+        }
+        if (profile.getPicture().isPresent()) {
+            apiBodyParam += String.format(",\"picture\":\"%s\"", profile.getPicture().get());
+        }
+
+        var apiBody =  new JsonNode(String.format("{%s}", apiBodyParam));
+
+        return apiAccess.accessToken.map(token -> {
+            var response = Unirest.patch(apiAccess.apiUrl + "users/{id}")
+                    .routeParam("id", id)
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/json")
+                    .header("Authorization", "Bearer " + token)
+                    .body(apiBody)
+                    .asJson();
+
+            if (response.isSuccess()) {
+                log.info("Updated the remote user profile.");
+                var object = response.getBody().getObject();
+                return translateProfileEntity(object);
+            } else {
+                log.error("Failed to update user profile (status: {}, message: {})", response.getStatus(),
+                response.getBody().getObject().optString("message"));
+
+                return ProfileEntity.empty();
+            }
+        }).orElse(ProfileEntity.empty());
+    }
 }

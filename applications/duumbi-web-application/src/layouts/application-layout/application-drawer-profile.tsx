@@ -13,8 +13,10 @@ export default function ApplicationDrawerProfile({
   updateDrawer,
 }: DrawerProps): JSX.Element {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isClosed, setIsClosed] = React.useState<boolean>(false);
 
   const onClosed = () => {
+    setIsClosed(!isClosed);
     updateDrawer(ApplicationDrawerType.NONE);
   };
 
@@ -33,7 +35,7 @@ export default function ApplicationDrawerProfile({
       }}
     >
       <Spin spinning={isLoading}>
-        <DrawerProfile setIsLoading={setIsLoading} />
+        <DrawerProfile setIsLoading={setIsLoading} onClosed={onClosed} isClosed={isClosed}/>
       </Spin>
     </Drawer>
   );

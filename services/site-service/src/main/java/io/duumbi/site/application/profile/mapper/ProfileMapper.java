@@ -9,5 +9,6 @@ import org.mapstruct.InjectionStrategy;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ProfileMapper {
-    Profile convertToDto(ProfileEntity profileEntity);
+    Profile toDto(ProfileEntity profileEntity);
+    ProfileEntity toEntity(Profile profile);
 }

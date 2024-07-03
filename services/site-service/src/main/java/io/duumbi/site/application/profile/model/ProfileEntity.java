@@ -14,6 +14,15 @@ public class ProfileEntity implements Serializable {
     Optional<String> email;
     Optional<String> picture;
 
+    public ProfileEntity(
+            final String name,
+            final Optional<String> email,
+            final Optional<String> picture) {
+        this.name = name;
+        this.email = email;
+        this.picture = picture;
+    }
+
     public static ProfileEntity empty() {
         return ProfileEntity.builder().build();
     }

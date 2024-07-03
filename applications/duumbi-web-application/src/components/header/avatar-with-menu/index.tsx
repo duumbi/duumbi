@@ -4,6 +4,7 @@ import { CiUser } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { Text, UserAvatar } from "../../base";
 import { styled } from "styled-components";
+import { UserOutlined } from "@ant-design/icons";
 import { ApplicationDrawerType } from "../../../constants/enums";
 
 const StyledUserData = styled.div`
@@ -31,7 +32,7 @@ interface AvatarWithMenuProps {
 export default function AvatarWithMenu({
   updateDrawerState,
 }: AvatarWithMenuProps) {
-  const {user, logout} = useAuth0();
+  const { user, logout } = useAuth0();
 
   const userPicture = user
     ? user.picture
@@ -41,7 +42,7 @@ export default function AvatarWithMenu({
     <div>
       <StyledUserData>
         <StyledAvatarUserData>
-          <Avatar src={userPicture} />
+          <Avatar src={userPicture} icon={<UserOutlined />} />
         </StyledAvatarUserData>
         <StyledDescriptionUserData>
           <Flex gap="smal" vertical>
@@ -65,7 +66,7 @@ export default function AvatarWithMenu({
             icon: <CiUser />,
             onClick: () => {
               updateDrawerState(ApplicationDrawerType.PROFILE);
-            }
+            },
           },
           {
             key: "signout",
@@ -73,7 +74,7 @@ export default function AvatarWithMenu({
             icon: <IoIosLogOut />,
             onClick: () => {
               logout({ logoutParams: { returnTo: window.location.origin } });
-            }
+            },
           },
         ]}
       />
@@ -91,11 +92,12 @@ export default function AvatarWithMenu({
       >
         <UserAvatar
           name={user?.name}
-          src={user?.picture}
+          src={userPicture}
+          icon={<UserOutlined />}
           size="default"
           style={{ cursor: "pointer" }}
         />
       </Popover>
     </>
   );
-};
+}

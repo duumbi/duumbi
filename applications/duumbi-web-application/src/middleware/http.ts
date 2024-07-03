@@ -42,3 +42,10 @@ export async function getUserInfo(token: string): Promise<Profile> {
 
     return ProfileFromJSONTyped(resData, false);
 }
+
+export async function updateUserProfile(id: string, profile: Profile, token: string): Promise<Profile> {
+    const apiConfig = await createApiConfiguration(token);
+    const profileApi = new ProfileApi(apiConfig);
+
+    return await profileApi.updateProfile({ id: id, profile: profile });
+}

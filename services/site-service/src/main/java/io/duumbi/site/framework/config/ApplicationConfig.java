@@ -30,7 +30,7 @@ import io.duumbi.site.framework.property.Auth0ManagementApiProperty;
         "io.duumbi.site.application.**.service"
 })
 @Import({
-    ResponseHeadersFilter.class
+        ResponseHeadersFilter.class
 })
 public class ApplicationConfig {
 
@@ -46,6 +46,7 @@ public class ApplicationConfig {
                         HttpMethod.GET.name(),
                         HttpMethod.POST.name(),
                         HttpMethod.PUT.name(),
+                        HttpMethod.PATCH.name(),
                         HttpMethod.DELETE.name()));
         corsConfig.setAllowedHeaders(
                 List.of(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE));
@@ -63,5 +64,4 @@ public class ApplicationConfig {
 
         return new CorsWebFilter(configSource);
     }
-
 }

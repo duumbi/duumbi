@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import { Alert, Button, Col, Form, Input, Image, Row, Card } from "antd";
 import { useEffect, useState } from "react";
 import { Profile } from "../../../generated-sources/openapi";
-import { getUserInfo } from "../../../middleware/http";
+import { getUserInfo, updateUserProfile } from "../../../middleware/http";
 
 const StyledCard = styled(Card)`
   padding-top: 22px;
@@ -12,15 +12,23 @@ const StyledCard = styled(Card)`
 
 interface DrawerProfileProps {
   setIsLoading: (value: React.SetStateAction<boolean>) => void;
+  onClosed: () => void;
+  isClosed: boolean;
 }
 
 export const DrawerProfile = ({
   setIsLoading,
+  onClosed,
+  isClosed,
 }: DrawerProfileProps): JSX.Element => {
-  const { getAccessTokenSilently } = useAuth0();
+  const {user, getAccessTokenSilently } = useAuth0();
   const [profile, setProfile] = useState<Profile>();
   const [error, setError] = useState<string>();
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    form.resetFields();
+  }, [isClosed]);
 
   useEffect(() => {
     async function fetchData() {
@@ -61,9 +69,23 @@ export const DrawerProfile = ({
     return <Alert message="Error" description={error} type="error" showIcon />;
   }
 
-  function onFinish(values: any): void {
-    console.log(values);
-    // const { name, email } = values;
+  async function onFinish(values: any): Promise<void> {
+    setIsLoading(true);
+    const token = await getAccessTokenSilently({
+      authorizationParams: {
+        scope: "openid profile email",
+      },
+    });
+
+    if (user?.sub !== undefined && user.name !== values.name) {
+      await updateUserProfile(user?.sub, values, token);
+      user.name = values.name;
+    }
+
+    setTimeout(() => {
+      setIsLoading(false);
+      onClosed();
+    }, 100);
   }
 
   return (
