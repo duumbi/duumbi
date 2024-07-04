@@ -5,12 +5,12 @@
 			"path": ".."
 		},
 		{
-			"name": "Web Application - App",
-			"path": "../applications/app-web-application"
+			"name": "Web Application",
+			"path": "../applications/site-web-application"
 		},
 		{
-			"name": "Web Application - Duumbi",
-			"path": "../applications/duumbi-web-application"
+			"name": "Web Application - App",
+			"path": "../applications/app-web-application"
 		},
 		{
 			"name": "Service - Site Service",

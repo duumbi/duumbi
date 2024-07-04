@@ -20,3 +20,13 @@ resource "azurerm_dns_cname_record" "app_duumbi_io" {
 
   depends_on = [azurerm_static_web_app.app_swa]
 }
+
+
+# --------------------------------------------------------------
+# New Relic
+resource "newrelic_browser_application" "app_swa" {
+  name                        = "Duumbi.io Web Application - App"
+  cookies_enabled             = true
+  distributed_tracing_enabled = true
+  loader_type                 = "SPA"
+}

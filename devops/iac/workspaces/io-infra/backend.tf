@@ -29,5 +29,10 @@ terraform {
       source  = "BetterStackHQ/better-uptime"
       version = "0.11.1"
     }
+
+    newrelic = {
+      source  = "newrelic/newrelic"
+      version = "3.38.1"
+    }
   }
 }

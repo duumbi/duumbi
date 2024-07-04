@@ -12,3 +12,6 @@ provider "doppler" {
 
 provider "betteruptime" {
 }
+
+provider "newrelic" {
+}
