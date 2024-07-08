@@ -36,10 +36,10 @@ stages:
             name: newRelic
             inputs:
               secureFile: 'app_new_relic.js'
-            displayName: 'Download New Relic Agent'
+            displayName: 'Download New Relic agent'
           - task: CopyFiles@2
             inputs:
               SourceFolder: '$(Agent.TempDirectory)'
               Contents: 'app_new_relic.js'
               TargetFolder: '$(Build.ArtifactStagingDirectory)/applications/app-web-application/public/js'
-            displayName: "Import New Relic Agent"
+            displayName: "Import New Relic agent"
