@@ -1,0 +1,28 @@
+name: App - Web Application
+
+trigger:
+  - none
+
+pr:
+  branches:
+    include:
+      - "*"
+  paths:
+    include:
+      - "applications/app-web-application/**"
+
+variables:
+  system.debug: "false" # Enable or disable debug mode
+
+stages:
+  - stage: deploy_stage
+    displayName: Deploy to stage
+    jobs:
+      - job: build_and_deploy_job
+        displayName: Build and deploy Job
+        condition: or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'PullRequest'))
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - bash: echo '$(Build.Reason)'
+            displayName: Set new variable value
