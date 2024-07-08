@@ -31,7 +31,7 @@ App web application.
     npm run start
 ```
 
-## Learn More
+## Learn More.
 
 To learn more about **Refine**, please check out the [Documentation](https://refine.dev/docs)
 
