@@ -32,5 +32,13 @@ stages:
             displayName: Install Doppler CLI
             env:
               DOPPLER_TOKEN: $(DOPPLER_TOKEN)
-          - bash: echo '$(Build.Reason)'
-            displayName: Set new variable value
+          - task: DownloadSecureFile@1
+            name: newRelic
+            displayName: 'Download New Relic Agent'
+            inputs:
+              secureFile: 'app_new_relic.js'
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: '$(Agent.TempDirectory)'
+              Contents: secureFile
+              TargetFolder: '$(Build.ArtifactStagingDirectory)/applications/app-web-application/public/js'
