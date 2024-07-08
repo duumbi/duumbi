@@ -29,16 +29,17 @@ stages:
           - script: |
               (curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://cli.doppler.com/install.sh || wget -t 3 -qO- https://cli.doppler.com/install.sh) | sudo sh
               doppler configs get
+              env:
+                DOPPLER_TOKEN: $(DOPPLER_TOKEN)
             displayName: Install Doppler CLI
-            env:
-              DOPPLER_TOKEN: $(DOPPLER_TOKEN)
           - task: DownloadSecureFile@1
             name: newRelic
-            displayName: 'Download New Relic Agent'
             inputs:
               secureFile: 'app_new_relic.js'
+            displayName: 'Download New Relic Agent'
           - task: CopyFiles@2
             inputs:
               SourceFolder: '$(Agent.TempDirectory)'
-              Contents: secureFile
+              Contents: 'app_new_relic.js'
               TargetFolder: '$(Build.ArtifactStagingDirectory)/applications/app-web-application/public/js'
+            displayName: "Import New Relic Agent"
