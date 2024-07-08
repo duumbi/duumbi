@@ -24,13 +24,12 @@ stages:
         pool:
           vmImage: "ubuntu-latest"
         variables:
-          - group: doppler-app-web-application
+          - group: doppler-stg-app-web-application
         steps:
           - script: |
               (curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://cli.doppler.com/install.sh || wget -t 3 -qO- https://cli.doppler.com/install.sh) | sudo sh
+              doppler configs get
             displayName: Install Doppler CLI
-          - script: doppler configs get
-            displayName: Build
             env:
               DOPPLER_TOKEN: $(DOPPLER_TOKEN)
           - bash: echo '$(Build.Reason)'
