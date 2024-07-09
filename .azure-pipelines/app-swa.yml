@@ -44,3 +44,7 @@ stages:
               Contents: 'app_new_relic.js'
               TargetFolder: '$(Build.ArtifactStagingDirectory)/applications/app-web-application/public/js'
             displayName: "Import New Relic agent"
+          - script: |
+              command -v doppler
+              echo "DP_PATH=$(command -v doppler)"
+            displayName: Doppler CLI
