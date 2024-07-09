@@ -26,13 +26,24 @@ stages:
         variables:
           - group: doppler-stg-app-web-application
         steps:
+          - task: Cache@2
+            inputs:
+              key: '"doppler" | "$(Agent.OS)"'
+              restoreKeys: |
+                doppler | "$(Agent.OS)"
+              path: /usr/bin/doppler
+              cacheHitVar: DOPPLER_CACHE_RESTORED
+            displayName: Cache Yarn packages
           - script: |
               (curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://cli.doppler.com/install.sh || wget -t 3 -qO- https://cli.doppler.com/install.sh) | sudo sh
-              doppler configs get
+            condition: ne(variables.DOPPLER_CACHE_RESTORED, 'true')
+            displayName: Install Doppler CLI
+          - script: |
               command -v doppler
+              doppler configs get
             env:
               DOPPLER_TOKEN: $(DOPPLER_TOKEN)
-            displayName: Install Doppler CLI
+            displayName: Doppler CLI
           - task: DownloadSecureFile@1
             name: newRelic
             inputs:
@@ -44,7 +55,3 @@ stages:
               Contents: 'app_new_relic.js'
               TargetFolder: '$(Build.ArtifactStagingDirectory)/applications/app-web-application/public/js'
             displayName: "Import New Relic agent"
-          - script: |
-              command -v doppler
-              echo "DP_PATH=$(command -v doppler)"
-            displayName: Doppler CLI
