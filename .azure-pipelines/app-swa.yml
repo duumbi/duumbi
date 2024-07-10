@@ -24,31 +24,48 @@ stages:
         pool:
           vmImage: "ubuntu-latest"
         variables:
-          - group: doppler-stg-app-web-application
+          group: doppler-stg-app-web-application
+          DOPPLER_CACHE_FOLDER: $(Pipeline.Workspace)/.doppler
+          DOPPLER_PATH: '/usr/bin/doppler'
+
         steps:
           - task: Cache@2
             inputs:
               key: '"doppler" | "$(Agent.OS)"'
               restoreKeys: |
                 doppler | "$(Agent.OS)"
-              path: /usr/bin/doppler
+              path: '$(DOPPLER_CACHE_FOLDER)'
               cacheHitVar: DOPPLER_CACHE_RESTORED
-            displayName: Cache Yarn packages
+            displayName: Restore doppler from cache
+
           - script: |
               (curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://cli.doppler.com/install.sh || wget -t 3 -qO- https://cli.doppler.com/install.sh) | sudo sh
+              echo "Creating cache folder if it does not exist"
+              mkdir -p $(DOPPLER_CACHE_FOLDER)
+              echo "Copying doppler to cache folder"
+              cp ${DOPPLER_PATH} $(DOPPLER_CACHE_FOLDER)/
             condition: ne(variables.DOPPLER_CACHE_RESTORED, 'true')
             displayName: Install Doppler CLI
+
+          - script: |
+              cp $(DOPPLER_CACHE_FOLDER)/doppler ${DOPPLER_PATH}
+              sudo chmod +x ${DOPPLER_PATH}
+            condition: eq(variables.DOPPLER_CACHE_RESTORED, 'true')
+            displayName: Install Doppler CLI form cache
+
           - script: |
               command -v doppler
               doppler configs get
             env:
               DOPPLER_TOKEN: $(DOPPLER_TOKEN)
             displayName: Doppler CLI
+
           - task: DownloadSecureFile@1
             name: newRelic
             inputs:
               secureFile: 'app_new_relic.js'
             displayName: 'Download New Relic agent'
+
           - task: CopyFiles@2
             inputs:
               SourceFolder: '$(Agent.TempDirectory)'
