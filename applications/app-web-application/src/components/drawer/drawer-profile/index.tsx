@@ -46,13 +46,12 @@ export const DrawerProfile = ({
         setIsLoading(false);
       } catch (e) {
         if (e instanceof Error) {
+          console.log(e);
           setError("Could not fetch data, please try again later.");
-          newrelic.noticeError(e);
         } else {
           const message =
             "An unexpected error occurred. Please try again later.";
           setError(message);
-          newrelic.noticeError(new Error(message));
         }
         setIsLoading(false);
       }

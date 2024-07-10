@@ -1,4 +1,30 @@
 import { Configuration, ConfigurationParameters, GetProfileRequest, Profile, ProfileApi, ProfileFromJSONTyped } from "../generated-sources/openapi";
+import { ApplicationInterface } from "../types";
+
+export function getAuth0Domain(): string {
+    const domain = import.meta.env.VITE_REACT_APP_AUTH0_DOMAIN;
+    const appitem: ApplicationInterface = JSON.parse(localStorage.getItem("application") || "[]");
+    const { region } = appitem;
+
+    let authDomain = "";
+
+    switch (region) {
+        case "US":
+            authDomain = "us";
+            break;
+        case "EU":
+            authDomain = "eu";
+            break;
+        case "CH":
+            authDomain = "eu";
+            break;
+        default:
+            authDomain = "eu";
+            break;
+    }
+
+    return domain.replace("%REGION%", authDomain);
+}
 
 async function createApiConfiguration(token: string): Promise<Configuration> {
     const service = import.meta.env.VITE_REACT_APP_SITE_SERVICE
@@ -25,7 +51,7 @@ export async function getProfile(sub: string, token: string): Promise<Profile> {
 }
 
 export async function getUserInfo(token: string): Promise<Profile> {
-    const domain = import.meta.env.VITE_REACT_APP_AUTH0_DOMAIN;
+    const domain = getAuth0Domain();
 
     const response = await fetch(`https://${domain}/userinfo`, {
         headers: {

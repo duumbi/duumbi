@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { PropsWithChildren, ReactNode } from "react";
 import { ApplicationInterface } from "../types";
 import { RegionCode } from "../constants/enums";
+import { getAuth0Domain } from "../middleware/http";
 
 interface Auth0ProviderWithNavigateProps {
   children: ReactNode;
@@ -13,30 +14,8 @@ export const Auth0ProviderWithNavigate = ({
 }: PropsWithChildren<Auth0ProviderWithNavigateProps>): JSX.Element | null => {
   const navigate = useNavigate();
 
-  const domain = import.meta.env.VITE_REACT_APP_AUTH0_DOMAIN;
   const clientId = import.meta.env.VITE_REACT_APP_AUTH0_CLIENT_ID;
-
-  const appitem: ApplicationInterface = JSON.parse(localStorage.getItem("application") || "[]");
-  const { region } = appitem;
-
-  let authDomain = "";
-
-  switch (region) {
-    case RegionCode.US:
-      authDomain = "eu";
-      break;
-    case RegionCode.EU:
-      authDomain = "eu";
-      break;
-    case RegionCode.CH:
-      authDomain = "eu";
-      break;
-    default:
-      authDomain = "eu";
-      break;
-  }
-
-  domain.replace("%REGION%", authDomain)
+  const domain = getAuth0Domain();
 
   const onRedirectCallback = (appState?: AppState) => {
     navigate(appState?.returnTo || window.location.pathname);
