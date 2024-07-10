@@ -48,7 +48,7 @@ stages:
             displayName: Install Doppler CLI
 
           - script: |
-              cp $(DOPPLER_CACHE_FOLDER)/doppler ${DOPPLER_PATH}
+              sudo cp $(DOPPLER_CACHE_FOLDER)/doppler ${DOPPLER_PATH}
               sudo chmod +x ${DOPPLER_PATH}
             condition: eq(variables.DOPPLER_CACHE_RESTORED, 'true')
             displayName: Install Doppler CLI form cache
