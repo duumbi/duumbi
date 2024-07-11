@@ -1,8 +1,6 @@
 import { Auth0Provider, AppState } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import { PropsWithChildren, ReactNode } from "react";
-import { ApplicationInterface } from "../types";
-import { RegionCode } from "../constants/enums";
 import { getAuth0Domain } from "../middleware/http";
 
 interface Auth0ProviderWithNavigateProps {
