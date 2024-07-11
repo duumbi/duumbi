@@ -29,6 +29,7 @@ stages:
         condition: or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'PullRequest'))
         pool:
           vmImage: "ubuntu-latest"
+        timeoutInMinutes: 2 # Cancel the job if it hasn't completed after 60 minutes
         variables:
           group: stg-app-web-application
 
