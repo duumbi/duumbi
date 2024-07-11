@@ -33,7 +33,7 @@ resource "newrelic_browser_application" "app_swa" {
 
 # --------------------------------------------------------------
 # Port.io
-resource "port_entity" "site_swa_entity" {
+resource "port_entity" "app_swa_entity" {
   identifier = local.app_swa_name
   title      = "Duumbi.io Web Application - App"
   blueprint  = data.terraform_remote_state.idp.outputs.port_azure_static_web_app_identifier
