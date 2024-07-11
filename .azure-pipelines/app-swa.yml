@@ -30,34 +30,10 @@ stages:
         pool:
           vmImage: "ubuntu-latest"
         variables:
-          group: doppler-stg-app-web-application
-          DOPPLER_CACHE_FOLDER: $(Pipeline.Workspace)/.doppler
-          DOPPLER_PATH: '/usr/bin/doppler'
+          group: stg-app-web-application
 
         steps:
-          - task: Cache@2
-            inputs:
-              key: '"doppler" | "$(Agent.OS)"'
-              restoreKeys: |
-                doppler | "$(Agent.OS)"
-              path: '$(DOPPLER_CACHE_FOLDER)'
-              cacheHitVar: DOPPLER_CACHE_RESTORED
-            displayName: Restore doppler from cache
-
-          - script: |
-              (curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://cli.doppler.com/install.sh || wget -t 3 -qO- https://cli.doppler.com/install.sh) | sudo sh
-              echo "Creating cache folder if it does not exist"
-              mkdir -p $(DOPPLER_CACHE_FOLDER)
-              echo "Copying doppler to cache folder"
-              cp ${DOPPLER_PATH} $(DOPPLER_CACHE_FOLDER)/
-            condition: ne(variables.DOPPLER_CACHE_RESTORED, 'true')
-            displayName: Install Doppler CLI
-
-          - script: |
-              sudo cp $(DOPPLER_CACHE_FOLDER)/doppler ${DOPPLER_PATH}
-              sudo chmod +x ${DOPPLER_PATH}
-            condition: eq(variables.DOPPLER_CACHE_RESTORED, 'true')
-            displayName: Install Doppler CLI form cache
+          - template: doppler/steps/install-doppler-cli.yml@templates
 
           - script: |
               command -v doppler
@@ -68,6 +44,6 @@ stages:
 
           - template: newrelic/steps/insert-newrelic-js-agent.yml@templates
             parameters:
-              AGENT_FILE: 'app_new_relic.js'
+              AGENT_FILE: $(NEW_RELIC_AGENT)
               SOURCES_DIRECTORY: '$(Build.SourcesDirectory)'
               TARGET_FOLDER: 'applications/app-web-application/public/js'
