@@ -6,8 +6,8 @@ on:
       branches:
         - main
       paths:
-        - applications/site-web-application/**
-        - .github/workflows/azure-static-web-apps-gray-plant-0f013cd03.yml
+        - applications/app-web-application/**
+        - .github/workflows/azure-static-web-apps-white-water-0cb6b9203.yml
     pull_request:
       types: [opened, synchronize, reopened, closed]
       branches:
