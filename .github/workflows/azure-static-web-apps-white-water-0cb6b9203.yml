@@ -1,0 +1,49 @@
+name: App Web Application
+run-name: Web Application deploy to Azure by @${{ github.actor }}
+
+on:
+    push:
+      branches:
+        - main
+      paths:
+        - applications/site-web-application/**
+        - .github/workflows/azure-static-web-apps-gray-plant-0f013cd03.yml
+    pull_request:
+      types: [opened, synchronize, reopened, closed]
+      branches:
+        - main
+      paths:
+        - applications/app-web-application/**
+        - .github/workflows/azure-static-web-apps-white-water-0cb6b9203.yml
+
+jobs:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+
+    outputs:
+      current_date: ${{ steps.date.outputs.current_date }}
+      sha_short: ${{ steps.commit.outputs.sha_short }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set short sha
+        id: commit
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Set current date as env variable
+        id: date
+        run: echo "current_date=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_OUTPUT
+
+      - name: Install CLI
+        uses: dopplerhq/cli-action@v3
+
+      - name: Do something with the CLI
+        run: doppler secrets --only-names
+        env:
+          DOPPLER_TOKEN: ${{ secrets.APP_WEBAPP_DOPPLER_TOKEN }}
+
