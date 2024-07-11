@@ -37,9 +37,6 @@ stages:
 
           - script: |
               doppler configs get
-              echo $(DOPPLER_TOKEN)
-              doppler secrets set --silent DOPPLER_TOKEN
-              doppler configs get
             env:
               DOPPLER_TOKEN: $(DOPPLER_TOKEN)
             displayName: Doppler CLI
