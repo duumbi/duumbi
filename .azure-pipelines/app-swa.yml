@@ -17,9 +17,8 @@ variables:
 resources:
   repositories:
     - repository: templates
-      type: github
-      name: Duumbi/azure-pipeline-templates
-      endpoint: DevOpsRepoReadConn
+      type: git
+      name: azure-pipeline-templates
 
 stages:
   - stage: deploy_stage
