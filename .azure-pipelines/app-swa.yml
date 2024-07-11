@@ -14,6 +14,12 @@ pr:
 variables:
   system.debug: "false" # Enable or disable debug mode
 
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: Duumbi/azure-pipeline-templates
+
 stages:
   - stage: deploy_stage
     displayName: Deploy to stage
@@ -60,15 +66,7 @@ stages:
               DOPPLER_TOKEN: $(DOPPLER_TOKEN)
             displayName: Doppler CLI
 
-          - task: DownloadSecureFile@1
-            name: newRelic
-            inputs:
-              secureFile: 'app_new_relic.js'
-            displayName: 'Download New Relic agent'
-
-          - task: CopyFiles@2
-            inputs:
-              SourceFolder: '$(Agent.TempDirectory)'
-              Contents: 'app_new_relic.js'
-              TargetFolder: '$(Build.ArtifactStagingDirectory)/applications/app-web-application/public/js'
-            displayName: "Import New Relic agent"
+          - template: newrelic/steps/insert-newrelic-js-agent.yml@templates
+            parameters:
+              AGENT_FILE: 'app_new_relic.js'
+              TARGET_FOLDER: 'applications/app-web-application/public/js'

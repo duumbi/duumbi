@@ -27,6 +27,11 @@
 		{
 			"name": "DevOps - Infrastructure as code",
 			"path": "../devops/iac"
+		},
+		{
+			// External repository
+			"name": "DevOps - Pipeline Templates",
+			"path": "../../../azdevops/azure-pipeline-templates"
 		}
 	],
 	"settings": {
