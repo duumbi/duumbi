@@ -30,3 +30,26 @@ resource "newrelic_browser_application" "app_swa" {
   distributed_tracing_enabled = true
   loader_type                 = "SPA"
 }
+
+# --------------------------------------------------------------
+# Port.io
+resource "port_entity" "site_swa_entity" {
+  identifier = local.app_swa_name
+  title      = "Duumbi.io Web Application - App"
+  blueprint  = data.terraform_remote_state.idp.outputs.port_azure_static_web_app_identifier
+  properties = {
+    "string_props" = {
+      "name"              = local.app_swa_name
+      "defaultHostName"   = azurerm_static_web_app.app_swa.default_host_name
+      "resourceGroupName" = azurerm_resource_group.main_rg.name
+      "skuTier"           = azurerm_static_web_app.app_swa.sku_tier
+      "defaultDomain"     = "app.${local.zone_name}"
+    }
+  }
+  relations = {
+    single_relations = {
+      "environment" = var.environment
+      "monitor"     = betteruptime_monitor.site_monitor.id
+    }
+  }
+}
