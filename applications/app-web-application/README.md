@@ -1,3 +1,5 @@
+[![App Web Application](https://github.com/duumbi/duumbi/actions/workflows/azure-static-web-apps-white-water-0cb6b9203.yml/badge.svg?branch=main)](https://github.com/duumbi/duumbi/actions/workflows/azure-static-web-apps-white-water-0cb6b9203.yml)
+
 # Web Application: Duumbi
 App web application.
 
