@@ -69,4 +69,5 @@ stages:
           - template: newrelic/steps/insert-newrelic-js-agent.yml@templates
             parameters:
               AGENT_FILE: 'app_new_relic.js'
+              SOURCES_DIRECTORY: '$(Build.SourcesDirectory)'
               TARGET_FOLDER: 'applications/app-web-application/public/js'
