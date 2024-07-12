@@ -52,13 +52,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ErrorSchema'
         "404":
           description: Non-existent resource is requested.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ErrorSchema'
     delete:
       tags:
       - profile
@@ -81,31 +81,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ErrorSchema'
         "401":
           description: Authorization information is missing or invalid.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ErrorSchema'
         "403":
           description: Authenticated user doesn't have access to the resource.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ErrorSchema'
         "429":
           description: Too many requests
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ErrorSchema'
         "404":
           description: Non-existent resource is requested.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ErrorSchema'
     patch:
       tags:
       - profile
@@ -140,13 +140,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ErrorSchema'
         "404":
           description: Non-existent resource is requested.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ErrorSchema'
 components:
   schemas:
     Profile:
@@ -161,7 +161,7 @@ components:
           format: email
         picture:
           type: string
-    Error:
+    ErrorSchema:
       required:
       - message
       type: object
@@ -176,34 +176,34 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/ErrorSchema'
     Unauthorized:
       description: Authorization information is missing or invalid.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/ErrorSchema'
     Forbidden:
       description: Authenticated user doesn't have access to the resource.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/ErrorSchema'
     NotFound:
       description: Non-existent resource is requested.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/ErrorSchema'
     TooManyRequests:
       description: Too many requests
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/ErrorSchema'
     ServerError:
       description: Internal server error.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/ErrorSchema'
