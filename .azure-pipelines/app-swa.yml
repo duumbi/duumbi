@@ -37,6 +37,7 @@ stages:
         steps:
           - script: |
               # Read the Node.js version from .nvmrc
+              cd $(Build.SourcesDirectory)/applications/app-web-application
               NODE_VERSION=$(cat .nvmrc)
               echo "##vso[task.setvariable variable=NODE_VERSION]$NODE_VERSION"
             displayName: 'Read Node.js version from .nvmrc'
@@ -52,6 +53,7 @@ stages:
             displayName: 'Check Node.js and npm version'
 
           - script: |
+              cd $(Build.SourcesDirectory)/applications/app-web-application
               npm install
               npm run codegen
             displayName: 'Install dependencies'
