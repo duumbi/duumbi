@@ -74,7 +74,7 @@ export const DrawerDatabaseUpdateForm = ({
           </Form.Item>
         </Col>
 
-        <Col span={12}></Col>
+        <Col span={12}/>
       </Row>
 
       <Row gutter={16}>

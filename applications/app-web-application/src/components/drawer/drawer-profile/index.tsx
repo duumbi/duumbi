@@ -16,6 +16,10 @@ interface DrawerProfileProps {
   isClosed: boolean;
 }
 
+interface FormValues {
+  name: string;
+}
+
 export const DrawerProfile = ({
   setIsLoading,
   onClosed,
@@ -68,7 +72,7 @@ export const DrawerProfile = ({
     return <Alert message="Error" description={error} type="error" showIcon />;
   }
 
-  async function onFinish(values: any): Promise<void> {
+  async function onFinish(values: FormValues): Promise<void> {
     setIsLoading(true);
     const token = await getAccessTokenSilently({
       authorizationParams: {

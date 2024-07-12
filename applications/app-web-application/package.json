@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "doppler run -- vite",
-    "tsc": "tsc",
-    "build": "tsc && vite build",
+    "build": "npm run codegen && tsc && vite build",
     "lint": "eslint . ",
     "preview": "vite preview",
     "codegen": "rm -rf src/generated-sources/openapi; openapi-generator-cli generate -i ../../services/site-service/src/main/resources/api/openapi.yaml -g typescript-fetch -o src/generated-sources/openapi --template-dir custom-templates --additional-properties=supportsES6=true,npmVersion=10.2.3,typescriptThreePlus=true"
@@ -32,7 +31,8 @@
     "eslint": "9.6.0",
     "typescript": "5.5.3",
     "typescript-eslint": "7.15.0",
-    "vite": "5.3.3"
+    "vite": "5.3.3",
+    "vite-bundle-analyzer": "^0.10.3"
   },
   "browserslist": {
     "production": [

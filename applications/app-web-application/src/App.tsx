@@ -3,15 +3,14 @@ import { Route, Routes } from "react-router-dom";
 import { PageLoader } from "./components/base/page-loader";
 import { AuthenticationGuard } from "./middleware/authentication";
 
-// import { lazy } from "react";
-import Region from "./pages/region";
+// import Region from "./pages/region";
 import Application from "./pages/application";
-import NotFoundPage from "./pages/not-found-page";
+import React from "react";
+// import NotFoundPage from "./pages/not-found-page";
 
-// const Application = lazy(() => import("./pages/application"));
-// const Region = lazy(() => import("./pages/region"));
-// const NotFoundPage = lazy(() => import("./pages/not-found-page"));
-// const [isDarkMode, setIsDarkMode] = useState(false);
+// const Application = React.lazy(() => import("./pages/application"));
+const Region = React.lazy(() => import("./pages/region"));
+const NotFoundPage = React.lazy(() => import("./pages/not-found-page"));
 
 function App() {
   const { isLoading } = useAuth0();

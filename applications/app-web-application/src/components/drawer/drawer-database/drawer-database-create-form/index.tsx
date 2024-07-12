@@ -37,6 +37,12 @@ interface FormProps {
   onClosed: () => void;
 }
 
+interface FormValues {
+  name: string;
+  region: string;
+  description: string;
+}
+
 export const DrawerDatabaseCreateForm = ({
   drawerCloseState,
   setLoading,
@@ -51,7 +57,7 @@ export const DrawerDatabaseCreateForm = ({
     form.resetFields();
   }, [drawerCloseState]);
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: FormValues) => {
     // Make API call to save the database
     setDatabase({ key: "bab", name: values.name });
     setLoading(true);
@@ -100,7 +106,7 @@ export const DrawerDatabaseCreateForm = ({
               options={options}
               optionRender={(option) => (
                 <Space>
-                  <span role="img" aria-label={option.data.label}>
+                  <span role="img" aria-label={typeof option.data.label === 'string' ? option.data.label : ''}>
                     {option.data.emoji}
                   </span>
                   {option.data.label}
