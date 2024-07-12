@@ -14,6 +14,7 @@ pr:
 
 variables:
   system.debug: "false" # Enable or disable debug mode
+  APP_WEB_APPLICATION_PATH: '$(Build.SourcesDirectory)/applications/app-web-application'
 
 resources:
   repositories:
@@ -35,35 +36,16 @@ stages:
           group: stg-app-web-application
 
         steps:
-          - script: |
-              # Read the Node.js version from .nvmrc
-              cd $(Build.SourcesDirectory)/applications/app-web-application
-              NODE_VERSION=$(cat .nvmrc)
-              echo "##vso[task.setvariable variable=NODE_VERSION]$NODE_VERSION"
-            displayName: 'Read Node.js version from .nvmrc'
+          - template: doppler/steps/install-doppler-cli.yml@templates
+            parameters:
+              DOPPLER_TOKEN: $(DOPPLER_TOKEN)
 
-          - task: UseNode@1
-            inputs:
-              version: '$(NODE_VERSION)'
-            displayName: 'Use Node.js version from .nvmrc'
+          - template: newrelic/steps/insert-newrelic-js-agent.yml@templates
+            parameters:
+              AGENT_FILE: $(NEW_RELIC_AGENT)
+              SOURCES_DIRECTORY: $(APP_WEB_APPLICATION_PATH)
+              TARGET_FOLDER: 'public/js'
 
-          - script: |
-              node -v
-              npm -v
-            displayName: 'Check Node.js and npm version'
-
-          - script: |
-              cd $(Build.SourcesDirectory)/applications/app-web-application
-              npm install
-              npm run codegen
-            displayName: 'Install dependencies'
-
-          # - template: doppler/steps/install-doppler-cli.yml@templates
-          #   parameters:
-          #     DOPPLER_TOKEN: $(DOPPLER_TOKEN)
-
-          # - template: newrelic/steps/insert-newrelic-js-agent.yml@templates
-          #   parameters:
-          #     AGENT_FILE: $(NEW_RELIC_AGENT)
-          #     SOURCES_DIRECTORY: '$(Build.SourcesDirectory)'
-          #     TARGET_FOLDER: 'applications/app-web-application/public/js'
+          - template: node/steps/build.yml@templates
+            parameters:
+              SOURCES_DIRECTORY: $(APP_WEB_APPLICATION_PATH)
