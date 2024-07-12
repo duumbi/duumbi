@@ -36,6 +36,10 @@ stages:
           group: stg-app-web-application
 
         steps:
+          - template: node/steps/qa.yml@templates
+            parameters:
+              SOURCES_DIRECTORY: $(APP_WEB_APPLICATION_PATH)
+
           - template: doppler/steps/install-doppler-cli.yml@templates
             parameters:
               DOPPLER_TOKEN: $(DOPPLER_TOKEN)
