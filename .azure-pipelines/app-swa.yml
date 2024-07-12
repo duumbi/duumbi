@@ -23,11 +23,11 @@ resources:
       name: azure-pipeline-templates
 
 stages:
-  - stage: deploy_stage
-    displayName: Deploy to stage
+  - stage: Staging
+    displayName: Staging
     jobs:
-      - job: build_and_deploy_job
-        displayName: Build and deploy Job
+      - job: BuildStagingJob
+        displayName: Build Staging Job
         condition: or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'PullRequest'))
         pool:
           vmImage: "ubuntu-latest"
