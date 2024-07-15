@@ -24,26 +24,33 @@ resources:
       name: azure-pipeline-templates
 
 stages:
-  - stage: Staging
-    displayName: Staging
+  - stage: Build
+    displayName: Build stage
     jobs:
-      - job: BuildAndDeployStagingJob
-        displayName: Build and Deploy Staging Job
+      - job: BuildJob
+        displayName: Build Job
         condition: or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'PullRequest'))
         pool:
           vmImage: "ubuntu-latest"
         timeoutInMinutes: 2 # Cancel the job if it hasn't completed after 60 minutes
         variables:
-          group: stg-app-web-application
+          group: app-web-application
 
         steps:
+          - script: |
+              echo 'Artifact staging directory: $(Build.ArtifactStagingDirectory)'
+              echo 'Build sources directory: $(Build.SourcesDirectory)'
+              echo 'Agent Build Directory: $(Agent.BuildDirectory)'
+              echo 'Pipeline Workspace: $(Pipeline.Workspace)'
+            displayName: 'Pipeline description'
+
           - template: node/steps/qa.yml@templates
             parameters:
               SOURCES_DIRECTORY: $(APP_WEB_APPLICATION_PATH)
 
           - template: doppler/steps/install-doppler-cli.yml@templates
             parameters:
-              DOPPLER_TOKEN: $(DOPPLER_TOKEN)
+              DOPPLER_TOKEN: $(DEV_DOPPLER_TOKEN)
 
           - template: newrelic/steps/insert-newrelic-js-agent.yml@templates
             parameters:
@@ -55,14 +62,60 @@ stages:
             parameters:
               SOURCES_DIRECTORY: $(APP_WEB_APPLICATION_PATH)
 
-          - task: AzureStaticWebApp@0
+          - task: CopyFiles@2
+            displayName: 'Copy distribution files'
             inputs:
-              deployment_environment: staging
-              skip_app_build: true
-              skip_api_build: true
-              azure_static_web_apps_api_token: $(DEPLOYMENT_TOKEN)
-              app_location: $(APP_WEB_APPLICATION_RELATIVE_PATH)/dist
-              api_location: ''
-              output_location: ''
-              build_timeout_in_minutes: 5
+              contents: 'dist/**'
+              targetFolder: '$(Build.ArtifactStagingDirectory)'
 
+          - publish: '$(Build.ArtifactStagingDirectory)/dist'
+            displayName: 'Publish dist'
+            artifact: dist
+
+  - stage: Deploy
+    displayName: Deploy stage
+    dependsOn: Build
+    jobs:
+      - deployment: StagingDeploymentJob
+        displayName: Deployment Job - Staging
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'PullRequest')))
+        pool:
+          vmImage: "ubuntu-latest"
+        timeoutInMinutes: 2 # Cancel the job if it hasn't completed after 60 minutes
+        environment: 'staging'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: dist
+                  displayName: 'Download Artifacts'
+
+                - template: doppler/steps/install-doppler-cli.yml@templates
+                  parameters:
+                    DOPPLER_TOKEN: $(STG_DOPPLER_TOKEN)
+
+                - script: |
+                    sudo apt-get update
+                    sudo apt-get install -y jq
+                    doppler secrets download --no-file --format json > doppler.json
+                    AUTH0_CLIENT_ID=$(jq -r '.VITE_REACT_APP_AUTH0_CLIENT_ID' doppler.json)
+                    AUTH0_DOMAIN=$(jq -r '.VITE_REACT_APP_AUTH0_DOMAIN' doppler.json)
+                    SITE_SERVICE=$(jq -r '.VITE_REACT_APP_SITE_SERVICE' doppler.json)
+                    rm -f doppler.json
+                  displayName: 'Install jq'
+
+                - task: AzureStaticWebApp@0
+                  inputs:
+                    deployment_environment: staging
+                    skip_app_build: true
+                    skip_api_build: true
+                    azure_static_web_apps_api_token: $(DEPLOYMENT_TOKEN)
+                    app_location: 'dist'
+                    api_location: ''
+                    output_location: ''
+                    build_timeout_in_minutes: 5
+                  env:
+                    VITE_REACT_APP_AUTH0_CLIENT_ID: $(AUTH0_CLIENT_ID)
+                    VITE_REACT_APP_AUTH0_DOMAIN: $(AUTH0_DOMAIN)
+                    VITE_REACT_APP_SITE_SERVICE: $(SITE_SERVICE)
