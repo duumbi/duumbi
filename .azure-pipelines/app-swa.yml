@@ -121,10 +121,11 @@ stages:
                     skip_app_build: true
                     skip_api_build: true
                     azure_static_web_apps_api_token: $(DEPLOYMENT_TOKEN)
-                    app_location: '(Pipeline.Workspace)/dist'
+                    app_location: /
                     api_location: ''
                     output_location: ''
                     build_timeout_in_minutes: 5
+                    cwd: $(Pipeline.Workspace)/dist
                   env:
                     VITE_REACT_APP_AUTH0_CLIENT_ID: $(AUTH0_CLIENT_ID)
                     VITE_REACT_APP_AUTH0_DOMAIN: $(AUTH0_DOMAIN)
