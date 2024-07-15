@@ -13,7 +13,7 @@ pr:
       - "applications/app-web-application/**"
 
 variables:
-  system.debug: "true" # Enable or disable debug mode
+  system.debug: "false" # Enable or disable debug mode
   APP_WEB_APPLICATION_RELATIVE_PATH: 'applications/app-web-application'
   APP_WEB_APPLICATION_PATH: '$(Build.SourcesDirectory)/$(APP_WEB_APPLICATION_RELATIVE_PATH)'
 
