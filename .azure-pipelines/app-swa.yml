@@ -72,8 +72,8 @@ stages:
             displayName: 'Publish dist'
             artifact: dist
 
-  - stage: Deploy
-    displayName: Deploy stage
+  - stage: StagingDeploy
+    displayName: Deploy stage - Staging
     dependsOn: Build
     jobs:
       - deployment: StagingDeploymentJob
@@ -91,16 +91,6 @@ stages:
                   artifact: dist
                   displayName: 'Download Artifacts'
 
-                - script: ls
-                  displayName: 'List files in workspace'
-
-                - task: CopyFiles@2
-                  displayName: 'Copy distribution files'
-                  condition: always()
-                  inputs:
-                    contents: '$(Pipeline.Workspace)/dist/**'
-                    targetFolder: '$(System.DefaultWorkingDirectory)/dist'
-
                 - template: doppler/steps/install-doppler-cli.yml@templates
                   parameters:
                     DOPPLER_TOKEN: $(STG_DOPPLER_TOKEN)
@@ -116,6 +106,7 @@ stages:
                   displayName: 'Install jq'
 
                 - task: AzureStaticWebApp@0
+                  displayName: 'Deploy to Azure Static Web App'
                   inputs:
                     deployment_environment: staging
                     skip_app_build: true
@@ -127,6 +118,55 @@ stages:
                     build_timeout_in_minutes: 5
                     cwd: $(Pipeline.Workspace)/dist
                   env:
-                    VITE_REACT_APP_AUTH0_CLIENT_ID: $(AUTH0_CLIENT_ID)
-                    VITE_REACT_APP_AUTH0_DOMAIN: $(AUTH0_DOMAIN)
-                    VITE_REACT_APP_SITE_SERVICE: $(SITE_SERVICE)
+                    VITE_REACT_APP_AUTH0_CLIENT_ID: '$(AUTH0_CLIENT_ID)'
+                    VITE_REACT_APP_AUTH0_DOMAIN: '$(AUTH0_DOMAIN)'
+                    VITE_REACT_APP_SITE_SERVICE: '$(SITE_SERVICE)'
+
+  - stage: LiveDeploy
+    displayName: Deploy stage - Live
+    dependsOn: Build
+    jobs:
+      - deployment: LiveDeploymentJob
+        displayName: Deployment Job - Live
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'PullRequest')))
+        pool:
+          vmImage: "ubuntu-latest"
+        timeoutInMinutes: 2 # Cancel the job if it hasn't completed after 60 minutes
+        environment: 'live'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: dist
+                  displayName: 'Download Artifacts'
+
+                - template: doppler/steps/install-doppler-cli.yml@templates
+                  parameters:
+                    DOPPLER_TOKEN: $(LIVE_DOPPLER_TOKEN)
+
+                - script: |
+                    sudo apt-get update
+                    sudo apt-get install -y jq
+                    doppler secrets download --no-file --format json > doppler.json
+                    AUTH0_CLIENT_ID=$(jq -r '.VITE_REACT_APP_AUTH0_CLIENT_ID' doppler.json)
+                    AUTH0_DOMAIN=$(jq -r '.VITE_REACT_APP_AUTH0_DOMAIN' doppler.json)
+                    SITE_SERVICE=$(jq -r '.VITE_REACT_APP_SITE_SERVICE' doppler.json)
+                    rm -f doppler.json
+                  displayName: 'Install jq'
+
+                - task: AzureStaticWebApp@0
+                  displayName: 'Deploy to Azure Static Web App'
+                  inputs:
+                    skip_app_build: true
+                    skip_api_build: true
+                    azure_static_web_apps_api_token: $(DEPLOYMENT_TOKEN)
+                    app_location: /
+                    api_location: ''
+                    output_location: ''
+                    build_timeout_in_minutes: 5
+                    cwd: $(Pipeline.Workspace)/dist
+                  env:
+                    VITE_REACT_APP_AUTH0_CLIENT_ID: '$(AUTH0_CLIENT_ID)'
+                    VITE_REACT_APP_AUTH0_DOMAIN: '$(AUTH0_DOMAIN)'
+                    VITE_REACT_APP_SITE_SERVICE: '$(SITE_SERVICE)'
