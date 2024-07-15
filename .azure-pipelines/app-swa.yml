@@ -1,4 +1,4 @@
-name: App - Web Application
+name: $(BuildDefinitionName)_$(date:yyyyMMdd)$(rev:.r)
 
 trigger:
   - none
@@ -14,7 +14,8 @@ pr:
 
 variables:
   system.debug: "false" # Enable or disable debug mode
-  APP_WEB_APPLICATION_PATH: '$(Build.SourcesDirectory)/applications/app-web-application'
+  APP_WEB_APPLICATION_RELATIVE_PATH: 'applications/app-web-application'
+  APP_WEB_APPLICATION_PATH: '$(Build.SourcesDirectory)/$(APP_WEB_APPLICATION_RELATIVE_PATH)'
 
 resources:
   repositories:
@@ -26,8 +27,8 @@ stages:
   - stage: Staging
     displayName: Staging
     jobs:
-      - job: BuildStagingJob
-        displayName: Build Staging Job
+      - job: BuildAndDeployStagingJob
+        displayName: Build and Deploy Staging Job
         condition: or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'PullRequest'))
         pool:
           vmImage: "ubuntu-latest"
@@ -53,3 +54,15 @@ stages:
           - template: node/steps/build.yml@templates
             parameters:
               SOURCES_DIRECTORY: $(APP_WEB_APPLICATION_PATH)
+
+          - task: AzureStaticWebApp@0
+            inputs:
+              deployment_environment: staging
+              skip_app_build: true
+              skip_api_build: true
+              azure_static_web_apps_api_token: $(DEPLOYMENT_TOKEN)
+              app_location: $(APP_WEB_APPLICATION_RELATIVE_PATH)/dist
+              api_location: ''
+              output_location: ''
+              build_timeout_in_minutes: 5
+
