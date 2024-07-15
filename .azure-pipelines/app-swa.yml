@@ -94,18 +94,14 @@ stages:
                 - script: ls $(Pipeline.Workspace)
                   displayName: 'List files in workspace'
 
-                - task: CopyFiles@2
-                  displayName: 'Copy distribution files'
-                  condition: always()
-                  inputs:
-                    contents: '$(Pipeline.Workspace)/**'
-                    targetFolder: '$(System.DefaultWorkingDirectory)/dist'
+                - script: ls $(Pipeline.Workspace)/dist
+                  displayName: 'List files in workspace'
 
                 - task: CopyFiles@2
                   displayName: 'Copy distribution files'
                   condition: always()
                   inputs:
-                    contents: '$(Pipeline.Workspace)/$(APP_WEB_APPLICATION_RELATIVE_PATH)/dist/**'
+                    contents: '$(Pipeline.Workspace)/dist/**'
                     targetFolder: '$(System.DefaultWorkingDirectory)/dist'
 
                 - template: doppler/steps/install-doppler-cli.yml@templates
