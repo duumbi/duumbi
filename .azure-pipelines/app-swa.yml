@@ -111,7 +111,7 @@ stages:
                     skip_app_build: true
                     skip_api_build: true
                     azure_static_web_apps_api_token: $(DEPLOYMENT_TOKEN)
-                    app_location: 'dist'
+                    app_location: '$(Pipeline.Workspace)\dist'
                     api_location: ''
                     output_location: ''
                     build_timeout_in_minutes: 5
