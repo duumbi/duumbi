@@ -111,7 +111,7 @@ stages:
                     skip_app_build: true
                     skip_api_build: true
                     azure_static_web_apps_api_token: $(DEPLOYMENT_TOKEN)
-                    app_location: '$(APP_WEB_APPLICATION_RELATIVE_PATH)/dist'
+                    app_location: 'dist'
                     api_location: ''
                     output_location: ''
                     build_timeout_in_minutes: 5
