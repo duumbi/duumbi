@@ -91,6 +91,20 @@ stages:
                   artifact: dist
                   displayName: 'Download Artifacts'
 
+                - task: CopyFiles@2
+                  displayName: 'Copy distribution files'
+                  condition: always()
+                  inputs:
+                    contents: '$(Pipeline.Workspace)/dist/**'
+                    targetFolder: '$(System.DefaultWorkingDirectory)/dist'
+
+                - task: CopyFiles@2
+                  displayName: 'Copy distribution files'
+                  condition: always()
+                  inputs:
+                    contents: '$(Pipeline.Workspace)/$(APP_WEB_APPLICATION_RELATIVE_PATH)/dist/**'
+                    targetFolder: '$(System.DefaultWorkingDirectory)/dist'
+
                 - template: doppler/steps/install-doppler-cli.yml@templates
                   parameters:
                     DOPPLER_TOKEN: $(STG_DOPPLER_TOKEN)
@@ -111,7 +125,7 @@ stages:
                     skip_app_build: true
                     skip_api_build: true
                     azure_static_web_apps_api_token: $(DEPLOYMENT_TOKEN)
-                    app_location: '$(Pipeline.Workspace)/dist'
+                    app_location: 'dist'
                     api_location: ''
                     output_location: ''
                     build_timeout_in_minutes: 5
