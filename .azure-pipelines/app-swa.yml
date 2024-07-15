@@ -91,11 +91,14 @@ stages:
                   artifact: dist
                   displayName: 'Download Artifacts'
 
+                - script: ls $(Pipeline.Workspace)
+                  displayName: 'List files in workspace'
+
                 - task: CopyFiles@2
                   displayName: 'Copy distribution files'
                   condition: always()
                   inputs:
-                    contents: '$(Pipeline.Workspace)/dist/**'
+                    contents: '$(Pipeline.Workspace)/**'
                     targetFolder: '$(System.DefaultWorkingDirectory)/dist'
 
                 - task: CopyFiles@2
