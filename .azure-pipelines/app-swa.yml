@@ -65,7 +65,7 @@ stages:
           - task: CopyFiles@2
             displayName: 'Copy distribution files'
             inputs:
-              contents: 'dist/**'
+              contents: '$(APP_WEB_APPLICATION_RELATIVE_PATH)/dist/**'
               targetFolder: '$(Build.ArtifactStagingDirectory)'
 
           - publish: '$(Build.ArtifactStagingDirectory)/dist'
