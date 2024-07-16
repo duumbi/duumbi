@@ -154,7 +154,9 @@ variable "port_secret" {
   description = "Port Secret. Get it from port UI"
 }
 
-# DOPPLER ---------------------------------------------------------------------
+# ----------------------------------------------------------------------------|
+# -- DOPPLER -----------------------------------------------------------------|
+# ----------------------------------------------------------------------------|
 variable "doppler_config" {
   type        = string
   sensitive   = true
@@ -173,6 +175,7 @@ variable "doppler_project" {
   description = "value for the DOPPLER_PROJECT environment variable"
 }
 
+# -- DNS ---------------------------------------------------------------------|
 variable "dns_azure_duumbi_txt_record" {
   type        = string
   sensitive   = true
@@ -195,4 +198,22 @@ variable "duumbi_aks_administrators_object_id" {
   type        = string
   sensitive   = true
   description = "Azure AD Object ID of the duumbi.io AKS administrators"
+}
+# -- VITE---------------------------------------------------------------------|
+variable "vite_react_app_auth0_client_id" {
+  type        = string
+  sensitive   = true
+  description = "Auth0 Client ID"
+}
+
+variable "vite_react_app_auth0_domain" {
+  type        = string
+  sensitive   = true
+  description = "Auth0 Domain"
+}
+
+variable "vite_react_app_site_service" {
+  type        = string
+  sensitive   = true
+  description = "App Servide URL"
 }
