@@ -4,16 +4,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 import io.duumbi.site.application.profile.model.ProfileEntity;
 import io.duumbi.site.framework.property.Auth0ManagementApiProperty;
@@ -28,9 +21,6 @@ public class Auth0ManagementService {
 
     @Autowired
     private Auth0ManagementApiProperty auth0ManagementApiProperty;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     private record ApiAccess(String apiUrl, Optional<String> accessToken) {}
 
