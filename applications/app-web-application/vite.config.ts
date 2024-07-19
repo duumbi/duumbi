@@ -8,5 +8,11 @@ export default defineConfig({
     react(),
     // analyzer(),
   ],
-  server: { port: 5173 },
+  base: '/',
+  build: {
+    outDir: 'dist',
+  },
+  server: {
+    port: 5173
+  },
 })
