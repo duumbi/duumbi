@@ -8,34 +8,11 @@ export default defineConfig({
     react(),
     // analyzer(),
   ],
-  server: { port: 5173 },
+  base: '/',
   build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('antd/es/result')) return '@antd-result'
-          if (id.includes('antd/es/input')) return '@antd-input'
-          if (id.includes('antd/es/form')) return '@antd-form'
-          if (id.includes('antd/es/menu')) return '@antd-menu'
-          if (id.includes('antd')) return '@antd'
-          if (
-            id.includes('@ant-design') ||
-            id.includes('@rc-component') ||
-            id.includes('rc-select/es') ||
-            id.includes('rc-field-form/es')
-          ) {
-              return '@antd-dc'
-            }
-          if (
-            id.includes('react-router-dom') ||
-            id.includes('react-dom') ||
-            id.includes('@remix-run') ||
-            id.includes('react-router')
-          ) {
-            return '@react-router';
-          }
-        },
-      },
-    },
+    outDir: 'dist',
+  },
+  server: {
+    port: 5173
   },
 })
