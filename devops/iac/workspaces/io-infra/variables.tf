@@ -199,21 +199,3 @@ variable "duumbi_aks_administrators_object_id" {
   sensitive   = true
   description = "Azure AD Object ID of the duumbi.io AKS administrators"
 }
-# -- VITE---------------------------------------------------------------------|
-variable "vite_react_app_auth0_client_id" {
-  type        = string
-  sensitive   = true
-  description = "Auth0 Client ID"
-}
-
-variable "vite_react_app_auth0_domain" {
-  type        = string
-  sensitive   = true
-  description = "Auth0 Domain"
-}
-
-variable "vite_react_app_site_service" {
-  type        = string
-  sensitive   = true
-  description = "App Servide URL"
-}

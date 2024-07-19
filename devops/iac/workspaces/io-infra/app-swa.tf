@@ -5,11 +5,6 @@ resource "azurerm_static_web_app" "app_swa" {
   sku_size            = "Free"
   sku_tier            = "Free"
   tags                = local.tags
-  app_settings = {
-    VITE_REACT_APP_AUTH0_CLIENT_ID = var.vite_react_app_auth0_client_id
-    VITE_REACT_APP_AUTH0_DOMAIN    = var.vite_react_app_auth0_domain
-    VITE_REACT_APP_SITE_SERVICE    = var.vite_react_app_site_service
-  }
 }
 
 resource "azurerm_dns_cname_record" "app_duumbi_io" {
