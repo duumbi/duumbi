@@ -61,6 +61,7 @@ stages:
           - template: node/steps/build.yml@templates
             parameters:
               SOURCES_DIRECTORY: $(APP_WEB_APPLICATION_PATH)
+              DOPPLER_TOKEN: $(DEV_DOPPLER_TOKEN)
 
           - task: CopyFiles@2
             displayName: 'Copy distribution files'
