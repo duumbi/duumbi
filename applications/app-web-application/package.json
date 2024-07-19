@@ -18,7 +18,6 @@
     "@types/new-relic-browser": "1.230.4",
     "antd": "5.19.1",
     "dayjs": "1.11.11",
-    "dotenv": "16.4.5",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-icons": "5.2.1",
