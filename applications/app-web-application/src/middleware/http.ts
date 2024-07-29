@@ -1,8 +1,7 @@
 import { Configuration, ConfigurationParameters, GetProfileRequest, Profile, ProfileApi, ProfileFromJSONTyped } from "../generated-sources/openapi";
 import { ApplicationInterface } from "../types";
 
-export function getAuth0Domain(): string {
-    const domain = import.meta.env.VITE_REACT_APP_AUTH0_DOMAIN;
+export function parseRegion(token: string): string {
     const appitem: ApplicationInterface = JSON.parse(localStorage.getItem("application") || "[]");
     const { region } = appitem;
 
@@ -23,13 +22,25 @@ export function getAuth0Domain(): string {
             break;
     }
 
-    return domain.replace("%REGION%", authDomain);
+    return token.replace("%REGION%", authDomain);
+}
+
+export function getAuth0Domain(): string {
+    const domain = import.meta.env.VITE_REACT_APP_AUTH0_DOMAIN;
+
+    return parseRegion(domain);
+}
+
+export function getAppServiceAudience(): string {
+    const audience = import.meta.env.VITE_APP_SERVICE_AUDIENCE;
+
+    return parseRegion(audience);
 }
 
 async function createApiConfiguration(token: string): Promise<Configuration> {
-    const service = import.meta.env.VITE_REACT_APP_SITE_SERVICE
+    const serviceUrl = import.meta.env.VITE_APP_SERVICE_URL
     const configParams: ConfigurationParameters = {
-        basePath: `${service}/api/v1`,
+        basePath: `${serviceUrl}/api/v1`,
         headers: {
             'Authorization': 'Bearer ' + token,
         },

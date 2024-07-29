@@ -2,9 +2,9 @@ setup:
   - project: app-web-application
     config: dev_personal
     path: applications/app-web-application/
-  - project: site-service
+  - project: app-service
     config: dev_personal
-    path: services/site-service/
+    path: services/app-service/
   - project: ias
     config: local_personal
     path: devops/iac/local/

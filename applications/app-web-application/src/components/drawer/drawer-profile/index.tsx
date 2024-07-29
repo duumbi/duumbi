@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import { Alert, Button, Col, Form, Input, Row, Card, Avatar } from "antd";
 import { useEffect, useState } from "react";
 import { Profile } from "../../../generated-sources/openapi";
-import { getUserInfo, updateUserProfile } from "../../../middleware/http";
+import { getAppServiceAudience, getUserInfo, updateUserProfile } from "../../../middleware/http";
 import { UserOutlined } from "@ant-design/icons";
 
 const StyledCard = styled(Card)`
@@ -78,6 +78,7 @@ export const DrawerProfile = ({
     const token = await getAccessTokenSilently({
       authorizationParams: {
         scope: "openid profile email",
+        audience: getAppServiceAudience(),
       },
     });
 

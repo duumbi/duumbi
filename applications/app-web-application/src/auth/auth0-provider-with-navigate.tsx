@@ -40,14 +40,9 @@ export const Auth0ProviderWithNavigate = ({
     <Auth0Provider
       domain={domain}
       clientId={clientId}
-      // useRefreshTokens={true}
+      cacheLocation="localstorage"
       authorizationParams={{
         redirect_uri: window.location.origin,
-        // scope: "openid profile email offline_access",
-        // audience: "https://api.site-ne.duumbi.io",
-        // scope: 'read:profile',
-        // scope: "read:current_user read:current_user_metadata update:current_user_metadata",
-        scope: "openid profile email read:profile"
       }}
       onRedirectCallback={onRedirectCallback}
     >
