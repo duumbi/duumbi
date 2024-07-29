@@ -74,6 +74,7 @@ export default function ApplicationHeader({
             { value: ThemeType.light, icon: <CiLight /> },
             { value: ThemeType.dark, icon: <CiDark /> },
           ]}
+          defaultValue={localStorage.getItem("theme") === ThemeType.light.toString() ? ThemeType.light : ThemeType.dark}
           onChange={(value) => {
             setTheme(value === ThemeType.light ? ThemeType.light : ThemeType.dark);
           }}

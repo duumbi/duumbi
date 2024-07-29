@@ -1,9 +1,10 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
-import { Alert, Button, Col, Form, Input, Image, Row, Card } from "antd";
+import { Alert, Button, Col, Form, Input, Image, Row, Card, Avatar } from "antd";
 import { useEffect, useState } from "react";
 import { Profile } from "../../../generated-sources/openapi";
 import { getUserInfo, updateUserProfile } from "../../../middleware/http";
+import { UserOutlined } from "@ant-design/icons";
 
 const StyledCard = styled(Card)`
   padding-top: 22px;
@@ -91,6 +92,10 @@ export const DrawerProfile = ({
     }, 100);
   }
 
+  const profilePicture = profile
+    ? profile.picture
+    : "https://cdn.iconscout.com/icon/free/png-256/avatar-380-456332.png";
+
   return (
     <Form
       form={form}
@@ -128,7 +133,7 @@ export const DrawerProfile = ({
             alignItems: "center",
           }}
         >
-          <Image width={120} src={profile?.picture} />
+          <Avatar src={profilePicture} size={120} icon={<UserOutlined />} />
         </Col>
       </Row>
 
