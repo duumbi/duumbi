@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
-import { Alert, Button, Col, Form, Input, Image, Row, Card, Avatar } from "antd";
+import { Alert, Button, Col, Form, Input, Row, Card, Avatar } from "antd";
 import { useEffect, useState } from "react";
 import { Profile } from "../../../generated-sources/openapi";
 import { getUserInfo, updateUserProfile } from "../../../middleware/http";
