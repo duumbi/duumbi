@@ -11,16 +11,16 @@
 	</parent>
 
 	<groupId>io.duumbi</groupId>
-	<artifactId>site-service</artifactId>
+	<artifactId>app-service</artifactId>
 	<version>${revision}</version>
 	<packaging>jar</packaging>
-	<name>Duumbi Site Service</name>
-	<description>This repository contains a service for handling Site Application requests</description>
+	<name>Duumbi App Service</name>
+	<description>This repository contains a service for handling App Application requests</description>
 
 	<scm>
 		<connection>scm:git:git@github.com:duumbi/duumbi.git</connection>
 		<developerConnection>scm:git:git@github.com:duumbi/duumbi.git</developerConnection>
-		<url>https://github.com/duumbi/duumbi/tree/main/services/site-service</url>
+		<url>https://github.com/duumbi/duumbi/tree/main/services/app-service</url>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -325,8 +325,8 @@
 							<generateModels>true</generateModels>
 							<generateSupportingFiles>true</generateSupportingFiles>
 							<languageSpecificPrimitives>true</languageSpecificPrimitives>
-							<apiPackage>io.duumbi.site.application.api</apiPackage>
-							<modelPackage>io.duumbi.site.application.model</modelPackage>
+							<apiPackage>io.duumbi.app.application.api</apiPackage>
+							<modelPackage>io.duumbi.app.application.model</modelPackage>
 							<typeMappings>
 								<typeMapping>OffsetDateTime=java.time.LocalDateTime</typeMapping>
 							</typeMappings>
