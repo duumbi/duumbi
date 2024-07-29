@@ -7,11 +7,12 @@
     "clean": "rimraf dist/",
     "clean:env": "rm -f .env.production",
     "env": "doppler secrets download --no-file --format env > .env.production",
+    "copy": "cp staticwebapp.config.json dist/",
     "codegen": "rm -rf src/generated-sources/openapi; openapi-generator-cli generate -i ../../services/site-service/src/main/resources/api/openapi.yaml -g typescript-fetch -o src/generated-sources/openapi --template-dir custom-templates --additional-properties=supportsES6=true,npmVersion=10.2.3,typescriptThreePlus=true",
     "dev": "doppler run -- vite",
     "lint": "eslint . ",
     "preview": "vite preview",
-    "build": "npm run clean && npm run codegen && npm run env && tsc && vite build --mode production && npm run clean:env"
+    "build": "npm run clean && npm run codegen && npm run env && tsc && vite build --mode production && npm run clean:env && npm run copy"
   },
   "dependencies": {
     "@auth0/auth0-react": "2.2.4",
