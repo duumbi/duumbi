@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Duumbi Site Service API v1
-  description: "This is a Duumbi Site Service API documentation. API has resource-oriented\
+  title: Duumbi App Service API v1
+  description: "This is a Duumbi App Service API documentation. API has resource-oriented\
     \ URLs, accepts JSON-encoded request bodies and returns JSON-encoded responses."
   contact:
     name: Duumbi
@@ -9,9 +9,9 @@ info:
     email: mail@duumbi.io
   version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/duumbi/site/1.0.0
+- url: https://virtserver.swaggerhub.com/duumbi/app/1.0.0
   description: SwaggerHub API Auto Mocking
-- url: "https://api.site-{location}.duumbi.io/{basePath}"
+- url: "https://api.app-{location}.duumbi.io/{basePath}"
   description: The production API server
   variables:
     location:
