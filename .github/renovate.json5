@@ -18,7 +18,7 @@
     "devops/iac/workspaces/io-auth0/**",
     "devops/iac/workspaces/io-infra/**",
     "applications/site-web-application/**",
-    "applications/duumbi-web-application/**"
+    "applications/app-web-application/**"
   ],
   "labels": ["dependencies", "renovate"],
   "prHourlyLimit": 3,
@@ -55,10 +55,10 @@
       "labels": ["dependencies", "renovate", "npm"]
     },
     {
-      "description": "Update all Duumbi Web App dependencies",
-      "groupName": "duumbi-web-application",
+      "description": "Update all App Web Application dependencies",
+      "groupName": "app-web-application",
       "paths": [
-        "applications/duumbi-web-application/**"
+        "applications/app-web-application/**"
       ],
       "updateTypes": ["minor", "patch", "pin"],
       "labels": ["dependencies", "renovate", "npm"]

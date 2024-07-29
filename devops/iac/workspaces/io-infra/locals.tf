@@ -17,6 +17,7 @@ locals {
   aks_ingress_ip_name = lower(format("%s-%s-%s-%s-aks-ingress-ip", var.organization, var.project, var.environment, local.aks_location_short_name))
 
   site_swa_name = lower(format("%s-%s-%s-%s-site-swa", var.organization, var.project, var.environment, local.location_short_name))
+  app_swa_name  = lower(format("%s-%s-%s-%s-app-swa", var.organization, var.project, var.environment, local.location_short_name))
 
   tags = merge(
     var.tags_base,

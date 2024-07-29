@@ -74,6 +74,41 @@ services:
     networks:
       - backend
 
+  postgres:
+    image: postgres
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - PGDATA=/data/postgres
+    volumes:
+       - postgres:/data/postgres
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+    networks:
+      - backend
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+       - pgadmin:/var/lib/pgadmin
+    ports:
+      - "8888:80"
+    networks:
+      - backend
+    restart: unless-stopped
+
 networks:
   backend:
     driver: bridge
@@ -81,6 +116,8 @@ networks:
 
 volumes:
   traefik:
+  postgres:
+  pgadmin:
 
 
 # certbot certonly --agree-tos --manual --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory -d "whoami.duumbi.io"

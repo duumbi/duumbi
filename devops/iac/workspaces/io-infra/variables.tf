@@ -154,7 +154,9 @@ variable "port_secret" {
   description = "Port Secret. Get it from port UI"
 }
 
-# DOPPLER ---------------------------------------------------------------------
+# ----------------------------------------------------------------------------|
+# -- DOPPLER -----------------------------------------------------------------|
+# ----------------------------------------------------------------------------|
 variable "doppler_config" {
   type        = string
   sensitive   = true
@@ -173,6 +175,7 @@ variable "doppler_project" {
   description = "value for the DOPPLER_PROJECT environment variable"
 }
 
+# -- DNS ---------------------------------------------------------------------|
 variable "dns_azure_duumbi_txt_record" {
   type        = string
   sensitive   = true

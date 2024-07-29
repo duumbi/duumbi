@@ -1,0 +1,23 @@
+hazelcast:
+  cluster-name: hazelcast-cluster
+  map:
+    instruments:
+      time-to-live-seconds: 60
+      max-idle-seconds: 60
+      eviction:
+        eviction-policy: LRU
+        max-size-policy: USED_NATIVE_MEMORY_PERCENTAGE
+        size: 10
+  network:
+    join:
+      multicast:
+        enabled: true
+    rest-api:
+      enabled: true
+      endpoint-groups:
+        HEALTH_CHECK:
+          enabled: true
+  serialization:
+    serializers:
+      - type-class: io.duumbi.app.application.profile.model.ProfileEntity
+        class-name: io.duumbi.app.application.profile.model.ProfileEntitySerializer

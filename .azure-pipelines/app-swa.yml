@@ -1,0 +1,137 @@
+name: $(BuildDefinitionName) - $(date:yyyyMMdd)$(rev:.r)
+
+trigger:
+  - none
+
+pr:
+  autoCancel: true # Automatically cancel previous runs when a new run is triggered
+  branches:
+    include:
+      - "*"
+  paths:
+    include:
+      - "applications/app-web-application/**"
+
+variables:
+  system.debug: "false" # Enable or disable debug mode
+  APP_WEB_APPLICATION_RELATIVE_PATH: 'applications/app-web-application'
+  APP_WEB_APPLICATION_PATH: '$(Build.SourcesDirectory)/$(APP_WEB_APPLICATION_RELATIVE_PATH)'
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: azure-pipeline-templates
+
+stages:
+  - stage: Build
+    displayName: Build stage
+    jobs:
+      - job: BuildJob
+        displayName: Build Job
+        condition: or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'PullRequest'))
+        pool:
+          vmImage: "ubuntu-latest"
+        timeoutInMinutes: 2 # Cancel the job if it hasn't completed after 60 minutes
+        variables:
+          group: app-web-application
+
+        steps:
+          - script: |
+              echo 'Artifact staging directory: $(Build.ArtifactStagingDirectory)'
+              echo 'Build sources directory: $(Build.SourcesDirectory)'
+              echo 'Agent Build Directory: $(Agent.BuildDirectory)'
+              echo 'Pipeline Workspace: $(Pipeline.Workspace)'
+            displayName: 'Pipeline description'
+
+          - template: node/steps/qa.yml@templates
+            parameters:
+              SOURCES_DIRECTORY: $(APP_WEB_APPLICATION_PATH)
+
+          - template: doppler/steps/install-doppler-cli.yml@templates
+            parameters:
+              DOPPLER_TOKEN: $(DOPPLER_TOKEN)
+
+          - template: newrelic/steps/insert-newrelic-js-agent.yml@templates
+            parameters:
+              AGENT_FILE: $(NEW_RELIC_AGENT)
+              SOURCES_DIRECTORY: $(APP_WEB_APPLICATION_PATH)
+              TARGET_FOLDER: 'public/js'
+
+          - template: node/steps/build.yml@templates
+            parameters:
+              SOURCES_DIRECTORY: $(APP_WEB_APPLICATION_PATH)
+              DOPPLER_TOKEN: $(DOPPLER_TOKEN)
+
+          - task: CopyFiles@2
+            displayName: 'Copy distribution files'
+            inputs:
+              contents: '$(APP_WEB_APPLICATION_RELATIVE_PATH)/dist/**'
+              targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+          - publish: '$(Build.ArtifactStagingDirectory)/$(APP_WEB_APPLICATION_RELATIVE_PATH)/dist'
+            displayName: 'Publish dist'
+            artifact: dist
+
+  - stage: StagingDeploy
+    displayName: Deploy stage - Staging
+    dependsOn: Build
+    jobs:
+      - deployment: StagingDeploymentJob
+        displayName: Deployment Job - Staging
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'PullRequest')))
+        pool:
+          vmImage: "ubuntu-latest"
+        timeoutInMinutes: 2
+        environment: 'staging'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: dist
+                  displayName: 'Download Artifacts'
+
+                - task: AzureStaticWebApp@0
+                  displayName: 'Deploy to Azure Static Web App'
+                  inputs:
+                    deployment_environment: staging
+                    skip_app_build: true
+                    skip_api_build: true
+                    azure_static_web_apps_api_token: $(DEPLOYMENT_TOKEN)
+                    app_location: /
+                    api_location: ''
+                    output_location: ''
+                    build_timeout_in_minutes: 5
+                    cwd: $(Pipeline.Workspace)/dist
+
+  - stage: LiveDeploy
+    displayName: Deploy stage - Live
+    dependsOn: Build
+    jobs:
+      - deployment: LiveDeploymentJob
+        displayName: Deployment Job - Live
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'PullRequest')))
+        pool:
+          vmImage: "ubuntu-latest"
+        timeoutInMinutes: 2
+        environment: 'live'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: dist
+                  displayName: 'Download Artifacts'
+
+                - task: AzureStaticWebApp@0
+                  displayName: 'Deploy to Azure Static Web App'
+                  inputs:
+                    skip_app_build: true
+                    skip_api_build: true
+                    azure_static_web_apps_api_token: $(DEPLOYMENT_TOKEN)
+                    app_location: /
+                    api_location: ''
+                    output_location: ''
+                    build_timeout_in_minutes: 5
+                    cwd: $(Pipeline.Workspace)/dist

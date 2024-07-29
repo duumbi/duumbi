@@ -1,10 +1,10 @@
 setup:
-  - project: duumbi-web-application
+  - project: app-web-application
     config: dev_personal
-    path: applications/duumbi-web-application/
-  - project: duumbi-customer-service
+    path: applications/app-web-application/
+  - project: site-service
     config: dev_personal
-    path: services/customer-service/
+    path: services/site-service/
   - project: ias
     config: local_personal
     path: devops/iac/local/

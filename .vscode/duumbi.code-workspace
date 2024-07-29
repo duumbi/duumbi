@@ -5,16 +5,16 @@
 			"path": ".."
 		},
 		{
-			"name": "Web Application - Site",
+			"name": "Web Application",
 			"path": "../applications/site-web-application"
 		},
 		{
-			"name": "Web Application - Duumbi",
-			"path": "../applications/duumbi-web-application"
+			"name": "Web Application - App",
+			"path": "../applications/app-web-application"
 		},
 		{
-			"name": "Service - Site Service",
-			"path": "../services/site-service"
+			"name": "Service - App Service",
+			"path": "../services/app-service"
 		},
 		{
 			"name": "Service - Duumbi Service",
@@ -27,65 +27,16 @@
 		{
 			"name": "DevOps - Infrastructure as code",
 			"path": "../devops/iac"
+		},
+		{
+			// External repository
+			"name": "DevOps - Pipeline Templates",
+			"path": "../../../azdevops/azure-pipeline-templates"
 		}
 	],
 	"settings": {
 		"liveServer.settings.multiRootWorkspaceName": "Duumbi",
 		"java.configuration.updateBuildConfiguration": "automatic",
 		"java.compile.nullAnalysis.mode": "automatic",
-	},
-	"launch": {
-		"configurations": [
-			{
-				"type": "pwa-msedge",
-				"name": "Launch Microsoft Edge",
-				"request": "launch",
-				"runtimeArgs": [
-					"--remote-debugging-port=9222"
-				],
-				"url": "/Users/heizergabor/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.5/out/startpage/index.html",
-				"presentation": {
-					"hidden": true
-				}
-			},
-			{
-				"type": "pwa-msedge",
-				"name": "Launch Microsoft Edge in headless mode",
-				"request": "launch",
-				"runtimeArgs": [
-					"--headless",
-					"--remote-debugging-port=9222"
-				],
-				"url": "file:///Users/heizergabor/space/hgahub/duumbi/applications/duumbi-web-application/index.html",
-				"presentation": {
-					"hidden": true
-				}
-			},
-			{
-				"type": "vscode-edge-devtools.debug",
-				"name": "Open Edge DevTools",
-				"request": "attach",
-				"url": "/Users/heizergabor/.vscode/extensions/ms-edgedevtools.vscode-edge-devtools-2.1.5/out/startpage/index.html",
-				"presentation": {
-					"hidden": true
-				}
-			}
-		],
-		"compounds": [
-			{
-				"name": "Launch Edge Headless and attach DevTools",
-				"configurations": [
-					"Launch Microsoft Edge in headless mode",
-					"Open Edge DevTools"
-				]
-			},
-			{
-				"name": "Launch Edge and attach DevTools",
-				"configurations": [
-					"Launch Microsoft Edge",
-					"Open Edge DevTools"
-				]
-			}
-		]
 	}
 }

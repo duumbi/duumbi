@@ -1,0 +1,4 @@
+### Retrieve a user profile
+# @prompt profileId
+GET {{siteHost}}/api/v1/profiles/{{profileId}}
+Authorization: Bearer {{$dotenv ACCESS_TOKEN}}

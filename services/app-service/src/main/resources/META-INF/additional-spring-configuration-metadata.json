@@ -1,0 +1,34 @@
+{
+  "properties": [
+    {
+      "name": "application.environment",
+      "type": "java.lang.String",
+      "description": "The installation environment of the application."
+    },
+    {
+      "name": "application.client-origin-url",
+      "type": "java.lang.String",
+      "description": "The URL of the client used to make it an allowed CORS origin"
+    },
+    {
+      "name": "auth0.management.api.domain",
+      "type": "java.lang.String",
+      "description": "The domain name of the Auth0 Management API"
+    },
+    {
+      "name": "auth0.management.api.client-id",
+      "type": "java.lang.String",
+      "description": "This is the value of the Client ID field of the Machine-to-Machine Application"
+    },
+    {
+      "name": "auth0.management.api.client-secret",
+      "type": "java.lang.String",
+      "description": "This is the value of the Client Secret field of the Machine-to-Machine Application"
+    },
+    {
+      "name": "auth0.management.api.identifier",
+      "type": "java.lang.String",
+      "description": "This is the value of the Identifier field of the Auth0 Management API"
+    }
+  ]
+}

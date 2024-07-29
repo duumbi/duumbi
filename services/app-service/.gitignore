@@ -1,0 +1,10 @@
+# Visual Studio Code
+.vscode/*
+
+# Spring Boot Application
+application-dev.yaml
+.env
+
+# Java
+.java-version
+target/
