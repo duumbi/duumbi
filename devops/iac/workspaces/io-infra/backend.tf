@@ -17,7 +17,7 @@ terraform {
 
     port = {
       source  = "port-labs/port-labs"
-      version = "2.0.12"
+      version = "2.0.13"
     }
 
     doppler = {
