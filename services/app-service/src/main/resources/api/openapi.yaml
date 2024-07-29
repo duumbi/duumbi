@@ -1,0 +1,209 @@
+openapi: 3.0.0
+info:
+  title: Duumbi Site Service API v1
+  description: "This is a Duumbi Site Service API documentation. API has resource-oriented\
+    \ URLs, accepts JSON-encoded request bodies and returns JSON-encoded responses."
+  contact:
+    name: Duumbi
+    url: https://duumbi.io/
+    email: mail@duumbi.io
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/duumbi/site/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: "https://api.site-{location}.duumbi.io/{basePath}"
+  description: The production API server
+  variables:
+    location:
+      default: ne
+      enum:
+      - ne
+      - eu
+    basePath:
+      default: v1
+tags:
+- name: profile
+  description: Profile operations
+paths:
+  /profiles/{id}:
+    get:
+      tags:
+      - profile
+      summary: Retrieve a user profile.
+      description: Retrieves the details of an existing profile.
+      operationId: GetProfile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: User successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+        "400":
+          description: The request is malformed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+        "404":
+          description: Non-existent resource is requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+    delete:
+      tags:
+      - profile
+      summary: Delete a user profile
+      description: Delete an existing profile.
+      operationId: DeleteProfile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Profile successfully deleted.
+        "400":
+          description: The request is malformed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+        "401":
+          description: Authorization information is missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+        "403":
+          description: Authenticated user doesn't have access to the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+        "429":
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+        "404":
+          description: Non-existent resource is requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+    patch:
+      tags:
+      - profile
+      summary: Update a user profile
+      description: Update an existing profile. Returns a profile object if the update
+        is succeded.
+      operationId: UpdateProfile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Profile object that you would like to update.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Profile'
+        required: true
+      responses:
+        "200":
+          description: User successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+        "400":
+          description: The request is malformed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+        "404":
+          description: Non-existent resource is requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSchema'
+components:
+  schemas:
+    Profile:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        picture:
+          type: string
+    ErrorSchema:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: The request is malformed.
+  responses:
+    BadRequest:
+      description: The request is malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSchema'
+    Unauthorized:
+      description: Authorization information is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSchema'
+    Forbidden:
+      description: Authenticated user doesn't have access to the resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSchema'
+    NotFound:
+      description: Non-existent resource is requested.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSchema'
+    TooManyRequests:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSchema'
+    ServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSchema'

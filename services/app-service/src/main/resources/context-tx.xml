@@ -1,0 +1,26 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<tx:advice id="txAdvice">
+    <tx:attributes>
+        <tx:method name="*" />
+    </tx:attributes>
+</tx:advice>
+
+<tx:advice id="txAdviceReadonly">
+    <tx:attributes>
+        <tx:method name="*" read-only="true" />
+    </tx:attributes>
+</tx:advice>
+
+<aop:config proxy-target-class="true">
+    <aop:advisor advice-ref="txAdvice"
+        pointcut="(@within(org.springframework.stereotype.Service)) or (@within(io.duumbi.app.framework.stereotype.service.CommandService))" />
+    <aop:advisor advice-ref="txAdviceReadonly"
+        pointcut="(@within(io.duumbi.app.framework.stereotype.service.QueryService)) or (execution(public void io.duumbi.app.framework.validator.Validator+.validate(..)))" />
+</aop:config>
