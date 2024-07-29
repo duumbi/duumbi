@@ -13,8 +13,8 @@
 			"path": "../applications/app-web-application"
 		},
 		{
-			"name": "Service - Site Service",
-			"path": "../services/site-service"
+			"name": "Service - App Service",
+			"path": "../services/app-service"
 		},
 		{
 			"name": "Service - Duumbi Service",

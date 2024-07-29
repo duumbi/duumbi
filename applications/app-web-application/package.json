@@ -8,7 +8,7 @@
     "clean:env": "rm -f .env.production",
     "env": "doppler secrets download --no-file --format env > .env.production",
     "copy": "cp staticwebapp.config.json dist/",
-    "codegen": "rm -rf src/generated-sources/openapi; openapi-generator-cli generate -i ../../services/site-service/src/main/resources/api/openapi.yaml -g typescript-fetch -o src/generated-sources/openapi --template-dir custom-templates --additional-properties=supportsES6=true,npmVersion=10.2.3,typescriptThreePlus=true",
+    "codegen": "rm -rf src/generated-sources/openapi; openapi-generator-cli generate -i ../../services/app-service/src/main/resources/api/openapi.yaml -g typescript-fetch -o src/generated-sources/openapi --template-dir custom-templates --additional-properties=supportsES6=true,npmVersion=10.2.3,typescriptThreePlus=true",
     "dev": "doppler run -- vite",
     "lint": "eslint . ",
     "preview": "vite preview",
