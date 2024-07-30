@@ -13,7 +13,7 @@ pr:
       - "services/app-service/**"
 
 variables:
-  system.debug: "false" # Enable or disable debug mode
+  system.debug: "true" # Enable or disable debug mode
   APP_SERVICE_RELATIVE_PATH: 'services/app-service'
   APP_SERVICE_PATH: '$(Build.SourcesDirectory)/$(APP_SERVICE_RELATIVE_PATH)'
 
