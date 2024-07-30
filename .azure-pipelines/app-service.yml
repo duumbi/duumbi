@@ -34,6 +34,10 @@ stages:
         variables:
           group: app-service
         steps:
+          - task: CmdLine@2
+            displayName: Install emulator
+            inputs:
+              script: 'sudo apt-get install -y qemu qemu-user-static'
           - task: Docker@2
             displayName: Login
             inputs:
@@ -43,6 +47,7 @@ stages:
               DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
               echo $DOCKER_CONFIG
               docker info
+              ls -la /usr/libexec/docker/cli-plugins/
               mkdir -vp $DOCKER_CONFIG/cli-plugins/
               ARCH=amd64
               BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
@@ -51,5 +56,5 @@ stages:
               chmod a+x $DOCKER_CONFIG/cli-plugins/docker-buildx
               docker info
               ls -la $DOCKER_CONFIG/cli-plugins/
-              docker buildx create --use --driver cloud hgahub/default
+              docker buildx create --driver cloud hgahub/default
             displayName: 'Create a instance of the cloud builder'
