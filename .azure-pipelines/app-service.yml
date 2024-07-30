@@ -14,6 +14,8 @@ pr:
 
 variables:
   system.debug: "false" # Enable or disable debug mode
+  APP_SERVICE_RELATIVE_PATH: 'services/app-service'
+  APP_SERVICE_PATH: '$(Build.SourcesDirectory)/$(APP_SERVICE_RELATIVE_PATH)'
 
 resources:
   repositories:
@@ -34,27 +36,20 @@ stages:
         variables:
           group: app-service
         steps:
-          - task: CmdLine@2
-            displayName: Install emulator
-            inputs:
-              script: 'sudo apt-get install -y qemu qemu-user-static'
+          - template: java/steps/config-versions.yml@templates
+            parameters:
+              SOURCES_DIRECTORY: $(APP_SERVICE_PATH)
           - task: Docker@2
             displayName: Login
             inputs:
               command: 'login'
               containerRegistry: '$(DOCKER_REGISTRY_SERVICE_CONNECTION)'
+          - template: docker/steps/install-cloud-builder.yml@templates
+            parameters:
+              DOCKER_CONFIG: ${DOCKER_CONFIG:-$HOME/.docker}
           - script: |
-              DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
-              echo $DOCKER_CONFIG
-              docker info
-              ls -la /usr/libexec/docker/cli-plugins/
-              mkdir -vp $DOCKER_CONFIG/cli-plugins/
-              ARCH=amd64
-              BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-              echo $BUILDX_URL
-              curl --silent -L --output $DOCKER_CONFIG/cli-plugins/docker-buildx $BUILDX_URL
-              chmod a+x $DOCKER_CONFIG/cli-plugins/docker-buildx
-              docker info
-              ls -la $DOCKER_CONFIG/cli-plugins/
-              docker buildx create --driver cloud hgahub/default
-            displayName: 'Create a instance of the cloud builder'
+              echo 'Java version: $(JAVA_VERSION)'
+              echo 'Maven version: $(MAVEN_VERSION)'
+          # - script: |
+          #     docker buildx build --call=outline --platform linux/amd64,linux/arm64 --tag "$(DOCKER_HUB_REPO):$(Build.BuildId)" --push .
+          #   displayName: 'Build'

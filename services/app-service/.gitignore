@@ -6,5 +6,4 @@ application-dev.yaml
 .env
 
 # Java
-.java-version
 target/
