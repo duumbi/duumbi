@@ -48,9 +48,6 @@ stages:
             parameters:
               DOCKER_CONFIG: ${DOCKER_CONFIG:-$HOME/.docker}
           - script: |
-              echo 'Java version: $(JAVA_VERSION)'
-              echo 'Maven version: $(MAVEN_VERSION)'
-          - script: |
               cd $(APP_SERVICE_RELATIVE_PATH) && docker buildx build \
                 --call=outline \
                 --build-arg JAVA_VERSION=$(JAVA_VERSION) \
