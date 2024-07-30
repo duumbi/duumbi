@@ -49,10 +49,8 @@ stages:
               DOCKER_CONFIG: ${DOCKER_CONFIG:-$HOME/.docker}
           - script: |
               cd $(APP_SERVICE_RELATIVE_PATH) && docker buildx build \
-                --call=outline \
-                --build-arg JAVA_VERSION=$(JAVA_VERSION) \
                 --platform linux/arm64 \
-                --tag "$(DOCKER_HUB_USER)/$(DOCKER_HUB_REPO):$(Build.BuildId)" \
-                --tag "$(DOCKER_HUB_USER)/$(DOCKER_HUB_REPO):latest" \
+                --tag $(DOCKER_HUB_USER)/$(DOCKER_HUB_REPO):$(Build.BuildId) \
+                --tag $(DOCKER_HUB_USER)/$(DOCKER_HUB_REPO):latest \
                 --push .
             displayName: 'Build multi-platform image and push to registry'
