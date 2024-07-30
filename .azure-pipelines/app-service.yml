@@ -40,10 +40,14 @@ stages:
               command: 'login'
               containerRegistry: '$(DOCKER_REGISTRY_SERVICE_CONNECTION)'
           - script: |
+              docker info
               mkdir -vp ~/.docker/cli-plugins/
               ARCH=amd64
               BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+              echo $BUILDX_URL
               curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
               chmod a+x ~/.docker/cli-plugins/docker-buildx
+              docker info
+              ls -la ~/.docker/cli-plugins/
               docker buildx create --use --driver cloud hgahub/default
             displayName: 'Create a instance of the cloud builder'
