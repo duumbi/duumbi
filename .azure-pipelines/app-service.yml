@@ -51,8 +51,7 @@ stages:
               cd $(APP_SERVICE_RELATIVE_PATH) && docker buildx build \
                 --call=outline \
                 --build-arg JAVA_VERSION=$(JAVA_VERSION) \
-                --build-arg MAVEN_VERSION=$(MAVEN_VERSION) \
-                --platform linux/amd64,linux/arm64 \
+                --platform linux/arm64 \
                 --tag "$(DOCKER_HUB_USER)/$(DOCKER_HUB_REPO):$(Build.BuildId)" \
                 --tag "$(DOCKER_HUB_USER)/$(DOCKER_HUB_REPO):latest" \
                 --push .
