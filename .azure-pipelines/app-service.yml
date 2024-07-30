@@ -13,7 +13,7 @@ pr:
       - "services/app-service/**"
 
 variables:
-  system.debug: "false" # Enable or disable debug mode
+  system.debug: "true" # Enable or disable debug mode
 
 resources:
   repositories:
@@ -34,17 +34,8 @@ stages:
         variables:
           group: app-service
         steps:
-          - task: CmdLine@2
-            displayName: Install emulator
-            inputs:
-              script: 'sudo apt-get install -y qemu qemu-user-static'
-
-          - task: Docker@2
-            displayName: Login
-            inputs:
-              command: 'login'
-              containerRegistry: '$(DOCKER_REGISTRY_SERVICE_CONNECTION)'
-
           - script: |
-              docker buildx create --driver cloud hgahub/duumbi
+              mkdir -vp ~/.docker/cli-plugins/
+              ARCH=amd64
+              BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
             displayName: 'Create a instance of the cloud builder'
