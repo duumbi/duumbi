@@ -50,7 +50,11 @@ stages:
           - script: |
               cd $(APP_SERVICE_RELATIVE_PATH) && docker buildx build \
                 --platform linux/arm64 \
+                --build-arg JAVA_VERSION=$(JAVA_VERSION) \
                 --tag $(DOCKER_HUB_USER)/$(DOCKER_HUB_REPO):$(Build.BuildId) \
                 --tag $(DOCKER_HUB_USER)/$(DOCKER_HUB_REPO):latest \
                 --push .
             displayName: 'Build multi-platform image and push to registry'
+            env:
+              BUILDX_GIT_LABELS: 'full' # Adds provenance labels, based on Git information
+              MAVEN_VERSION: '3.9.8'
