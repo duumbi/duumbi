@@ -8,79 +8,18 @@
         "type": "tabs",
         "children": [
           {
-            "id": "f39e6d862d238c51",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Samples.md",
-                "mode": "preview",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "462b0a4058567fc4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Contribution Guidelines/Multirepo.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f2590f0d74cd6c81",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "DevOps/Internal Developer Portal (IDP).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f19675685a77e670",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "DevOps/Infrastructure As Code (IAC).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "a4a1087d414fccbd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Test.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "a68c6277dbe4dce2",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Layout.md",
+                "file": "Contribution Guidelines/Web Application - Site.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 5
+        ]
       }
     ],
     "direction": "vertical"
@@ -146,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Layout.md",
+                "file": "Contribution Guidelines/Web Application - Site.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Layout.md",
+                "file": "Contribution Guidelines/Web Application - Site.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Layout.md"
+                "file": "Contribution Guidelines/Web Application - Site.md"
               }
             }
           }
@@ -209,14 +148,16 @@
   },
   "active": "a68c6277dbe4dce2",
   "lastOpenFiles": [
+    "DevOps/Infrastructure As Code (IAC).md",
+    "DevOps/Internal Developer Portal (IDP).md",
+    "Contribution Guidelines/Multirepo.md",
+    "Samples.md",
+    "Contribution Guidelines/Web Application - Site.md",
+    "Contribution Guidelines/Web Application - Duumbi.md",
+    "Contribution Guidelines/Service - Site Service.md",
+    "Applications/Duumbi.md",
     "Test.md",
     "Layout.md",
-    "Applications/Duumbi.md",
-    "Contribution Guidelines/Web Application - Site.md",
-    "Samples.md",
-    "Contribution Guidelines/Multirepo.md",
-    "DevOps/Internal Developer Portal (IDP).md",
-    "DevOps/Infrastructure As Code (IAC).md",
     "DevOps/DNS.md",
     "Applications",
     "DevOps",
