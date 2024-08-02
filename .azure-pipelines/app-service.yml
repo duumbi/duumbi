@@ -13,7 +13,7 @@ pr:
       - "services/app-service/**"
 
 variables:
-  system.debug: "true" # Enable or disable debug mode
+  system.debug: "false" # Enable or disable debug mode
   APP_SERVICE_RELATIVE_PATH: 'services/app-service'
   APP_SERVICE_PATH: '$(Build.SourcesDirectory)/$(APP_SERVICE_RELATIVE_PATH)'
 
@@ -51,10 +51,10 @@ stages:
               cd $(APP_SERVICE_RELATIVE_PATH) && docker buildx build \
                 --platform linux/arm64 \
                 --build-arg JAVA_VERSION=$(JAVA_VERSION) \
+                --build-arg MAVEN_VERSION=$(MAVEN_VERSION) \
                 --tag $(DOCKER_HUB_USER)/$(DOCKER_HUB_REPO):$(Build.BuildId) \
                 --tag $(DOCKER_HUB_USER)/$(DOCKER_HUB_REPO):latest \
                 --push .
             displayName: 'Build multi-platform image and push to registry'
             env:
               BUILDX_GIT_LABELS: 'full' # Adds provenance labels, based on Git information
-              MAVEN_VERSION: '3.9.8'
