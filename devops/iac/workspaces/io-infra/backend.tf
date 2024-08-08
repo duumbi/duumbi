@@ -12,12 +12,12 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.113.0"
+      version = "3.114.0"
     }
 
     port = {
       source  = "port-labs/port-labs"
-      version = "2.0.13"
+      version = "2.0.16"
     }
 
     doppler = {
@@ -27,12 +27,12 @@ terraform {
 
     betteruptime = {
       source  = "BetterStackHQ/better-uptime"
-      version = "0.11.5"
+      version = "0.11.6"
     }
 
     newrelic = {
       source  = "newrelic/newrelic"
-      version = "3.40.1"
+      version = "3.41.0"
     }
   }
 }
