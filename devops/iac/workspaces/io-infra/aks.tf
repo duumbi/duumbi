@@ -29,7 +29,7 @@ resource "azurerm_role_assignment" "dns_zone_contributor" {
 }
 
 # Public IP for Ingress Controller
-resource "azurerm_public_ip" "ingress" {
+/* resource "azurerm_public_ip" "ingress" {
   count = var.aks_enable_ingress ? 1 : 0
 
   name                = local.aks_ingress_ip_name
@@ -39,10 +39,10 @@ resource "azurerm_public_ip" "ingress" {
   allocation_method   = "Static"
   domain_name_label   = lower(format("%s-%s-aks-ingress", var.organization, var.project))
   tags                = local.tags
-}
+} */
 
 #trivy:ignore:avd-azu-0040
-resource "azurerm_kubernetes_cluster" "aks" {
+/* resource "azurerm_kubernetes_cluster" "aks" {
   name                      = local.aks_name
   location                  = local.aks_location_name
   resource_group_name       = azurerm_resource_group.aks_rg.name
@@ -125,7 +125,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   depends_on = [
     azurerm_role_assignment.aks_ra
   ]
-}
+} */
 
 /* resource "azurerm_kubernetes_cluster_node_pool" "spot" {
   name                  = "spot"
