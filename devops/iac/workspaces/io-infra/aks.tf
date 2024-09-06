@@ -164,7 +164,7 @@ resource "azurerm_role_assignment" "dns_zone_contributor" {
   }
 } */
 
-resource "azurerm_federated_identity_credential" "external_dns" {
+/* resource "azurerm_federated_identity_credential" "external_dns" {
   name                = "${local.aks_name}-sa-infra-external-dns"
   resource_group_name = azurerm_resource_group.aks_rg.name
   audience            = ["api://AzureADTokenExchange"]
@@ -180,4 +180,4 @@ resource "azurerm_federated_identity_credential" "cert_manager" {
   issuer              = azurerm_kubernetes_cluster.aks.oidc_issuer_url
   parent_id           = azurerm_user_assigned_identity.aks_id.id
   subject             = "system:serviceaccount:infra:cert-manager"
-}
+} */
